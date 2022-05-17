@@ -1,16 +1,35 @@
 //
 //  ContentView.swift
-//  Feedapp
+//  JSON
 //
-//  Created by Gagandeep on 09/05/22.
+//  Created by Zelxius on 14/03/22.
 //
 
 import SwiftUI
 
 struct ContentView: View {
+    
+    @EnvironmentObject var login: PostViewModel
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        Group{
+//            if login.authenticated == 0 {
+//                Login()
+//            }else
+            if login.authenticated <= 1 {
+                SplashScreenView()
+            }else
+            if login.authenticated == 2{
+                VStack{
+                    Text("Incorrect Username&Password")
+                    Button(action:{
+                        login.authenticated = 0
+                    }){
+                        Text("Go Back")
+                    }
+                }
+            }
+        }
     }
 }
 

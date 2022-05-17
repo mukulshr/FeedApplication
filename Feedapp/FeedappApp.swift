@@ -10,8 +10,9 @@ import SwiftUI
 @main
 struct FeedappApp: App {
     var body: some Scene {
+        let login = PostViewModel()
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(login)
         }
     }
 }
