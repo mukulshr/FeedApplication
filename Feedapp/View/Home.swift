@@ -4,6 +4,7 @@ import SwiftUI
 struct Home: View {
     
     @State private var showBottomSheet = false
+  
     @EnvironmentObject var login: PostViewModel
     @State private var isHeaderViewVisible = false
     @State private var isScrollViewBouncing = false
@@ -26,31 +27,33 @@ struct Home: View {
                                             HStack(alignment: .center){
                                             Image(uiImage: UIImage(named: "logo_white")!)
                                                     .resizable()
-                                                .frame(width: 55, height: 60, alignment: .leading)
+                                                .frame(width: 40, height: 45, alignment: .leading)
                                                
                                                 .padding(.leading,20)
                                                
                                                 Spacer()
-                                           Image(uiImage: UIImage(named: "logo_white")!)
+                                           Image(uiImage: UIImage(named: "namami")!)
                                                     .resizable()
-                                                .frame(width: 60, height: 60, alignment: .leading)
+                                                .frame(width: 45, height: 45, alignment: .leading)
 //                                                .padding(.top, 90)
                                                 .padding(.trailing,20)
 //                                                .padding(.bottom,10)
                                             }
-                                            .padding(.top, 70)
+                                            .padding(.top, 60)
                                             .padding(.bottom,10)
                                             HomeHeaderView()
+                                               
                                             .opacity(isHeaderViewVisible ? 0.0 : 1.0)
                                             
                                         }
                                         
                                     } //: HStack
                                     .frame(height: geometry.frame(in: .global).minY > 0 ? geometry.frame(in: .global).minY + 180 : 180)
-                                    .background(Color(UIColor.darkGray))
+                                    .background(Color.customblack2)
                                     .offset(y: geometry.frame(in: .global).minY > 0 ? -geometry.frame(in: .global).minY : 0)
                                 } //: GeometryReader
                                 .padding(.bottom, 150)
+                                .zIndex(1)
                                 
                                 
                                 GeometryReader { geometry in
@@ -59,7 +62,7 @@ struct Home: View {
                                             if !isScrollViewBouncing {
                                                 let globalFrame = geometry.frame(in: .global)
                                                 
-                                                print("Gloabl frame: \(globalFrame)")
+//                                                print("Gloabl frame: \(globalFrame)")
                                                 /// Show Sticky Header View
                                                 if globalFrame.origin.y <= 20 {
                                                     withAnimation {
@@ -81,6 +84,7 @@ struct Home: View {
                              
                                 
                                 FeedRoomView()
+                                
                                   
                             } //: ScrollView
                         } //: VStack
@@ -88,12 +92,11 @@ struct Home: View {
                         if isHeaderViewVisible {
                             ZStack(alignment: .bottom) {
                                HomeHeaderView()
-                                    .padding(.top, 50)
-//                                needbutton()
-                            } //: VStack
+//                                    .padding(.top, 60)
+                               }
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .frame(height: 100)
-                            .background(Color(UIColor.lightGray))
+                            .background(Color(UIColor.white))
                         }
                         
                         VStack {
@@ -109,9 +112,9 @@ struct Home: View {
                                                }, label: {
                                                    Text("+")
                                                        .font(.system(.largeTitle))
-                                                       .frame(width: 77, height: 70)
+                                                       .frame(width: 65, height: 60)
                                                        .foregroundColor(Color.black)
-                                                       .padding(.bottom, 7)
+                                                       .padding(.bottom, 6)
                                                })
                                                .background(Color.customGrey)
                                                .cornerRadius(38.5)
@@ -125,7 +128,7 @@ struct Home: View {
                                        
                                        BottomSheetModal(display: $showBottomSheet) {
                                            
-                                           VStack(alignment:.leading){
+                                           VStack(){
                                                
                                                
                                                NavigationLink(destination: VolunteerView()) {
@@ -140,19 +143,6 @@ struct Home: View {
                                                    .frame(alignment: .leading)
                                                }
                                                
-//                                               Button(action: {
-//                                                   
-//                                               }) {
-//                                                   HStack{
-//                                                       Text("VOLUNTEER HOURS")
-//                                                           .frame(alignment:.leading)
-//                                                           .padding()
-//                                                           .foregroundColor(Color.white)
-//                                                           .frame(minWidth: 0, maxWidth: .infinity)
-//                                                  
-//                                                   }
-//                                                   .frame(alignment: .leading)
-//                                               }
                                                
                                                
                                                

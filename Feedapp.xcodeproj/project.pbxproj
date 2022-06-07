@@ -36,8 +36,15 @@
 		E60A2C2C2828D296008D52ED /* FeedRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60A2C2B2828D296008D52ED /* FeedRoomView.swift */; };
 		E60A2C2E2828D2AF008D52ED /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60A2C2D2828D2AF008D52ED /* CommentView.swift */; };
 		E60A2C312828D30D008D52ED /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = E60A2C302828D30D008D52ED /* SDWebImageSwiftUI */; };
+		E63C90FA284D0BD300C8E7C2 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63C90F9284D0BD300C8E7C2 /* LoadingView.swift */; };
+		E63C90FC284E17BA00C8E7C2 /* muli.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E63C90FB284E17B900C8E7C2 /* muli.ttf */; };
+		E64EE159284CC81700BBE131 /* HeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64EE158284CC81700BBE131 /* HeaderViewModel.swift */; };
+		E652EE04284F6A9E00AC8462 /* RichText in Frameworks */ = {isa = PBXBuildFile; productRef = E652EE03284F6A9E00AC8462 /* RichText */; };
 		E66E49662830D664001272A1 /* needbutton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E49652830D664001272A1 /* needbutton.swift */; };
 		E66E496E2831355B001272A1 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E496D2831355B001272A1 /* SplashScreenView.swift */; };
+		E6AA9731284F01E8005F4D6C /* Font Awesome 6 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = E6AA972E284F01E8005F4D6C /* Font Awesome 6 Brands-Regular-400.otf */; };
+		E6AA9732284F01E8005F4D6C /* Font Awesome 6 Free-Solid-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = E6AA972F284F01E8005F4D6C /* Font Awesome 6 Free-Solid-900.otf */; };
+		E6AA9733284F01E8005F4D6C /* Font Awesome 6 Free-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = E6AA9730284F01E8005F4D6C /* Font Awesome 6 Free-Regular-400.otf */; };
 		E6DEA9AB2832DAE8002C1AAD /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DEA9AA2832DAE8002C1AAD /* WebView.swift */; };
 		E6DEA9AD28337499002C1AAD /* VolunteerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DEA9AC28337499002C1AAD /* VolunteerView.swift */; };
 /* End PBXBuildFile section */
@@ -91,8 +98,15 @@
 		E60A2C292828D26F008D52ED /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
 		E60A2C2B2828D296008D52ED /* FeedRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRoomView.swift; sourceTree = "<group>"; };
 		E60A2C2D2828D2AF008D52ED /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
+		E63C90F9284D0BD300C8E7C2 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		E63C90FB284E17B900C8E7C2 /* muli.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = muli.ttf; sourceTree = "<group>"; };
+		E63C90FE284E1F3E00C8E7C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E64EE158284CC81700BBE131 /* HeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewModel.swift; sourceTree = "<group>"; };
 		E66E49652830D664001272A1 /* needbutton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = needbutton.swift; sourceTree = "<group>"; };
 		E66E496D2831355B001272A1 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		E6AA972E284F01E8005F4D6C /* Font Awesome 6 Brands-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 6 Brands-Regular-400.otf"; sourceTree = "<group>"; };
+		E6AA972F284F01E8005F4D6C /* Font Awesome 6 Free-Solid-900.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 6 Free-Solid-900.otf"; sourceTree = "<group>"; };
+		E6AA9730284F01E8005F4D6C /* Font Awesome 6 Free-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 6 Free-Regular-400.otf"; sourceTree = "<group>"; };
 		E6DEA9AA2832DAE8002C1AAD /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		E6DEA9AC28337499002C1AAD /* VolunteerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolunteerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,6 +117,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E60A2C312828D30D008D52ED /* SDWebImageSwiftUI in Frameworks */,
+				E652EE04284F6A9E00AC8462 /* RichText in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +161,7 @@
 		E60A2BD52828C86D008D52ED /* Feedapp */ = {
 			isa = PBXGroup;
 			children = (
+				E63C9100284E220700C8E7C2 /* Fonts */,
 				E60A2C022828C89F008D52ED /* ViewModel */,
 				E60A2C012828C897008D52ED /* Model */,
 				E60A2C002828C88C008D52ED /* View */,
@@ -154,6 +170,7 @@
 				E60A2BD82828C86D008D52ED /* ContentView.swift */,
 				E60A2BDA2828C870008D52ED /* Assets.xcassets */,
 				E60A2BDC2828C870008D52ED /* Preview Content */,
+				E63C90FE284E1F3E00C8E7C2 /* Info.plist */,
 			);
 			path = Feedapp;
 			sourceTree = "<group>";
@@ -198,6 +215,7 @@
 				E66E496D2831355B001272A1 /* SplashScreenView.swift */,
 				E6DEA9AA2832DAE8002C1AAD /* WebView.swift */,
 				E6DEA9AC28337499002C1AAD /* VolunteerView.swift */,
+				E63C90F9284D0BD300C8E7C2 /* LoadingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -218,6 +236,7 @@
 				E60A2C052828C8E7008D52ED /* PostViewModel.swift */,
 				E60A2C0F2828D152008D52ED /* UserViewModel.swift */,
 				E60A2C112828D174008D52ED /* CommentViewModel.swift */,
+				E64EE158284CC81700BBE131 /* HeaderViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -244,6 +263,17 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		E63C9100284E220700C8E7C2 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				E6AA972E284F01E8005F4D6C /* Font Awesome 6 Brands-Regular-400.otf */,
+				E6AA9730284F01E8005F4D6C /* Font Awesome 6 Free-Regular-400.otf */,
+				E6AA972F284F01E8005F4D6C /* Font Awesome 6 Free-Solid-900.otf */,
+				E63C90FB284E17B900C8E7C2 /* muli.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -262,6 +292,7 @@
 			name = Feedapp;
 			packageProductDependencies = (
 				E60A2C302828D30D008D52ED /* SDWebImageSwiftUI */,
+				E652EE03284F6A9E00AC8462 /* RichText */,
 			);
 			productName = Feedapp;
 			productReference = E60A2BD32828C86D008D52ED /* Feedapp.app */;
@@ -337,6 +368,7 @@
 			mainGroup = E60A2BCA2828C86D008D52ED;
 			packageReferences = (
 				E60A2C2F2828D30D008D52ED /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				E652EE02284F6A9E00AC8462 /* XCRemoteSwiftPackageReference "RichText" */,
 			);
 			productRefGroup = E60A2BD42828C86D008D52ED /* Products */;
 			projectDirPath = "";
@@ -354,11 +386,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6AA9733284F01E8005F4D6C /* Font Awesome 6 Free-Regular-400.otf in Resources */,
 				E60A2BDE2828C870008D52ED /* Preview Assets.xcassets in Resources */,
 				E60A2C212828D1ED008D52ED /* NunitoSans-ExtraBold.ttf in Resources */,
 				E60A2BDB2828C870008D52ED /* Assets.xcassets in Resources */,
+				E6AA9732284F01E8005F4D6C /* Font Awesome 6 Free-Solid-900.otf in Resources */,
 				E60A2C242828D1ED008D52ED /* NunitoSans-SemiBold.ttf in Resources */,
+				E6AA9731284F01E8005F4D6C /* Font Awesome 6 Brands-Regular-400.otf in Resources */,
 				E60A2C232828D1ED008D52ED /* NunitoSans-Bold.ttf in Resources */,
+				E63C90FC284E17BA00C8E7C2 /* muli.ttf in Resources */,
 				E60A2C222828D1ED008D52ED /* NunitoSans-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,6 +425,7 @@
 				E60A2C2E2828D2AF008D52ED /* CommentView.swift in Sources */,
 				E60A2C1E2828D1ED008D52ED /* Image.swift in Sources */,
 				E66E49662830D664001272A1 /* needbutton.swift in Sources */,
+				E64EE159284CC81700BBE131 /* HeaderViewModel.swift in Sources */,
 				E60A2C082828C8FD008D52ED /* Login.swift in Sources */,
 				E60A2C202828D1ED008D52ED /* Colors.swift in Sources */,
 				E60A2C142828D1A1008D52ED /* BottomSheetModel.swift in Sources */,
@@ -401,6 +438,7 @@
 				E60A2C042828C8CD008D52ED /* PostModel.swift in Sources */,
 				E60A2C2A2828D26F008D52ED /* ProfileHeader.swift in Sources */,
 				E66E496E2831355B001272A1 /* SplashScreenView.swift in Sources */,
+				E63C90FA284D0BD300C8E7C2 /* LoadingView.swift in Sources */,
 				E60A2C1F2828D1ED008D52ED /* Font.swift in Sources */,
 				E60A2C0E2828D12E008D52ED /* commentsModel.swift in Sources */,
 				E60A2C0A2828C91C008D52ED /* Home.swift in Sources */,
@@ -567,12 +605,13 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Feedapp/Preview Content\"";
 				DEVELOPMENT_TEAM = UUNJH84ZMG;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = /Users/gagandeep/Desktop/Feedapp/Feedapp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -596,12 +635,13 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Feedapp/Preview Content\"";
 				DEVELOPMENT_TEAM = UUNJH84ZMG;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = /Users/gagandeep/Desktop/Feedapp/Feedapp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -741,6 +781,14 @@
 				kind = branch;
 			};
 		};
+		E652EE02284F6A9E00AC8462 /* XCRemoteSwiftPackageReference "RichText" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NuPlay/RichText.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -748,6 +796,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E60A2C2F2828D30D008D52ED /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
+		};
+		E652EE03284F6A9E00AC8462 /* RichText */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E652EE02284F6A9E00AC8462 /* XCRemoteSwiftPackageReference "RichText" */;
+			productName = RichText;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

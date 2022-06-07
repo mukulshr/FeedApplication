@@ -1,6 +1,7 @@
 
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct CommentView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -18,7 +19,7 @@ struct CommentView: View {
     @State var condtext: String = "Adding Comment"
     @State private var AuthToken = UserDefaults.standard.string(forKey: "Token")
     @State var showreplies: Bool = false
-    @State private var isLoading = false
+    @State var IsLoaded: Bool = true
 
     @State var selectedid: Int = 0
     
@@ -40,11 +41,16 @@ struct CommentView: View {
 
     
     func testFunction() {
-        getcomments().getcomment(need: need,needpostid: needpostid,needId:needId) { (comments) in
-            self.getcmnt = comments
-            isLoading = false
-//            print(comments)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    print("delay text done")
+            getcomments().getcomment(need: need,needpostid: needpostid,needId:needId) { (comments) in
+                self.getcmnt = comments
+                self.IsLoaded = false
+               
+            }
         }
+            
+       
        }
   
     var body: some View {
@@ -57,12 +63,6 @@ struct CommentView: View {
             Color.customGrey.ignoresSafeArea()
             VStack{
              
-                
-                if (isLoading ){
-                    
-                    Text("Loading...")
-                    
-                }
                 
                 
             if getcmnt != [] {
@@ -115,8 +115,10 @@ struct CommentView: View {
             })
                     Button(
                         action: {
-                            isLoading = true
-                                deletecomment().delete(need: comment,needpostid: needpostid,needId:needId,id: cmnt.id)
+                            self.IsLoaded = true
+                            deletecomment().delete(need: comment,needpostid: needpostid,needId:needId,id: cmnt.id)
+                            
+                            
                             print("#",fetcher.delete)
                             self.testFunction()
                        
@@ -234,9 +236,22 @@ struct CommentView: View {
 //                    } }
 //                    .navigationBarTitle(Text("Navigation title"))
             }else if getcmnt == []{
-                Text("Nothing There")
-        }
-            
+                
+                
+                
+                
+                ZStack{
+                        Color.customGrey
+                            .ignoresSafeArea()
+                        Image("nodatafound")
+                            .resizable()
+                            .scaledToFit()
+                            .padding(2)
+                            .foregroundColor(Color.textYellow)
+                    }
+
+            }
+                
             
 //                    .navigationBarTitle(Text("Navigation title"))
             }
@@ -244,12 +259,18 @@ struct CommentView: View {
                 
                 
                 
+                   
+                   if IsLoaded{
+                       ActivityIndicator()
+                           .frame(alignment: .center)
+                   }
+                   
                 
-            }
+            }.navigationBarTitle("")
         }.onAppear {
             self.testFunction()
         }
-//        computedView()
+        .background(Color.white.edgesIgnoringSafeArea(.all))
         
        
         
@@ -259,33 +280,48 @@ struct CommentView: View {
                 Text(condtext)
                     .animation(.easeInOut(duration: 1.0))
                     .font(Font.Nunito.bold(size: 16))
-                    .foregroundColor(Color.customGrey)
+                    .foregroundColor(Color.darkGrey)
                 Spacer()
                 Button(
                     action: {
+                        self.IsLoaded = true
+
                         if (editmode == true){
                             self.comment = ""
                                                    editmode = false
                             conditiontext()
+                            self.IsLoaded = false
+
                                                }
                         else  if (replymode == true){
                             self.comment = ""
                                                    editmode = false
                             replymode = false
                             conditiontext()
+                            self.IsLoaded = false
                                                }
                         else{
+                            if self.comment == ""{
+                            self.IsLoaded = false
                                                    self.presentationMode.wrappedValue.dismiss()
+                            }else{
+                                
+                                self.comment = ""
+                                self.IsLoaded = false
+                            }
                                                }
                         
                 }, label: {
                     Text("Cancel")
-            })
+                        .font(Font.Nunito.bold(size: 16))
+                        .foregroundColor(Color.darkGrey)
+            }).padding(.trailing, 70)
             }
             HStack(){
-            TextField("Your Comment", text: $comment)
+            TextField("Write a Comment...", text: $comment)
                 .font(.title3)
-                .padding()
+                .padding(.vertical,10)
+                .padding(.horizontal,15)
                 .frame(maxWidth: .infinity)
                 .background(Color.customGrey)
                 .cornerRadius(50.0)
@@ -293,6 +329,8 @@ struct CommentView: View {
 
                 Button(
                     action: {
+                        self.IsLoaded = true
+
                         
                         if (editmode == true){
                             editcomment().edit(need: comment,needpostid: needpostid,needId:needId,id: cmntId)
@@ -305,6 +343,8 @@ struct CommentView: View {
                         }else if (replymode == true){
                             if(self.comment.isEmpty ){
                                 print("Please add comment")
+                                self.IsLoaded = false
+
                             }else {
                                 replycomment().replycomment(commentid: cmntId, reply: comment)
                                 self.testFunction()
@@ -315,6 +355,8 @@ struct CommentView: View {
                         else{
                                                    if(self.comment.isEmpty ){
                                                        print("Please add comment")
+                                                       self.IsLoaded = false
+
                                                    }else {
                                                    addcomments().addcomment(need: comment,needpostid: needpostid,needId:needId)
                                                self.comment = ""

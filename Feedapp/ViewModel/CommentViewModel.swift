@@ -28,6 +28,7 @@ class getcomments {
 
         request.httpMethod = "POST"
         request.httpBody = postData
+//        print("this is request",request)
 
 
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in

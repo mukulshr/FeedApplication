@@ -1,12 +1,13 @@
 import Foundation
 
-class apiCall {
+class apiCall : ObservableObject{
     
     @Published var req = [reqdata]()
+  
     
-    func getUsers(completion:@escaping ([reqdata]) -> ()) {
+    func getUsers(lastid: Int,completion:@escaping ([reqdata]) -> ()) {
         
-        let parameters = "{\r\n    \"action\": \"get_live_feed\",\r\n    \"data\": {\r\n        \"lastId\": 0,\r\n        \"cat\": 0,\r\n        \"city\": 0\r\n    }\r\n}"
+        let parameters = "{\r\n    \"action\": \"get_live_feed\",\r\n    \"data\": {\r\n         \"lastId\": \(lastid),\r\n        \"limit\":4\r\n    }\r\n}"
         let postData = parameters.data(using: .utf8)
 
         var request = URLRequest(url: URL(string: "https://www.mysuperhumanrace-uat.com/api/liveFeedApis")!,timeoutInterval: Double.infinity)
@@ -26,7 +27,10 @@ class apiCall {
                 
                 let aa = prinnt.data.data
                 
+//                self.req = Array(Set(self.req).union(Set(prinnt.data.data)))
+//                self.req.append(prinnt.data.data)
                 self.req = prinnt.data.data
+                print("here is the data we want",lastid)
                 
 //                print(self.req)
                 DispatchQueue.main.async {

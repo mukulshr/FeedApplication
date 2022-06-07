@@ -11,7 +11,7 @@ struct extradata: Decodable {
     let data: [reqdata]
 }
 
-struct reqdata: Codable,Equatable {
+struct reqdata: Codable,Equatable ,Hashable{
     let id: Int
     let postId: Int
     let post_type: String
@@ -25,6 +25,12 @@ struct reqdata: Codable,Equatable {
     let name:String
     let feedDate:String
     let cityName:String
+    let read_more_link:String
+    let userLike:String
+    let totalLikes: Int
+    let feedUserType: String
+    let feedType: Int
+    let description: String
 }
 
 
