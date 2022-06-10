@@ -19,6 +19,7 @@ extension Image {
     static let namami = Image("namami")
     static let nodata = Image("nodatafound")
     static let like = Image(systemName: "heart-thin")
+    
     /** SFSymbols **/
     static let search = Image(systemName: "magnifyingglass")
     static let invite = Image(systemName: "envelope.open")
@@ -37,5 +38,6 @@ extension Image {
     static let ellipsis = Image(systemName: "ellipsis")
     static let star = Image(systemName: "staroflife.fill")
     static let mute = Image(systemName: "speaker.slash.fill")
+    
    
 }

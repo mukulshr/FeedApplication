@@ -53,7 +53,7 @@ struct FeedRoomView: View {
             
             
            
-                LazyVStack(spacing: 20){
+                LazyVStack(spacing: 10){
             ForEach(req, id: \.id) { user in
             
             
@@ -64,11 +64,12 @@ struct FeedRoomView: View {
 //
                 LazyVStack(alignment: .leading, spacing: 10) {
                 if let groupName = user.feed_type_name {
-                    HStack(spacing: 10) {
+                    HStack() {
                         Image(uiImage: UIImage(named: "location-thin")!)
                                 .resizable()
                             .foregroundColor(Color.black)
                         .frame(width: 20, height: 25, alignment: .leading)
+                        
                         VStack(alignment: .leading){
                             Text(user.cityName)
                                 .font(Font.Muli.muli(size: 14))
@@ -79,6 +80,16 @@ struct FeedRoomView: View {
 
                                 .foregroundColor(Color.darkGrey)
                         }
+                        
+                        Spacer()
+                        if user.feed_icon_type.count > 0{
+                        Image(uiImage: UIImage(named: setIcons(iconCount: user.feed_icon_count, iconType: user.feed_icon_type ))!)
+                                .resizable()
+                            .foregroundColor(Color.black)
+                        .frame(width: 30, height: 35, alignment: .trailing)
+                      
+                        }
+                        
                        
                     }                    .padding(.horizontal, 15)
                 }
@@ -94,13 +105,6 @@ struct FeedRoomView: View {
                     .font(.custom("muli", size: 18))
 
                 }.padding(.horizontal, 15)
-                    
-//                    self.desc = showde
-//                    self.img =  user.story_img
-//
-                    
-                    
-                
                     if user.post_type == "0"{
                         if user.feedUserType == "1"{
                           
@@ -132,16 +136,18 @@ struct FeedRoomView: View {
 //                    }
                     
               
-                VStack(alignment:.leading){
+                    LazyVStack(alignment:.leading ,spacing:0){
                     Text(user.category_name)
                             .foregroundColor(.white)
                             .font(Font.Muli.muli(size: 13))
-                            .padding(.leading, 20)
+                            .padding(.leading, 15)
+                            .lineLimit(1)
                         Text(user.name)
                             .foregroundColor(.white)
                             .font(Font.Muli.muli(size: 18))
-                            .padding(.leading, 20)
-                    } .frame( height: UIScreen.screenHeight * 0.08)
+                            .padding(.leading, 15)
+                            .lineLimit(1)
+                    } .frame( height: 55)
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
                         .background(Rectangle().fill( LinearGradient(gradient: Gradient(colors: [.gradientdark, .gradientlight]), startPoint: .leading, endPoint: .trailing)
                                                     ))
@@ -163,7 +169,7 @@ struct FeedRoomView: View {
                        
                     }, label: {
                         Text("Likes (\(user.totalLikes))")
-                            .font(Font.Muli.muli(size: 16))
+                            .font(Font.Muli.muli(size: 14))
                             .foregroundColor(Color.black)
                         
                         
@@ -171,13 +177,13 @@ struct FeedRoomView: View {
                         Image(uiImage: UIImage(named: "heart-thin")!)
                                 .resizable()
                                 .foregroundColor(Color.black)
-                            .frame(width: 25, height: 25, alignment: .leading)
+                            .frame(width: 20, height: 20, alignment: .leading)
                         }else if user.userLike == "1"{
                         
                         Image(uiImage: UIImage(named: "heart-solid")!)
                                 .resizable()
                                 .foregroundColor(Color.red)
-                            .frame(width: 25, height: 25, alignment: .leading)
+                            .frame(width: 20, height: 20, alignment: .leading)
                         }
                         
                         
@@ -189,24 +195,24 @@ struct FeedRoomView: View {
                     
                     NavigationLink(destination: CommentView(need : user.category_name,needpostid: user.postId,needId: activityid(id: user.id,posttype: user.post_type))) {
                         Text("Comment")
-                            .font(.custom("muli", size: 16))
+                            .font(.custom("muli", size: 14))
                             .foregroundColor(Color.black)
                         Image(uiImage: UIImage(named: "message-thin")!)
                                 .resizable()
                                 .foregroundColor(Color.black)
-                            .frame(width: 25, height: 25, alignment: .leading)
+                            .frame(width: 20, height: 20, alignment: .leading)
                     
                     }.navigationBarTitle(Text(user.name))
 
                     Spacer()
                     Button(action: {shareit(sharelink: user.read_more_link)}, label: {
                         Text("Share")
-                            .font(Font.Muli.muli(size: 16))
+                            .font(Font.Muli.muli(size: 14))
                             .foregroundColor(Color.black)
                         Image(uiImage: UIImage(named: "share-icon")!)
                                 .resizable()
                                 .foregroundColor(Color.black)
-                            .frame(width: 25, height: 25, alignment: .leading)
+                            .frame(width: 20, height: 20, alignment: .leading)
                         
                     })
                     
@@ -246,10 +252,10 @@ struct FeedRoomView: View {
                
             }
                     
-        .padding(.vertical, 10)
+        .padding(.vertical, 5)
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
         .background(Color.cardBackground)
-        .padding(.horizontal, 15)
+        .padding(.horizontal, 5)
                 }
             
             
@@ -346,7 +352,7 @@ extension UIScreen{
 struct HalfLayouttype: View {
     @State var desc: String = ""
     @State var img: String = ""
-    
+    @State private var showModal = false
 
 
     var body: some View {
@@ -354,7 +360,7 @@ struct HalfLayouttype: View {
                     HStack(){
 
                         Text(desc + "\n\n")
-                            .font(.custom("muli", size: 18))
+                            .font(.custom("muli", size: 16))
                             .lineLimit(3)
                             .foregroundColor(Color.darkGrey)
                             .padding(.leading, 15).padding(.bottom, 2)
@@ -365,9 +371,16 @@ struct HalfLayouttype: View {
                             AnimatedImage(url: URL(string: img))
                             .resizable()
                             .padding(.trailing, 15)
-                            .frame( height: UIScreen.screenHeight * 0.08)
+                            .frame( height: UIScreen.screenHeight * 0.1)
                                        .aspectRatio(16/9, contentMode: .fit)
                             .frame( alignment: .trailing)
+                            .onTapGesture {
+                                showModal = true
+                            }.fullScreenCover(isPresented: $showModal) {
+                                ModalView(showimg: img)
+                            }
+                        
+                        
 
                     }
         
@@ -377,7 +390,7 @@ struct HalfLayouttype: View {
 struct Fulllayouttype: View {
     @State var desc: String
     @State var img: String
-    
+    @State private var showModal = false
 
     var body: some View {
         
@@ -385,7 +398,7 @@ struct Fulllayouttype: View {
                 VStack{
 
                     Text(desc + "\n\n")
-                        .font(.custom("muli", size: 18))
+                        .font(.custom("muli", size: 16))
                         .lineLimit(3)
                         .foregroundColor(Color.darkGrey)
                         .fixedSize(horizontal: false, vertical: true)
@@ -398,6 +411,11 @@ struct Fulllayouttype: View {
                         .padding(.bottom, -10)
                         .frame( height: UIScreen.screenHeight * 0.3)
                         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
+                        .onTapGesture {
+                            showModal = true
+                        }.fullScreenCover(isPresented: $showModal) {
+                            ModalView(showimg: img)
+                        }
 
                 }
         
@@ -417,7 +435,7 @@ struct Nonlayouttype: View {
         VStack(){
 
                                 Text(desc + "\n\n")
-                                    .font(.custom("muli", size: 18))
+                                    .font(.custom("muli", size: 16))
                                     .lineLimit(3)
                                     .foregroundColor(Color.darkGrey)
                                     .fixedSize(horizontal: false, vertical: true)
@@ -427,3 +445,162 @@ struct Nonlayouttype: View {
         
     }
 }
+
+
+
+
+
+
+
+
+
+func setIcons(iconCount: Int,iconType: String) -> String {
+    if (iconType.count > 0) {
+
+            switch (iconType) {
+                case "person":
+                    if (iconCount == 0) {
+                        return "person-sign-thin"
+                    } else {
+                       return "person-sign-solid"
+                    }
+                   
+                case "puzzle":
+                    if (iconCount == 0) {
+                        return "puzzle-piece-thin"
+                    } else {
+                        return "puzzle-piece-solid"
+                    }
+                   
+                case "poll":
+                    if (iconCount == 0) {
+                        return "square-poll-vertical-thin"
+                    } else {
+                        return "square-poll-vertical-solid"
+                    }
+                   
+                case "question":
+                    if (iconCount == 0) {
+                        return "square-question-thin"
+                    } else {
+                        return "square-question-solid"
+                    }
+                   
+                case "balance":
+                    if (iconCount == 0) {
+                        return "scale-balanced-thin"
+                    } else {
+                        return "scale-balanced-solid"
+                    }
+                   
+                case "wallet":
+                    if (iconCount == 0) {
+                        return "wallet-thin"
+                    } else {
+                        return "wallet-solid"
+                    }
+                   
+                case "superpower_circlecheck":
+                    if (iconCount == 0) {
+                        return "superpowers-brands"
+                    } else {
+                        return "circle-check-solid"
+                    }
+                   
+                case "holding_box":
+                    if (iconCount == 0) {
+                        return "hand-holding-box-thin"
+                    } else {
+                        return "hand-holding-box-solid"
+                    }
+                   
+            default:
+                return "location-thin"
+            }
+
+           
+        }
+    return ""
+    
+}
+
+
+
+struct ModalView: View {
+    @State var showimg: String
+@Environment(\.presentationMode) var presentationMode
+var body: some View {
+    ZStack{
+       
+    ZoomableScrollView {
+        Image(uiImage: UIImage(named: "heart-solid")!)
+                .resizable()
+                .foregroundColor(Color.red)
+            .frame(width: 20, height: 20, alignment: .topTrailing)
+        
+            .onTapGesture {
+                presentationMode.wrappedValue.dismiss()
+            }
+        
+        AnimatedImage(url: URL(string: showimg))
+        .resizable()
+        .frame( height: UIScreen.screenHeight * 0.4)
+        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
+        
+      }
+       
+    }
+}
+}
+
+
+struct ZoomableScrollView<Content: View>: UIViewRepresentable {
+  private var content: Content
+
+  init(@ViewBuilder content: () -> Content) {
+    self.content = content()
+  }
+
+  func makeUIView(context: Context) -> UIScrollView {
+    // set up the UIScrollView
+    let scrollView = UIScrollView()
+    scrollView.delegate = context.coordinator  // for viewForZooming(in:)
+    scrollView.maximumZoomScale = 20
+    scrollView.minimumZoomScale = 1
+    scrollView.bouncesZoom = true
+
+    // create a UIHostingController to hold our SwiftUI content
+    let hostedView = context.coordinator.hostingController.view!
+    hostedView.translatesAutoresizingMaskIntoConstraints = true
+    hostedView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    hostedView.frame = scrollView.bounds
+    scrollView.addSubview(hostedView)
+
+    return scrollView
+  }
+
+  func makeCoordinator() -> Coordinator {
+    return Coordinator(hostingController: UIHostingController(rootView: self.content))
+  }
+
+  func updateUIView(_ uiView: UIScrollView, context: Context) {
+    // update the hosting controller's SwiftUI content
+    context.coordinator.hostingController.rootView = self.content
+    assert(context.coordinator.hostingController.view.superview == uiView)
+  }
+
+  // MARK: - Coordinator
+
+  class Coordinator: NSObject, UIScrollViewDelegate {
+    var hostingController: UIHostingController<Content>
+
+    init(hostingController: UIHostingController<Content>) {
+      self.hostingController = hostingController
+    }
+
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+      return hostingController.view
+    }
+  }
+}
+

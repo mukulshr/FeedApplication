@@ -45,6 +45,7 @@
 		E6AA9731284F01E8005F4D6C /* Font Awesome 6 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = E6AA972E284F01E8005F4D6C /* Font Awesome 6 Brands-Regular-400.otf */; };
 		E6AA9732284F01E8005F4D6C /* Font Awesome 6 Free-Solid-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = E6AA972F284F01E8005F4D6C /* Font Awesome 6 Free-Solid-900.otf */; };
 		E6AA9733284F01E8005F4D6C /* Font Awesome 6 Free-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = E6AA9730284F01E8005F4D6C /* Font Awesome 6 Free-Regular-400.otf */; };
+		E6DC52B328521C3700814450 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DC52B228521C3700814450 /* ImagePicker.swift */; };
 		E6DEA9AB2832DAE8002C1AAD /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DEA9AA2832DAE8002C1AAD /* WebView.swift */; };
 		E6DEA9AD28337499002C1AAD /* VolunteerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DEA9AC28337499002C1AAD /* VolunteerView.swift */; };
 /* End PBXBuildFile section */
@@ -107,6 +108,7 @@
 		E6AA972E284F01E8005F4D6C /* Font Awesome 6 Brands-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 6 Brands-Regular-400.otf"; sourceTree = "<group>"; };
 		E6AA972F284F01E8005F4D6C /* Font Awesome 6 Free-Solid-900.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 6 Free-Solid-900.otf"; sourceTree = "<group>"; };
 		E6AA9730284F01E8005F4D6C /* Font Awesome 6 Free-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 6 Free-Regular-400.otf"; sourceTree = "<group>"; };
+		E6DC52B228521C3700814450 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		E6DEA9AA2832DAE8002C1AAD /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		E6DEA9AC28337499002C1AAD /* VolunteerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolunteerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -166,6 +168,7 @@
 				E60A2C012828C897008D52ED /* Model */,
 				E60A2C002828C88C008D52ED /* View */,
 				E60A2BD62828C86D008D52ED /* FeedappApp.swift */,
+				E6DC52B228521C3700814450 /* ImagePicker.swift */,
 				E60A2C152828D1EC008D52ED /* Resources */,
 				E60A2BD82828C86D008D52ED /* ContentView.swift */,
 				E60A2BDA2828C870008D52ED /* Assets.xcassets */,
@@ -433,6 +436,7 @@
 				E60A2C282828D246008D52ED /* BottomCommentView.swift in Sources */,
 				E60A2C0C2828D103008D52ED /* userModel.swift in Sources */,
 				E60A2C262828D230008D52ED /* HomeHeaderView.swift in Sources */,
+				E6DC52B328521C3700814450 /* ImagePicker.swift in Sources */,
 				E6DEA9AD28337499002C1AAD /* VolunteerView.swift in Sources */,
 				E60A2BD92828C86D008D52ED /* ContentView.swift in Sources */,
 				E60A2C042828C8CD008D52ED /* PostModel.swift in Sources */,

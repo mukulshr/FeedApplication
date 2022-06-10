@@ -26,5 +26,8 @@ extension Color {
     static let textYellow = Color("TextYellow")
     static let gradientdark = Color("gradientbanddark")
     static let gradientlight = Color("gradientbandlight")
+    static let conditionbg = Color("conditionbg")
+    static let godrejgreen = Color("godrej_green")
+    static let buttonviolet = Color("buttonviolet")
 
 }

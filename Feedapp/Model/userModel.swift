@@ -31,6 +31,9 @@ struct reqdata: Codable,Equatable ,Hashable{
     let feedUserType: String
     let feedType: Int
     let description: String
+    let feed_icon_count:Int
+    let feed_icon_type:String
+    
 }
 
 

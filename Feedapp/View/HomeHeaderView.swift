@@ -10,8 +10,9 @@ struct HomeHeaderView: View {
     @State private var ProfilePic = UserDefaults.standard.string(forKey: "Profile_pic")
     @State private var CompanyPic = UserDefaults.standard.string(forKey: "Company_pic")
     @State private var open = false
-    
-    
+    @State private var showingAlert = false
+    @State private var isPresentedCamera = false
+    @State private var isPresentedLibrary = false
   
    
     var body: some View {
@@ -46,7 +47,7 @@ struct HomeHeaderView: View {
                                   .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .clipShape(Circle())
-                                            .overlay(Circle().stroke(Color.black, lineWidth: 2))
+                                            
 
 
 
@@ -65,7 +66,8 @@ struct HomeHeaderView: View {
                           
                     
                          
-                      
+          
+                     
           
 
             Spacer()
@@ -86,6 +88,7 @@ struct HomeHeaderView: View {
                                           .aspectRatio(contentMode: .fit)
                                           .clipShape(Circle())
                                           .overlay(Circle().stroke(Color.black, lineWidth: 2))
+                            
                    
                    
                         }else if login.authenticated == 1 {
@@ -113,6 +116,15 @@ struct HomeHeaderView: View {
                     SecondButton(open: $open, icon: "pencil", color: .black, offsetX: 90, delay: 0.4)
                     SecondButton(open: $open, icon: "folder", color: .black, offsetX: 60, offsetY: 60, delay: 0.6)
                     SecondButton(open: $open, icon: "person", color: .black, offsetX: 0, offsetY: 90, delay: 0.8)
+                        .onTapGesture {
+                            showingAlert = true
+                        }
+                        .alert("Change Profile", isPresented: $showingAlert) {
+                            
+                            Button("Camera") { isPresentedCamera.toggle() }
+                            Button("Photo Library") {isPresentedLibrary.toggle() }
+                            Button("Close", role: .cancel) { self.open.toggle() }
+                        }
                 }
 
             }.frame(alignment: .center)
@@ -129,17 +141,18 @@ struct HomeHeaderView: View {
                 Spacer()
                 Image(uiImage: UIImage(named: "bell-thin")!)
                         .resizable()
-                    .frame(width: 30, height: 35)
+                    .frame(width: 20, height: 25)
 
                 
                 
             }
-            .padding(.trailing, 20)
+            .padding(.trailing, 30)
                 .frame(alignment: .trailing)
                 .frame(maxWidth: .infinity)
          
            
-        }
+        }.fullScreenCover(isPresented: $isPresentedCamera, content: FullModalCameraView.init)
+            .fullScreenCover(isPresented: $isPresentedLibrary, content: ModalPhotoLibraryView.init)
         .frame(maxWidth: .infinity)
         .frame(minHeight: 40,  maxHeight: 60)
 
@@ -149,6 +162,7 @@ struct HomeHeaderView: View {
 
         
             }
+
 }
 
 struct HomeHeaderView_Previews: PreviewProvider {
@@ -159,3 +173,232 @@ struct HomeHeaderView_Previews: PreviewProvider {
 }
 
 
+struct FullModalCameraView: View {
+    @Environment(\.presentationMode) var presentationMode
+
+
+        
+    @State private var isShowPhotoLibrary = false
+    @State private var image = UIImage()
+    
+    
+    func aa (){
+        let imageData: Data? = image.jpegData(compressionQuality: 0.4)
+        let imageStr = imageData?.base64EncodedString(options: .lineLength64Characters) ?? ""
+        print(imageStr,"imageString")
+    }
+        
+            
+           
+            
+            var body: some View {
+                
+                
+                VStack {
+                
+                    
+                 
+                    
+                    
+                    if self.image.size.width != 0{
+                        
+                          Image(uiImage: self.image)
+                              .resizable()
+                              .scaledToFill()
+                              .frame(minWidth: 0, maxWidth: .infinity)
+                              .edgesIgnoringSafeArea(.all)
+                          
+                    Button(action: {
+                       aa()
+                    }){
+                        HStack {
+                            Image(systemName: "photo")
+                                .font(.system(size: 20))
+                                
+                            Text("Upload")
+                                .font(.headline)
+                        }
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 50)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(20)
+                        .padding(.horizontal)}
+                    
+                        
+                        Button(action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }){
+                            HStack {
+                                Image(systemName: "xmark.square.fill")
+                                    .font(.system(size: 20))
+                                    
+                                Text("Cancel")
+                                    .font(.headline)
+                            }
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 50)
+                            .background(Color.black)
+                            .foregroundColor(.white)
+                            .cornerRadius(20)
+                            .padding(.bottom)
+                            .padding(.horizontal)}
+                        
+                        
+                    }else{
+                    
+                        Button(action: {
+                            self.isShowPhotoLibrary = true
+                        }){
+                            HStack {
+                                Image(systemName: "photo")
+                                    .font(.system(size: 20))
+                                    
+                                Text("Camera")
+                                    .font(.headline)
+                            }
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 50)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(20)
+                            .padding(.horizontal)}
+                        
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }){
+                        HStack {
+                            Image(systemName: "xmark.square.fill")
+                                .font(.system(size: 20))
+                                
+                            Text("Cancel")
+                                .font(.headline)
+                        }
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 50)
+                        .background(Color.black)
+                        .foregroundColor(.white)
+                        .cornerRadius(20)
+                        .padding(.horizontal)}
+                    }
+                    
+
+            }.onAppear{ self.isShowPhotoLibrary = true}
+                .sheet(isPresented: $isShowPhotoLibrary) {
+                    ImagePicker(sourceType: .camera, selectedImage: self.$image)
+                }
+            }
+}
+
+
+
+
+
+struct ModalPhotoLibraryView: View {
+    @Environment(\.presentationMode) var presentationMode
+
+
+        
+    @State private var isShowPhotoLibrary = false
+    @State private var image = UIImage()
+    
+    
+    func aa (){
+        let imageData: Data? = image.jpegData(compressionQuality: 0.4)
+        let imageStr = imageData?.base64EncodedString(options: .lineLength64Characters) ?? ""
+        print(imageStr,"imageString")
+    }
+        
+            
+           
+            
+            var body: some View {
+                
+                
+                VStack {
+                
+                    
+                 
+                    
+                    
+                    if self.image.size.width != 0{
+                        
+                          Image(uiImage: self.image)
+                              .resizable()
+                              .scaledToFill()
+                              .frame(minWidth: 0, maxWidth: .infinity)
+                              .edgesIgnoringSafeArea(.all)
+                          
+                    Button(action: {
+                       aa()
+                    }){
+                        HStack {
+                            Image(systemName: "photo")
+                                .font(.system(size: 20))
+                                
+                            Text("Upload")
+                                .font(.headline)
+                        }
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 50)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(20)
+                        .padding(.horizontal)}
+                    
+                        
+                        Button(action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }){
+                            HStack {
+                                Image(systemName: "xmark.square.fill")
+                                    .font(.system(size: 20))
+                                    
+                                Text("Cancel")
+                                    .font(.headline)
+                            }
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 50)
+                            .background(Color.black)
+                            .foregroundColor(.white)
+                            .cornerRadius(20)
+                            .padding(.bottom)
+                            .padding(.horizontal)}
+                        
+                        
+                    }else{
+                    
+                        Button(action: {
+                            self.isShowPhotoLibrary = true
+                        }){
+                            HStack {
+                                Image(systemName: "photo")
+                                    .font(.system(size: 20))
+                                    
+                                Text("Photo Library")
+                                    .font(.headline)
+                            }
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 50)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(20)
+                            .padding(.horizontal)}
+                        
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }){
+                        HStack {
+                            Image(systemName: "xmark.square.fill")
+                                .font(.system(size: 20))
+                                
+                            Text("Cancel")
+                                .font(.headline)
+                        }
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 50)
+                        .background(Color.black)
+                        .foregroundColor(.white)
+                        .cornerRadius(20)
+                        .padding(.horizontal)}
+                    }
+                    
+
+            }.onAppear{ self.isShowPhotoLibrary = true}
+                .sheet(isPresented: $isShowPhotoLibrary) {
+                    ImagePicker(sourceType: .photoLibrary, selectedImage: self.$image)
+                }
+            }
+}

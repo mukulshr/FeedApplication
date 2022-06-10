@@ -64,14 +64,16 @@ class getcomments {
 
 
 class addcomments {
+    @State private var AuthToken = UserDefaults.standard.string(forKey: "Token")
     
     func addcomment(need: String,needpostid: Int,needId:Int) {
+        
         
         let parameters = "{\r\n    \"action\": \"add_comment\",\r\n    \"data\": {\r\n        \"interaction\": \"comment\",\r\n        \"actionType\": \"create\",\r\n        \"comment\": \"\(need)\",\r\n        \"postId\": \(needpostid),\r\n        \"activityId\": \(needId)\r\n    }\r\n}"
         let postData = parameters.data(using: .utf8)
 
         var request = URLRequest(url: URL(string: "https://www.mysuperhumanrace-uat.com/api/socialApis")!,timeoutInterval: Double.infinity)
-        request.addValue("eyJpdiI6ImR3MmNWOVAxd2NKV0NVaWV3QXp2eUE9PSIsInZhbHVlIjoibnZLR2k3anpRcUNaTlpxK0VTT1RzUT09IiwibWFjIjoiNWU4MTU1Y2ZjMWJiNTgzY2ZkMzdjNjc0MmYyYWRjNTk0ZWFhNDdkNWFlODYxOTU3YjI4YjZhZjAzZmQwZThlOCJ9", forHTTPHeaderField: "Authorization")
+        request.addValue(AuthToken!, forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
         request.httpMethod = "POST"
@@ -113,7 +115,7 @@ class addcomments {
 }
 
 public class deletecomment: ObservableObject {
-    
+    @State private var AuthToken = UserDefaults.standard.string(forKey: "Token")
     @Published var  delete: String = ""
     
     func delete(need: String,needpostid: Int,needId:Int,id: Int) {
@@ -122,7 +124,7 @@ public class deletecomment: ObservableObject {
         let postData = parameters.data(using: .utf8)
 
         var request = URLRequest(url: URL(string: "https://www.mysuperhumanrace-uat.com/api/socialApis")!,timeoutInterval: Double.infinity)
-        request.addValue("eyJpdiI6ImR3MmNWOVAxd2NKV0NVaWV3QXp2eUE9PSIsInZhbHVlIjoibnZLR2k3anpRcUNaTlpxK0VTT1RzUT09IiwibWFjIjoiNWU4MTU1Y2ZjMWJiNTgzY2ZkMzdjNjc0MmYyYWRjNTk0ZWFhNDdkNWFlODYxOTU3YjI4YjZhZjAzZmQwZThlOCJ9", forHTTPHeaderField: "Authorization")
+        request.addValue(AuthToken!, forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
         request.httpMethod = "POST"
@@ -171,6 +173,7 @@ public class deletecomment: ObservableObject {
 public class editcomment: ObservableObject {
     
     @Published var  edited: String = ""
+    @State private var AuthToken = UserDefaults.standard.string(forKey: "Token")
     
 func edit(need: String,needpostid: Int,needId:Int,id: Int) {
     
@@ -178,7 +181,7 @@ func edit(need: String,needpostid: Int,needId:Int,id: Int) {
     let postData = parameters.data(using: .utf8)
 
     var request = URLRequest(url: URL(string: "https://www.mysuperhumanrace-uat.com/api/socialApis")!,timeoutInterval: Double.infinity)
-    request.addValue("eyJpdiI6ImR3MmNWOVAxd2NKV0NVaWV3QXp2eUE9PSIsInZhbHVlIjoibnZLR2k3anpRcUNaTlpxK0VTT1RzUT09IiwibWFjIjoiNWU4MTU1Y2ZjMWJiNTgzY2ZkMzdjNjc0MmYyYWRjNTk0ZWFhNDdkNWFlODYxOTU3YjI4YjZhZjAzZmQwZThlOCJ9", forHTTPHeaderField: "Authorization")
+    request.addValue(AuthToken!, forHTTPHeaderField: "Authorization")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
     request.httpMethod = "POST"

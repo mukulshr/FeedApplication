@@ -11,32 +11,38 @@ struct SplashScreenView: View {
         if isActive {
             Home()
         } else {
-            ZStack {
-                Image("app_page")
-                                       .resizable()
-                                       .scaledToFill()
-                                       .edgesIgnoringSafeArea(.all)
-                
-                
+//            ZStack {
+//                Image("app_page")
+//                                       .resizable()
+//                                       .scaledToFill()
+//                                       .edgesIgnoringSafeArea(.all)
+//
+//
                
                                    
                 VStack() {
-    //
+    
+                    VStack{
                     Image(uiImage: #imageLiteral(resourceName: "godrej_logo_white"))
                         .resizable()
-                        .frame(width: 170.0, height: 120.0)
+                        .frame(width: UIScreen.screenWidth * 0.4, height: UIScreen.screenHeight * 0.15)
                     Text("DoGood@Godrej").foregroundColor(.white).bold().font(.system(size: 24))
+                    }
+                    .padding(.top ,UIScreen.screenHeight * 0.05)
                     
                
                 Spacer()
                
-    //
+    
+                    VStack{
                     Image(uiImage: #imageLiteral(resourceName: "logo_white"))
                         .resizable()
-                        .frame(width: 55.0, height: 60.0)
-                    Text("Powered by SuperHuman Race").foregroundColor(.white).bold().font(.system(size: 22))
+                        .frame(width: UIScreen.screenWidth * 0.15, height: UIScreen.screenHeight * 0.075)
+                        Text("Powered by SuperHuman Race").foregroundColor(.white).bold().font(.system(size: UIScreen.screenWidth * 0.05))
+                    }
+                    .padding(.bottom ,UIScreen.screenHeight * 0.05)
                     
-                }.padding()
+//                }
                 
             }
             .onAppear {
@@ -45,7 +51,13 @@ struct SplashScreenView: View {
                         self.isActive = true
                     }
                 }
-            }
+            }.frame( maxWidth: .infinity,maxHeight: UIScreen.screenHeight)
+                .ignoresSafeArea()
+            .background(
+                Image("app_page")
+                        .resizable()
+                        .ignoresSafeArea()
+                )
         }
     }
 }

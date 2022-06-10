@@ -52,7 +52,7 @@ struct Home: View {
                                     .background(Color.customblack2)
                                     .offset(y: geometry.frame(in: .global).minY > 0 ? -geometry.frame(in: .global).minY : 0)
                                 } //: GeometryReader
-                                .padding(.bottom, 150)
+                                .padding(.bottom, 125)
                                 .zIndex(1)
                                 
                                 
@@ -80,6 +80,7 @@ struct Home: View {
                                 
                                 if login.authenticated == 1 {
                                     profileheader()
+                                        .padding(.vertical, 10)
                                     }
                              
                                 
@@ -92,11 +93,11 @@ struct Home: View {
                         if isHeaderViewVisible {
                             ZStack(alignment: .bottom) {
                                HomeHeaderView()
-//                                    .padding(.top, 60)
+                                    .padding(.top, UIScreen.screenHeight * 0.08)
                                }
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .frame(height: 100)
-                            .background(Color(UIColor.white))
+                            .background(Color.conditionbg)
                         }
                         
                         VStack {
@@ -130,62 +131,97 @@ struct Home: View {
                                            
                                            VStack(){
                                                
+                                              
                                                
-                                               NavigationLink(destination: VolunteerView()) {
-                                                   HStack{
+                                               NavigationLink(destination:
+                                               VolunteerView()) {
+                                                   HStack(spacing: 5){
+                                                       Image(uiImage: UIImage(named: "stopwatch-thin")!)
+                                                               .resizable()
+                                                           .foregroundColor(Color.white)
+                                                       .frame(width: 25, height: 25)
+                                                       
                                                        Text("VOLUNTEER HOURS")
+                                                           .font(.custom("muli", size: 18))
                                                            .frame(alignment:.leading)
-                                                           .padding()
+                                                           .padding(.leading ,5)
                                                            .foregroundColor(Color.white)
-                                                           .frame(minWidth: 0, maxWidth: .infinity)
-                                                  
-                                                   }
-                                                   .frame(alignment: .leading)
+                                                  Spacer()
+                                                   }.padding()
                                                }
                                                
+                                              
                                                
                                                
                                                
-                                               Button(action: {
-                                                   
-                                               }) {
-                                                   HStack{
+                                               NavigationLink(destination:
+                                               VolunteerView()) {
+                                                   HStack(spacing: 5){
+                                                       Image(uiImage: UIImage(named: "messages-thin")!)
+                                                               .resizable()
+                                                           .foregroundColor(Color.white)
+                                                       .frame(width: 25, height: 25)
+                                                       
                                                        Text("CREATE STORY")
-                                                           .padding()
+                                                           .font(.custom("muli", size: 18))
+                                                           .frame(alignment:.leading)
+                                                           .padding(.leading ,5)
                                                            .foregroundColor(Color.white)
-                                                           .frame( alignment: .leading)
-                                                           .frame(minWidth: 0, maxWidth: .infinity)
-                                                   }
-                                                   
+                                                  Spacer()
+                                                   }.padding()
                                                }
-                                               .frame( alignment: .leading)
                                                
-                                               Button(action: {
-                                                   
-                                               }) {
-                                                   HStack{
+                                               NavigationLink(destination:
+                                               VolunteerView()) {
+                                                   HStack(spacing: 5){
+                                                       Image(uiImage: UIImage(named: "bullseye-arrow-thin")!)
+                                                               .resizable()
+                                                           .foregroundColor(Color.white)
+                                                       .frame(width: 25, height: 25)
+                                                       
                                                        Text("WEEKLY GOALS")
-                                                           .padding()
+                                                           .font(.custom("muli", size: 18))
+                                                           .frame(alignment:.leading)
+                                                           .padding(.leading ,5)
                                                            .foregroundColor(Color.white)
-                                                           .frame( alignment: .leading)
-                                                           .frame(minWidth: 0, maxWidth: .infinity)
-                                                   }
-                                                   
+                                                  Spacer()
+                                                   }.padding()
                                                }
-                                               .frame( alignment: .leading)
-                                               Button(action: {
-                                                   
-                                               }) {
-                                                   HStack{
+                                               
+                                               NavigationLink(destination:
+                                               VolunteerView()) {
+                                                   HStack(spacing: 5){
+                                                       Image(uiImage: UIImage(named: "fire-flame-thin")!)
+                                                               .resizable()
+                                                           .foregroundColor(Color.white)
+                                                       .frame(width: 25, height: 25)
+                                                       
                                                        Text("CREATE CHALLENGE")
-                                                           .padding()
+                                                           .font(.custom("muli", size: 18))
+                                                           .frame(alignment:.leading)
+                                                           .padding(.leading ,5)
                                                            .foregroundColor(Color.white)
-                                                           .frame( alignment: .leading)
-                                                           .frame(minWidth: 0, maxWidth: .infinity)
-                                                   }
-                                                   
+                                                  Spacer()
+                                                   }.padding()
                                                }
-                                               .frame( alignment: .leading)
+                                               
+                                               NavigationLink(destination:
+                                               VolunteerView()) {
+                                                   HStack(spacing: 5){
+                                                       Image(uiImage: UIImage(named: "user-thin")!)
+                                                               .resizable()
+                                                           .foregroundColor(Color.white)
+                                                       .frame(width: 25, height: 25)
+                                                       
+                                                       Text("FRIENDS")
+                                                           .font(.custom("muli", size: 18))
+                                                           .frame(alignment:.leading)
+                                                           .padding(.leading ,5)
+                                                           .foregroundColor(Color.white)
+                                                  Spacer()
+                                                   }.padding()
+                                               }
+                                             
                                                
                                                Button(action: {
                                                    UserDefaults.standard.removeObject(forKey: "sesion")
@@ -195,21 +231,23 @@ struct Home: View {
                                                    
                                                    
                                                }) {
-                                                   HStack{
-                                                       Text("LOG OUT")
-                                                           .padding()
+                                                   HStack(spacing: 5){
+                                                       Image(uiImage: UIImage(named: "log-out-thin")!)
+                                                               .resizable()
                                                            .foregroundColor(Color.white)
-                                                           .frame( alignment: .leading)
-                                                           .frame(minWidth: 0, maxWidth: .infinity)
-                                                   }
-                                                   
+                                                       .frame(width: 25, height: 25)
+                                                       
+                                                       Text("LOG OUT")
+                                                           .font(.custom("muli", size: 18))
+                                                           .frame(alignment:.leading)
+                                                           .padding(.leading ,5)
+                                                           .foregroundColor(Color.white)
+                                                  Spacer()
+                                                   }.padding()
                                                }
-                                               .frame( alignment: .leading)
-                                               
                                                
                                            }
                                        }
-                        
                         
                         
                         
