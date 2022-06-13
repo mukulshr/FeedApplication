@@ -1,5 +1,6 @@
 
 import SwiftUI
+import AlertToast
 
 struct Home: View {
     
@@ -9,6 +10,8 @@ struct Home: View {
     @State private var isHeaderViewVisible = false
     @State private var isScrollViewBouncing = false
     @State var timer = Timer.publish(every: 0.1, on: .current, in: .tracking).autoconnect()
+    @State private var showAlert = false
+
     
     var body: some View {
         
@@ -107,8 +110,12 @@ struct Home: View {
                                                Spacer()
                                                
                                                Button(action: {
+                                                   if login.authenticated == 1 {
                                                    withAnimation {
                                                        self.showBottomSheet.toggle()
+                                                   }
+                                                   }else{
+                                                       showAlert.toggle()
                                                    }
                                                }, label: {
                                                    Text("+")
@@ -124,6 +131,11 @@ struct Home: View {
                                                        radius: 3,
                                                        x: 3,
                                                        y: 3)
+                                           } .toast(isPresenting: $showAlert){
+                                               
+                                             
+                                               AlertToast(displayMode: .hud, type: .regular, title: "Please Login to Continue")
+                                              
                                            }
                                        }
                                        

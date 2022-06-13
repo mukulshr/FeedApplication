@@ -25,15 +25,17 @@ struct reqdata: Codable,Equatable ,Hashable{
     let name:String
     let feedDate:String
     let cityName:String
+    let stateName:String
     let read_more_link:String
-    let userLike:String
-    let totalLikes: Int
+    var userLike:String
+    var totalLikes: Int
     let feedUserType: String
     let feedType: Int
     let description: String
     let feed_icon_count:Int
     let feed_icon_type:String
-    
+    let city: Int
+    let userId: Int
 }
 
 

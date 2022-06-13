@@ -42,6 +42,13 @@
 		E652EE04284F6A9E00AC8462 /* RichText in Frameworks */ = {isa = PBXBuildFile; productRef = E652EE03284F6A9E00AC8462 /* RichText */; };
 		E66E49662830D664001272A1 /* needbutton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E49652830D664001272A1 /* needbutton.swift */; };
 		E66E496E2831355B001272A1 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E496D2831355B001272A1 /* SplashScreenView.swift */; };
+		E67B9CE4285705D000F6268F /* ProfilePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67B9CE3285705D000F6268F /* ProfilePageView.swift */; };
+		E67B9CE6285705E700F6268F /* ProfileDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67B9CE5285705E700F6268F /* ProfileDashboard.swift */; };
+		E67B9CE8285705FC00F6268F /* ProfileFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67B9CE7285705FC00F6268F /* ProfileFeed.swift */; };
+		E67B9CEA2857071B00F6268F /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67B9CE92857071B00F6268F /* ProfileModel.swift */; };
+		E67B9CEC285707A900F6268F /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67B9CEB285707A900F6268F /* ProfileViewModel.swift */; };
+		E67B9CEE285736B200F6268F /* feedlogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67B9CED285736B200F6268F /* feedlogic.swift */; };
+		E68954A228535FCF004D4DF8 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = E68954A128535FCF004D4DF8 /* AlertToast */; };
 		E6AA9731284F01E8005F4D6C /* Font Awesome 6 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = E6AA972E284F01E8005F4D6C /* Font Awesome 6 Brands-Regular-400.otf */; };
 		E6AA9732284F01E8005F4D6C /* Font Awesome 6 Free-Solid-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = E6AA972F284F01E8005F4D6C /* Font Awesome 6 Free-Solid-900.otf */; };
 		E6AA9733284F01E8005F4D6C /* Font Awesome 6 Free-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = E6AA9730284F01E8005F4D6C /* Font Awesome 6 Free-Regular-400.otf */; };
@@ -105,6 +112,12 @@
 		E64EE158284CC81700BBE131 /* HeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewModel.swift; sourceTree = "<group>"; };
 		E66E49652830D664001272A1 /* needbutton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = needbutton.swift; sourceTree = "<group>"; };
 		E66E496D2831355B001272A1 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		E67B9CE3285705D000F6268F /* ProfilePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageView.swift; sourceTree = "<group>"; };
+		E67B9CE5285705E700F6268F /* ProfileDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDashboard.swift; sourceTree = "<group>"; };
+		E67B9CE7285705FC00F6268F /* ProfileFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFeed.swift; sourceTree = "<group>"; };
+		E67B9CE92857071B00F6268F /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		E67B9CEB285707A900F6268F /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		E67B9CED285736B200F6268F /* feedlogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = feedlogic.swift; sourceTree = "<group>"; };
 		E6AA972E284F01E8005F4D6C /* Font Awesome 6 Brands-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 6 Brands-Regular-400.otf"; sourceTree = "<group>"; };
 		E6AA972F284F01E8005F4D6C /* Font Awesome 6 Free-Solid-900.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 6 Free-Solid-900.otf"; sourceTree = "<group>"; };
 		E6AA9730284F01E8005F4D6C /* Font Awesome 6 Free-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 6 Free-Regular-400.otf"; sourceTree = "<group>"; };
@@ -118,6 +131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E68954A228535FCF004D4DF8 /* AlertToast in Frameworks */,
 				E60A2C312828D30D008D52ED /* SDWebImageSwiftUI in Frameworks */,
 				E652EE04284F6A9E00AC8462 /* RichText in Frameworks */,
 			);
@@ -174,6 +188,7 @@
 				E60A2BDA2828C870008D52ED /* Assets.xcassets */,
 				E60A2BDC2828C870008D52ED /* Preview Content */,
 				E63C90FE284E1F3E00C8E7C2 /* Info.plist */,
+				E67B9CED285736B200F6268F /* feedlogic.swift */,
 			);
 			path = Feedapp;
 			sourceTree = "<group>";
@@ -206,6 +221,7 @@
 		E60A2C002828C88C008D52ED /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E67B9CE02857059900F6268F /* ProfilePage */,
 				E60A2C072828C8FD008D52ED /* Login.swift */,
 				E60A2C092828C91C008D52ED /* Home.swift */,
 				E60A2C132828D1A1008D52ED /* BottomSheetModel.swift */,
@@ -226,6 +242,7 @@
 		E60A2C012828C897008D52ED /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E67B9CE1285705A500F6268F /* ProfileModel */,
 				E60A2C032828C8CD008D52ED /* PostModel.swift */,
 				E60A2C0B2828D103008D52ED /* userModel.swift */,
 				E60A2C0D2828D12E008D52ED /* commentsModel.swift */,
@@ -236,6 +253,7 @@
 		E60A2C022828C89F008D52ED /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				E67B9CE2285705AF00F6268F /* ProfileViewModel */,
 				E60A2C052828C8E7008D52ED /* PostViewModel.swift */,
 				E60A2C0F2828D152008D52ED /* UserViewModel.swift */,
 				E60A2C112828D174008D52ED /* CommentViewModel.swift */,
@@ -277,6 +295,32 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		E67B9CE02857059900F6268F /* ProfilePage */ = {
+			isa = PBXGroup;
+			children = (
+				E67B9CE3285705D000F6268F /* ProfilePageView.swift */,
+				E67B9CE5285705E700F6268F /* ProfileDashboard.swift */,
+				E67B9CE7285705FC00F6268F /* ProfileFeed.swift */,
+			);
+			path = ProfilePage;
+			sourceTree = "<group>";
+		};
+		E67B9CE1285705A500F6268F /* ProfileModel */ = {
+			isa = PBXGroup;
+			children = (
+				E67B9CE92857071B00F6268F /* ProfileModel.swift */,
+			);
+			path = ProfileModel;
+			sourceTree = "<group>";
+		};
+		E67B9CE2285705AF00F6268F /* ProfileViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E67B9CEB285707A900F6268F /* ProfileViewModel.swift */,
+			);
+			path = ProfileViewModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -296,6 +340,7 @@
 			packageProductDependencies = (
 				E60A2C302828D30D008D52ED /* SDWebImageSwiftUI */,
 				E652EE03284F6A9E00AC8462 /* RichText */,
+				E68954A128535FCF004D4DF8 /* AlertToast */,
 			);
 			productName = Feedapp;
 			productReference = E60A2BD32828C86D008D52ED /* Feedapp.app */;
@@ -372,6 +417,7 @@
 			packageReferences = (
 				E60A2C2F2828D30D008D52ED /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				E652EE02284F6A9E00AC8462 /* XCRemoteSwiftPackageReference "RichText" */,
+				E68954A028535FCE004D4DF8 /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
 			productRefGroup = E60A2BD42828C86D008D52ED /* Products */;
 			projectDirPath = "";
@@ -435,16 +481,22 @@
 				E60A2C2C2828D296008D52ED /* FeedRoomView.swift in Sources */,
 				E60A2C282828D246008D52ED /* BottomCommentView.swift in Sources */,
 				E60A2C0C2828D103008D52ED /* userModel.swift in Sources */,
+				E67B9CEE285736B200F6268F /* feedlogic.swift in Sources */,
+				E67B9CEC285707A900F6268F /* ProfileViewModel.swift in Sources */,
 				E60A2C262828D230008D52ED /* HomeHeaderView.swift in Sources */,
 				E6DC52B328521C3700814450 /* ImagePicker.swift in Sources */,
 				E6DEA9AD28337499002C1AAD /* VolunteerView.swift in Sources */,
+				E67B9CEA2857071B00F6268F /* ProfileModel.swift in Sources */,
+				E67B9CE8285705FC00F6268F /* ProfileFeed.swift in Sources */,
 				E60A2BD92828C86D008D52ED /* ContentView.swift in Sources */,
 				E60A2C042828C8CD008D52ED /* PostModel.swift in Sources */,
 				E60A2C2A2828D26F008D52ED /* ProfileHeader.swift in Sources */,
+				E67B9CE6285705E700F6268F /* ProfileDashboard.swift in Sources */,
 				E66E496E2831355B001272A1 /* SplashScreenView.swift in Sources */,
 				E63C90FA284D0BD300C8E7C2 /* LoadingView.swift in Sources */,
 				E60A2C1F2828D1ED008D52ED /* Font.swift in Sources */,
 				E60A2C0E2828D12E008D52ED /* commentsModel.swift in Sources */,
+				E67B9CE4285705D000F6268F /* ProfilePageView.swift in Sources */,
 				E60A2C0A2828C91C008D52ED /* Home.swift in Sources */,
 				E60A2C102828D152008D52ED /* UserViewModel.swift in Sources */,
 				E60A2C122828D174008D52ED /* CommentViewModel.swift in Sources */,
@@ -621,7 +673,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = shr.Feedapp;
+				PRODUCT_BUNDLE_IDENTIFIER = shr.dogood;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -651,7 +703,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = shr.Feedapp;
+				PRODUCT_BUNDLE_IDENTIFIER = shr.dogood;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -793,6 +845,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		E68954A028535FCE004D4DF8 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -805,6 +865,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E652EE02284F6A9E00AC8462 /* XCRemoteSwiftPackageReference "RichText" */;
 			productName = RichText;
+		};
+		E68954A128535FCF004D4DF8 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E68954A028535FCE004D4DF8 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

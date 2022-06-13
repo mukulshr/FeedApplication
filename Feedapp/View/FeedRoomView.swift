@@ -12,6 +12,11 @@ struct FeedRoomView: View {
     @State private var showsBottomSheet: Bool = false
     @State var req: [reqdata] = []
     @State var IsLoading: Bool = true
+    @State var filteredcity: String = ""
+    @State var filteredcityid: Int = 0
+    var reqprofileid: String = ""
+    var emptyempid: String = ""
+    
     
     
     func activityid(id: Int,posttype: String) -> Int {
@@ -50,7 +55,30 @@ struct FeedRoomView: View {
         VStack(alignment: .leading) {
             
             
+            if (filteredcity != ""){
             
+            Text(filteredcity)
+                .font(.custom("muli", size: 15))
+                    .foregroundColor(Color.black)
+                .padding(10)
+                .background(Color.white)
+                .cornerRadius(20)
+                .padding(.horizontal)
+                
+                .onTapGesture{
+                    DispatchQueue.main.async {
+                    self.IsLoading = true
+                       
+                    apiCall().getUsers(lastid: 0, cityid: 0,profileid: reqprofileid,empid: emptyempid) { (users) in
+                        self.req = users
+                        filteredcity = ""
+                        filteredcityid = 0
+                        self.IsLoading = false
+            //            print(req)
+                    }
+                    }
+                }
+            }
             
            
                 LazyVStack(spacing: 10){
@@ -71,12 +99,34 @@ struct FeedRoomView: View {
                         .frame(width: 20, height: 25, alignment: .leading)
                         
                         VStack(alignment: .leading){
-                            Text(user.cityName)
-                                .font(Font.Muli.muli(size: 14))
+                            Text("\(user.cityName),\(user.stateName)")
+                                .font(Font.Muli.muli(size: 16))
+                                .onTapGesture{
+                                    
+                                    apiCall().getUsers(lastid: 0, cityid: user.city,profileid: reqprofileid,empid: emptyempid) { (users) in
+                                        self.IsLoading = true
+                                        if users == [] {
+                                            print("its empty")
+                                            filteredcity = "\(user.cityName),\(user.stateName)"
+                                        }else{
+                                        self.req = users
+                                        
+                                            filteredcity = "\(user.cityName),\(user.stateName)"
+                                        filteredcityid = user.city
+                                        print(user.cityName,user.city,users)
+                                        }
+                                        
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                        self.IsLoading = false
+                                        }
+                                    }
+                                   
+                                    }
+                                   
 
                             .foregroundColor(Color.black)
                             Text(user.feedDate)
-                                .font(Font.Muli.muli(size: 10))
+                                .font(Font.Muli.muli(size: 12))
 
                                 .foregroundColor(Color.darkGrey)
                         }
@@ -94,6 +144,9 @@ struct FeedRoomView: View {
                     }                    .padding(.horizontal, 15)
                 }
                 
+                    
+                    
+                    NavigationLink(destination: ProfilePageView(username: user.feedUserName,userid: user.userId)) {
                 HStack(){
                    AnimatedImage(url: URL(string: user.feedUserPic))
                         .resizable()
@@ -105,6 +158,11 @@ struct FeedRoomView: View {
                     .font(.custom("muli", size: 18))
 
                 }.padding(.horizontal, 15)
+                    }
+                    
+                    
+                    
+                    
                     if user.post_type == "0"{
                         if user.feedUserType == "1"{
                           
@@ -160,11 +218,31 @@ struct FeedRoomView: View {
                     Button(action: {
                        
                         if user.userLike == "0"{
-                            like(needpostid: user.postId,needId: activityid(id: user.id,posttype: user.post_type))
-                        
+                           
+                           
+                            
+                            
+                                DispatchQueue.main.async{
+                                    like(needpostid: user.postId,needId: activityid(id: user.id,posttype: user.post_type))
+                                    if let index = self.req.index(where: {$0.id == user.id}){
+                                    self.req[index].userLike = "1"
+                                        self.req[index].totalLikes += 1
+                                    print(self.req[index])
+                                    }
+                                }
+                                
+                            
+                           
                         }else if user.userLike == "1"{
+                            DispatchQueue.main.async{
                             dislike(needpostid: user.postId,needId: activityid(id: user.id,posttype: user.post_type))
-                        
+                            if let index = self.req.index(where: {$0.id == user.id}){
+                            self.req[index].userLike = "0"
+                                self.req[index].totalLikes -= 1
+                            print(self.req[index])
+                            }
+                            }
+                            
                         }
                        
                     }, label: {
@@ -202,7 +280,8 @@ struct FeedRoomView: View {
                                 .foregroundColor(Color.black)
                             .frame(width: 20, height: 20, alignment: .leading)
                     
-                    }.navigationBarTitle(Text(user.name))
+                    }
+//                    .navigationBarTitle(Text(user.name))
 
                     Spacer()
                     Button(action: {shareit(sharelink: user.read_more_link)}, label: {
@@ -227,7 +306,7 @@ struct FeedRoomView: View {
                         print("this is last",user.id)
                         self.IsLoading = true
               
-                        apiCall().getUsers(lastid: user.id) { (users) in
+                        apiCall().getUsers(lastid: user.id, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
                             self.req.append(contentsOf: users)
                             self.IsLoading = false
                         }
@@ -262,11 +341,8 @@ struct FeedRoomView: View {
             
         
     }.onAppear {
-        apiCall().getUsers(lastid: 0) { (users) in
-            self.req = users
-            self.IsLoading = false
-//            print(req)
-        }
+        checkFeedType()
+        
        
     }
         
@@ -279,13 +355,166 @@ struct FeedRoomView: View {
         }
     }
     }
+    
+    
+    
+    
+    
+    func checkFeedType() {
+        self.IsLoading = true
+        // Get Flag
+        print("STEP", "Get Flag");
+        var flag = UserDefaults.standard.string(forKey: "feedFlag")!;
+
+        if (flag.count > 0) {
+            // Flag has value
+            // Check Flag
+            print("STEP", "Flag has value, Check Flag");
+            if (flag == "PUB") {
+                DispatchQueue.main.async {
+                // Show Public Feed
+                print("STEP", "Show Public Feed");
+//                return showPublic(context, cat, lastId, city);
+                apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
+                    self.req = users
+                    self.IsLoading = false
+        //            print(req)
+                }
+                }
+            } else {
+                // Login Check
+                print("STEP", "Login Check");
+                 var userID = UserDefaults.standard.string(forKey: "id")
+
+                if (userID!.count > 0) {
+                    // User logged In
+                    // Get Organization
+                    print("STEP", "User logged In, Get Organization");
+                    var org = UserDefaults.standard.string(forKey: "organization");
+                    if (org == "1") {
+                        // Individual User
+                        // Check Employer
+                        print("STEP", "Check Employer");
+                        var employerId = UserDefaults.standard.string(forKey: "employerId");
+                        
+                        if (employerId != "0") {
+                            // Have Employer
+                            print("STEP", "Have Employer");
+                            
+                            var empId = employerId!.data(using: .utf8)!.base64EncodedString()
+                            // Show Private Feed (based on Employer ID)
+                            print("STEP", "Show Private Feed (based on Employer ID)",empId);
+//                            return showPrivate(context, cat, lastId, city, empId);
+                            DispatchQueue.main.async {
+                            apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: empId) { (users) in
+                                self.req = users
+                                self.IsLoading = false
+                            }
+                            }
+                        } else {
+                            // Doesn't have Employer
+                            // Show Public Feed
+                            print("STEP", "Doesn't have Employer, Show Public Feed");
+//                            return showPublic(context, cat, lastId, city);
+                            apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
+                                self.req = users
+                                self.IsLoading = false
+                            }
+                        }
+
+                    } else {
+                        // Employer ID is ID
+                        // Show Private Feed
+                        var empId = userID!.data(using: .utf8)!.base64EncodedString()
+                        print("STEP", "Employer ID is ID, Show Private Feed");
+//                        return showPrivate(context, cat, lastId, city, empId);
+                        apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: empId) { (users) in
+                            self.req = users
+                            self.IsLoading = false
+                        }
+                    }
+                } else {
+                    // Show Public Feed
+                    print("STEP", "Show Public Feed");
+//                    return showPublic(context, cat, lastId, city);
+                    apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
+                        self.req = users
+                        self.IsLoading = false
+                    }
+                }
+            }
+        } else {
+            // Flag is empty
+            // Login Check
+            print("STEP", "Flag is empty, Login Check");
+            var id = UserDefaults.standard.string(forKey: "id");
+
+            if (id!.count > 0) {
+                // Logged In
+                // Organization Check
+                print("STEP", "User logged In, Get Organization");
+                var org = UserDefaults.standard.string(forKey: "organization");
+                if (org == "1") {
+                    // Individual User
+                    // Employer check
+                    print("STEP", "Individual User, Employer check");
+                    var employerId = UserDefaults.standard.string(forKey: "employerId");
+                    if (employerId != "0") {
+                        // Have Employer
+                        print("STEP", "Have Employer");
+                        var empId = employerId!.data(using: .utf8)!.base64EncodedString()
+                        // Show Private Feed (based on Employer ID)
+                        print("STEP", "Show Private Feed (based on Employer ID)");
+//                        return showPrivate(context, cat, lastId, city, empId);
+                        apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: empId) { (users) in
+                            self.req = users
+                            self.IsLoading = false
+                        }
+                    } else {
+                        // Doesn't have Employer
+                       
+                        // Show Public Feed
+                        print("STEP", "Doesn't have Employer, Show Public Feed");
+//                        return showPublic(context, cat, lastId, city);
+                        apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
+                            self.req = users
+                            self.IsLoading = false
+                        }
+                    }
+                } else {
+                    // Corporate, Non-Profit User
+                    // Show Private Feed (based on ID)
+                    print("STEP", "Corporate, Non-Profit User, Show Private Feed (based on ID)");
+                    
+                    var empId = id!.data(using: .utf8)!.base64EncodedString()
+//                    return showPrivate(context, cat, lastId, city, empId);
+                    apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: empId) { (users) in
+                        self.req = users
+                        self.IsLoading = false
+                    }
+                }
+            } else {
+                // Not logged In
+                // Show Public Feed
+                print("STEP", "Not logged In, Show Public Feed");
+//                return showPublic(context, cat, lastId, city);
+                apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
+                    self.req = users
+                    self.IsLoading = false
+                }
+            }
+        }
+    }
+
+    
+    
+    
+    
+    
+    
 }
 
 
-
-func lasts(){
-    print("lasting")
-}
 
 func like(needpostid: Int,needId: Int) {
     let parameters = "{\r\n    \"action\": \"like\",\r\n    \"data\": {\r\n        \"interaction\": \"like\",\r\n        \"actionType\": \"create\",\r\n        \"postId\": \(needpostid),\r\n        \"activityId\": \(needId)\r\n    }\r\n}"
@@ -303,7 +532,10 @@ func like(needpostid: Int,needId: Int) {
         print("error")
         return
       }
-      print("like succedd")
+        DispatchQueue.main.async {
+            print("like succedd")
+                   }
+      
     }
 
     task.resume()

@@ -5,6 +5,7 @@ struct SplashScreenView: View {
     @State var isActive : Bool = false
     @State private var size = 0.8
     @State private var opacity = 0.5
+//    let flag = UserDefaults.standard.string(forKey: "feedFlag");
     
     // Customise your SplashScreen here
     var body: some View {
@@ -46,10 +47,22 @@ struct SplashScreenView: View {
                 
             }
             .onAppear {
+                if UserDefaults.standard.object(forKey: "feedFlag") != nil{
+                    print("kuch to hai")
+                    print(UserDefaults.standard.string(forKey: "feedFlag")!)
+                }else{
+                    print("set krdiya hai")
+                    UserDefaults.standard.set("PUB", forKey: "feedFlag")
+                }
+                
+                
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                     withAnimation {
                         self.isActive = true
                     }
+                    
+                    
                 }
             }.frame( maxWidth: .infinity,maxHeight: UIScreen.screenHeight)
                 .ignoresSafeArea()

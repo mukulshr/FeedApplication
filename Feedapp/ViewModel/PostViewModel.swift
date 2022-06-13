@@ -30,17 +30,21 @@ class PostViewModel: ObservableObject {
             return
           }
             do {
+                print("success")
                 let datos = try JSONDecoder().decode(PostModel.self, from: data)
                 if !datos.data.auth_token.isEmpty{
-                    
+
                     DispatchQueue.main.async {
-                        print(datos.data.profile_pic)
+                        print(datos.data.employer.data.employerId,"Employer data we need")
                         UserDefaults.standard.setValue(1, forKey: "sesion")
                         UserDefaults.standard.set(datos.data.auth_token, forKey: "Token")
                         UserDefaults.standard.set(datos.data.profile_pic, forKey: "Profile_pic")
                         UserDefaults.standard.set(datos.data.company_logo, forKey: "Company_pic")
+                        UserDefaults.standard.set(datos.data.organization, forKey: "organization")
+                        UserDefaults.standard.set(datos.data.id, forKey: "id")
+                        UserDefaults.standard.set(datos.data.employer.data.employerId, forKey: "employerId")
                         self.authenticated = 1
-                      
+
                     }
                 }
             } catch let error as NSError {

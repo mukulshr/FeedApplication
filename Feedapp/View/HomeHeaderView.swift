@@ -11,6 +11,7 @@ struct HomeHeaderView: View {
     @State private var CompanyPic = UserDefaults.standard.string(forKey: "Company_pic")
     @State private var open = false
     @State private var showingAlert = false
+    @State private var showingChangetype = false
     @State private var isPresentedCamera = false
     @State private var isPresentedLibrary = false
   
@@ -39,18 +40,33 @@ struct HomeHeaderView: View {
 
 
 
-                          Button(action: {
-                              self.open.toggle()
-                          }) {
+//                          Button(action: {
+//                              self.open.toggle()
+//                          }) {
 
                                   AnimatedImage(url: URL(string: CompanyPic ?? "https://i.pinimg.com/originals/d9/56/9b/d9569bbed4393e2ceb1af7ba64fdf86a.jpg"))
                                   .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .clipShape(Circle())
-                                            
+                                           
 
 
-
+                              .onTapGesture {
+                                  showingChangetype = true
+                              }
+                          .alert("Change Profile", isPresented: $showingChangetype) {
+                                  
+                                  Button("Public Feed") {
+                                      UserDefaults.standard.set("PUB", forKey: "feedFlag")
+                                     
+                                      FeedRoomView().checkFeedType()
+                                      
+                                  }
+                                  Button("Private Feed") {
+                                      UserDefaults.standard.set("PVT", forKey: "feedFlag")
+                                      FeedRoomView().checkFeedType()
+                                  }
+                                  Button("Close", role: .cancel) { self.open.toggle() }
                               }
 //
 

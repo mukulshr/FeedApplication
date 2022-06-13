@@ -5,9 +5,9 @@ class apiCall : ObservableObject{
     @Published var req = [reqdata]()
   
     
-    func getUsers(lastid: Int,completion:@escaping ([reqdata]) -> ()) {
+    func getUsers(lastid: Int,cityid: Int,profileid: String,empid:String,completion:@escaping ([reqdata]) -> ()) {
         
-        let parameters = "{\r\n    \"action\": \"get_live_feed\",\r\n    \"data\": {\r\n         \"lastId\": \(lastid),\r\n        \"limit\":4\r\n    }\r\n}"
+        let parameters = "{\r\n    \"action\": \"get_live_feed\",\r\n    \"data\": {\r\n         \"lastId\": \(lastid),\r\n        \"city\": \(cityid),\r\n        \"emp\": \"\(empid)\",\r\n        \"getProfileId\": \"\(profileid)\",\r\n        \"limit\":4\r\n    }\r\n}"
         let postData = parameters.data(using: .utf8)
 
         var request = URLRequest(url: URL(string: "https://www.mysuperhumanrace-uat.com/api/liveFeedApis")!,timeoutInterval: Double.infinity)

@@ -11,5 +11,16 @@ struct data: Decodable{
     var auth_token: String
     var profile_pic: String
     var company_logo: String
+    var id: String
+    var organization: String
+    var employer: employesdata
 }
 
+struct employesdata: Decodable{
+    var totalCount: Int?
+    var data: allemployes
+}
+
+struct allemployes: Decodable{
+    var employerId: String?
+}
