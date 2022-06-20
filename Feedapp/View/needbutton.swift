@@ -9,14 +9,14 @@ struct SecondButton: View {
     var offsetX = 0
     var offsetY = 0
     var delay   = 0.0
+    var endpoint = ""
     
     var body: some View {
-        Button(action: {
-            // do some action
-        }) {
-            Image(systemName: icon)
+        NavigationLink(destination: GlobalView(endpoint: endpoint)) {
+            Image(uiImage: UIImage(named: icon) ?? UIImage(named: "hand-heart-thin")!).resizable()
                 .foregroundColor(.white)
-                .font(.system(size: 16, weight: .bold))
+//                .resizable()
+                .frame(width: 20, height: 20)
         }
         .padding()
         .background(color)

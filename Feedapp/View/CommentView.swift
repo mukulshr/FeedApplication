@@ -4,6 +4,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct CommentView: View {
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var getcmnt: [reqgetcmnt] = []
     @State var getreply: [reqreplies] = []
@@ -13,8 +14,10 @@ struct CommentView: View {
     @State var comment: String = ""
     @State var delete: String = ""
     @State var cmntId : Int = 0
+    @State var replyId : Int = 0
     @ObservedObject var fetcher = deletecomment()
     @State var editmode = false
+    @State var editreplymode = false
     @State var replymode = false
     @State var condtext: String = "Adding Comment"
     @State private var AuthToken = UserDefaults.standard.string(forKey: "Token")
@@ -22,6 +25,7 @@ struct CommentView: View {
     @State var IsLoaded: Bool = true
 
     @State var selectedid: Int = 0
+    
     
 
     func conditiontext() {
@@ -31,7 +35,12 @@ struct CommentView: View {
             condtext = "Editing Comment"
         }
         else if (replymode == true){
-            editmode = false
+//            editmode = false
+//            editreplymode = false
+        }else if (editreplymode == true){
+//            editmode = false
+//            replymode = false
+            condtext = "Editing Reply"
         }
         else{
         condtext = "Adding Comment"
@@ -46,26 +55,34 @@ struct CommentView: View {
             getcomments().getcomment(need: need,needpostid: needpostid,needId:needId) { (comments) in
                 self.getcmnt = comments
                 self.IsLoaded = false
+                showreplies = false
                
             }
         }
             
        
        }
+    
+    
+   
   
     var body: some View {
        
-        NavigationView {
-            ZStack{
+//        NavigationView {
+        VStack{
+//                ScrollView {
+
+//            ZStack{
             
               
                 
-            Color.customGrey.ignoresSafeArea()
-            VStack{
+//            Color.customGrey
+//                VStack(spacing:10){
              
                 
                 
             if getcmnt != [] {
+                ScrollView{
             ForEach(getcmnt, id: \.id) { cmnt in
 //            ZStack(alignment: .bottom) {
                 
@@ -74,28 +91,35 @@ struct CommentView: View {
                 VStack(spacing:0){
                 
                 HStack(alignment: .bottom, spacing: 15) {
-                    Image("profile_pic")
+                    
+                    AnimatedImage(url: URL(string: cmnt.profilePic))
                               .resizable()
-                              .frame(width: 40, height: 40, alignment: .center)
+                              .frame(width: 40, height: 40, alignment: .top)
                               .cornerRadius(20)
-                   
+                              
                     
                     VStack(alignment:.leading){
                     Text(cmnt.userName)
                             .frame(alignment:.leading)
+//                            .fontWeight(.bold)
+                            .font(.custom("muli", size: 15))
+                        Text(cmnt.created_at)
+                                    .frame(alignment:.leading)
+                                    .font(.custom("muli", size: 10))
+                        
                 Text(cmnt.post_comment)
                             .frame(alignment:.leading)
-                }.frame(minWidth: 0,  maxWidth: .infinity, minHeight: 0,  alignment: .leading)
-                    
+                            .font(.custom("muli", size: 15))
+                }
                     .padding()
-                        .foregroundColor(Color.white)
-                        .background( Color.blue )
+                 .frame(minWidth: 0,  maxWidth: .infinity, minHeight: 0,  alignment: .leading)
+                 .foregroundColor(Color.black)
+                 .background( Color.white )
                         .cornerRadius(10)
                         
                
-                }.frame(minWidth: 0,  maxWidth: .infinity, minHeight: 0, maxHeight: 100, alignment: .leading)
-                        .padding(.leading)
-                        .padding(.trailing)
+                }
+                .padding(.horizontal)
                     
                 
                 
@@ -103,16 +127,44 @@ struct CommentView: View {
                 if (cmnt.mine == true){
                     HStack(){
                         Spacer()
+                        if (cmnt.replyCount >= 1){
+//                            Button(
+//                                action: {
+//
+//
+//                            }, label: {
+                                Text("\(cmnt.replyCount) Reply")
+                                    .font(.custom("muli", size: 15))
+                                    .foregroundColor(Color.black)
+                                    .onTapGesture{
+                                        getcommentreplies().getcommentreply(needId: cmnt.id){ (replies) in
+                                            DispatchQueue.main.async {
+                                            self.getreply = replies
+                                            print(self.getreply)
+                                            selectedid = cmnt.id
+                                            showreplies.toggle()
+                                            }
+                                        }
+                                        print(AuthToken!)
+                                    }
+//                            })
+                        }
+                        
                 Button(
                     action: {
                         self.comment = cmnt.post_comment
+                        replymode = false
+                        editreplymode = false
                         editmode = true
+                        
                         conditiontext()
                         cmntId = cmnt.id
                       
                 }, label: {
                     Text("Edit")
-            })
+            })                                    .font(.custom("muli", size: 15))
+                            .foregroundColor(Color.black)
+
                     Button(
                         action: {
                             self.IsLoaded = true
@@ -124,6 +176,9 @@ struct CommentView: View {
                        
                     }, label: {
                         Text("Delete")
+                            .font(.custom("muli", size: 15))
+                            .foregroundColor(Color.black)
+
                 })
                     }.padding(.trailing)
                 }else{
@@ -132,15 +187,21 @@ struct CommentView: View {
                         if (cmnt.replyCount >= 1){
                             Button(
                                 action: {
-                                    showreplies.toggle()
+                                    self.IsLoaded = true
                                     getcommentreplies().getcommentreply(needId: cmnt.id){ (replies) in
+                                        DispatchQueue.main.async {
                                         self.getreply = replies
                                         print(self.getreply)
-                                        self.selectedid = cmnt.id
+                                        selectedid = cmnt.id
+                                        showreplies.toggle()
+                                            self.IsLoaded = false
+                                        }
                                     }
                                     print(AuthToken!)
                             }, label: {
-                                Text("Reply \(cmnt.replyCount)")
+                                Text("\(cmnt.replyCount) Reply")
+                                    .font(.custom("muli", size: 15))
+                                                  .foregroundColor(Color.black)
                             })
                         }
                     Button(
@@ -151,12 +212,16 @@ struct CommentView: View {
 //                            cmntId = cmnt.id
 //
                             self.comment = ""
+                            editmode = false
+                            editreplymode = false
                             replymode = true
                             conditiontext()
                             cmntId = cmnt.id
                             condtext = "Reply to \(cmnt.userName)"
                     }, label: {
                         Text("Reply")
+                            .font(.custom("muli", size: 15))
+                                          .foregroundColor(Color.black)
                     }).padding(.trailing)
                 }
                 }
@@ -166,31 +231,38 @@ struct CommentView: View {
                         ForEach(getreply, id: \.id) { reply in
                             
                             
-                            VStack(){
-                            HStack( spacing: 10) {
-                                Image("profile_pic")
-                                          .resizable()
-                                          .frame(width: 40, height: 40, alignment: .center)
-                                          .cornerRadius(20)
-                               
-                                
-                                VStack(alignment:.leading){
-                                Text(reply.userName)
-                                        .frame(alignment:.leading)
-                                       
-                                    Text(reply.comment_reply)
-                                        .frame(alignment:.leading)
-                                       
-                            }.frame(minWidth: 0,  maxWidth: .infinity, minHeight: 0,  alignment: .leading)
-                            .padding()
-                                        .foregroundColor(Color.white)
-                                        .background( Color.blue )
-                                        .cornerRadius(10)
-                                        .padding()
+                            
+                            LazyVStack(spacing:0){
+                                HStack( spacing: 15) {
                                     
-                           
-                            }
-                            .frame(minWidth: 0,  maxWidth: .infinity, minHeight: 0, alignment: .trailing)
+                                    AnimatedImage(url: URL(string: reply.profilePic))
+                                              .resizable()
+                                              .frame(width: 40, height: 40, alignment: .top)
+                                              .cornerRadius(20)
+                                              
+                                    
+                                    VStack(alignment:.leading){
+                                    Text(reply.userName)
+                                            .frame(alignment:.leading)
+                //                            .fontWeight(.bold)
+                                            .font(.custom("muli", size: 15))
+                                        Text(reply.created_at)
+                                                    .frame(alignment:.leading)
+                                                    .font(.custom("muli", size: 10))
+                                        
+                                Text(reply.comment_reply)
+                                            .frame(alignment:.leading)
+                                            .font(.custom("muli", size: 15))
+                                }
+                                    .padding()
+                                 .frame(minWidth: 0,  maxWidth: .infinity, minHeight: 0,  alignment: .leading)
+                                 .foregroundColor(Color.black)
+                                 .background( Color.white )
+                                        .cornerRadius(10)
+                                        
+                               
+                                } .padding(.horizontal)
+                                .frame(minWidth: 0,  maxWidth: .infinity, minHeight: 0, alignment: .trailing)
                                 .padding(.leading,50)
                                 
                             
@@ -199,28 +271,36 @@ struct CommentView: View {
                                         Spacer()
                                 Button(
                                     action: {
-//                                        self.comment = cmnt.post_comment
-//                                        editmode = true
-//                                        conditiontext()
-//                                        cmntId = cmnt.id
+                                        self.comment = reply.comment_reply
+                                         editmode = false
+                                        replymode = false
+                                        editreplymode = true
+                                        conditiontext()
+                                        replyId = reply.id
+                                        print(reply.id,cmntId)
                                       
                                 }, label: {
                                     Text("Edit")
+                                    
+                                        .font(.custom("muli", size: 15))
+                                                      .foregroundColor(Color.black)
                             })
                                     Button(
                                         action: {
-                                            
-//                                                deletecomment().delete(need: comment,needpostid: needpostid,needId:needId,id: reply.id)
-//                                            self.testFunction()
-//                                            print(fetcher.delete)
+                                            self.IsLoaded = true
+                                            replycomment().deletereplycomment(replyid: reply.id)
+                                            self.testFunction()
+                                       
                                        
                                     }, label: {
                                         Text("Delete")
+                                            .font(.custom("muli", size: 15))
+                                                          .foregroundColor(Color.black)
                                 })
                                     }.padding(.trailing)
                                 }
                                 
-                            }
+                            }.padding(.vertical ,5)
                         }
                         }
                     }
@@ -232,15 +312,19 @@ struct CommentView: View {
                 
                 
             }
-                   
+                
+            }.background(Color.customGrey.edgesIgnoringSafeArea(.all))
 //                    } }
 //                    .navigationBarTitle(Text("Navigation title"))
             }else if getcmnt == []{
                 
                 
-                
-                
-                ZStack{
+
+                VStack(alignment: .center){
+                    
+                    
+                  
+                    
                         Color.customGrey
                             .ignoresSafeArea()
                         Image("nodatafound")
@@ -254,7 +338,9 @@ struct CommentView: View {
                 
             
 //                    .navigationBarTitle(Text("Navigation title"))
-            }
+//            }
+//                .padding(.vertical ,20)
+                
                 
                 
                 
@@ -266,21 +352,24 @@ struct CommentView: View {
                    }
                    
                 
-            }.navigationBarTitle("")
-        }.onAppear {
-            self.testFunction()
-        }
-        .background(Color.white.edgesIgnoringSafeArea(.all))
+//            }
+//            .background(Color.customGrey.edgesIgnoringSafeArea(.all))
+                   
+//        }
+//        }
+       
+        
         
        
         
-        ZStack{
+//        ZStack{
         VStack {
             HStack(){
                 Text(condtext)
                     .animation(.easeInOut(duration: 1.0))
-                    .font(Font.Nunito.bold(size: 16))
+                    .font(Font.Nunito.bold(size: 14))
                     .foregroundColor(Color.darkGrey)
+                    .padding(.leading, 20)
                 Spacer()
                 Button(
                     action: {
@@ -289,13 +378,23 @@ struct CommentView: View {
                         if (editmode == true){
                             self.comment = ""
                                                    editmode = false
+                            editreplymode = false
                             conditiontext()
                             self.IsLoaded = false
+
+                                               }
+                        else    if (editreplymode == true){
+                            self.comment = ""
+                                                   editreplymode = false
+                            conditiontext()
+                            self.IsLoaded = false
+                            replyId = 0
 
                                                }
                         else  if (replymode == true){
                             self.comment = ""
                                                    editmode = false
+                            editreplymode = false
                             replymode = false
                             conditiontext()
                             self.IsLoaded = false
@@ -313,7 +412,7 @@ struct CommentView: View {
                         
                 }, label: {
                     Text("Cancel")
-                        .font(Font.Nunito.bold(size: 16))
+                        .font(Font.Nunito.bold(size: 14))
                         .foregroundColor(Color.darkGrey)
             }).padding(.trailing, 70)
             }
@@ -340,7 +439,18 @@ struct CommentView: View {
                             conditiontext()
                             
                             
-                        }else if (replymode == true){
+                        } else  if (editreplymode == true){
+                            replycomment().editreplycomment(replyid: replyId, reply: comment)
+                            self.testFunction()
+                            self.comment = ""
+                            replyId = 0
+                            editreplymode = false
+                            conditiontext()
+                            
+                            
+                            
+                        }
+                        else if (replymode == true){
                             if(self.comment.isEmpty ){
                                 print("Please add comment")
                                 self.IsLoaded = false
@@ -366,19 +476,34 @@ struct CommentView: View {
                         
                        
                 }, label: {
-                Label("", systemImage: "plus")
-            })
+                    Image(uiImage: UIImage(named: "paper-plane")!)
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .padding(3)
+                                .foregroundColor(.white)
+                })
             .padding(.horizontal, 8)
             .padding(.vertical, 8)
             .font(Font.Nunito.bold(size: 24))
             .foregroundColor(.white)
             .background(Color.blue)
-            .cornerRadius(21, antialiased: true)
+            .cornerRadius(50)
             
-            }}}
-        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 105, alignment: .trailing)
-        .padding(.trailing, 15)
-        .padding(.leading, 15)
+            }
+            
+        }.padding(.bottom ,5)
+            
+//        }
+//        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .trailing)
+//        .padding(.trailing, 15)
+//        .padding(.leading, 15)
+    }.navigationBarTitle(need)
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                self.testFunction()
+            }
+            
+            
     }
 }
 

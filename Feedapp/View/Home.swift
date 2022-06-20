@@ -12,6 +12,13 @@ struct Home: View {
     @State var timer = Timer.publish(every: 0.1, on: .current, in: .tracking).autoconnect()
     @State private var showAlert = false
 
+    @AppStorage("id") var userloginID: String = ""
+    
+    @State private var showingAddUser = false
+    @State private var showinglogout = false
+    
+    @AppStorage("First_Name") var name: String = ""
+
     
     var body: some View {
         
@@ -35,16 +42,19 @@ struct Home: View {
                                                 .padding(.leading,20)
                                                
                                                 Spacer()
+                                                NavigationLink(destination:
+                                                                 GlobalView(endpoint: "namami-tate")) {
                                            Image(uiImage: UIImage(named: "namami")!)
                                                     .resizable()
                                                 .frame(width: 45, height: 45, alignment: .leading)
 //                                                .padding(.top, 90)
                                                 .padding(.trailing,20)
 //                                                .padding(.bottom,10)
+                                                }
                                             }
                                             .padding(.top, 60)
                                             .padding(.bottom,10)
-                                            HomeHeaderView()
+                                            HomeHeaderView(isPresented: $showingAddUser)
                                                
                                             .opacity(isHeaderViewVisible ? 0.0 : 1.0)
                                             
@@ -87,7 +97,7 @@ struct Home: View {
                                     }
                              
                                 
-                                FeedRoomView()
+                                FeedRoomView(loginalert: $showAlert)
                                 
                                   
                             } //: ScrollView
@@ -95,7 +105,7 @@ struct Home: View {
                         
                         if isHeaderViewVisible {
                             ZStack(alignment: .bottom) {
-                               HomeHeaderView()
+                               HomeHeaderView(isPresented: $showingAddUser)
                                     .padding(.top, UIScreen.screenHeight * 0.08)
                                }
                             .frame(minWidth: 0, maxWidth: .infinity)
@@ -110,7 +120,7 @@ struct Home: View {
                                                Spacer()
                                                
                                                Button(action: {
-                                                   if login.authenticated == 1 {
+                                                   if(userloginID.count != 0){
                                                    withAnimation {
                                                        self.showBottomSheet.toggle()
                                                    }
@@ -146,7 +156,7 @@ struct Home: View {
                                               
                                                
                                                NavigationLink(destination:
-                                               VolunteerView()) {
+                                               GlobalView(endpoint: "volunteer")) {
                                                    HStack(spacing: 5){
                                                        Image(uiImage: UIImage(named: "stopwatch-thin")!)
                                                                .resizable()
@@ -167,7 +177,7 @@ struct Home: View {
                                                
                                                
                                                NavigationLink(destination:
-                                               VolunteerView()) {
+                                                                GlobalView(endpoint: "create-story")) {
                                                    HStack(spacing: 5){
                                                        Image(uiImage: UIImage(named: "messages-thin")!)
                                                                .resizable()
@@ -184,7 +194,7 @@ struct Home: View {
                                                }
                                                
                                                NavigationLink(destination:
-                                               VolunteerView()) {
+                                                                GlobalView(endpoint: "profile-challenges-goals#ongoingTab")) {
                                                    HStack(spacing: 5){
                                                        Image(uiImage: UIImage(named: "bullseye-arrow-thin")!)
                                                                .resizable()
@@ -201,7 +211,7 @@ struct Home: View {
                                                }
                                                
                                                NavigationLink(destination:
-                                               VolunteerView()) {
+                                                                GlobalView(endpoint: "create-challenge")) {
                                                    HStack(spacing: 5){
                                                        Image(uiImage: UIImage(named: "fire-flame-thin")!)
                                                                .resizable()
@@ -218,7 +228,7 @@ struct Home: View {
                                                }
                                                
                                                NavigationLink(destination:
-                                               VolunteerView()) {
+                                                                GlobalView(endpoint: "people?type=Search")) {
                                                    HStack(spacing: 5){
                                                        Image(uiImage: UIImage(named: "user-thin")!)
                                                                .resizable()
@@ -236,11 +246,8 @@ struct Home: View {
                                              
                                                
                                                Button(action: {
-                                                   UserDefaults.standard.removeObject(forKey: "sesion")
-                                                   UserDefaults.standard.removeObject(forKey: "Token")
-                                                   login.authenticated = 0
-                                                   self.showBottomSheet.toggle()
-                                                   
+                                             
+                                                   self.showinglogout = true
                                                    
                                                }) {
                                                    HStack(spacing: 5){
@@ -260,6 +267,150 @@ struct Home: View {
                                                
                                            }
                                        }
+                        
+//                                       .sheet(isPresented: $showingAddUser) {
+//                                           AddView(isPresented: $showingAddUser)
+//                                       }
+                        
+                        
+                        
+                        if $showingAddUser.wrappedValue {
+                                        // But it will not show unless this variable is true
+                                        ZStack {
+                                            Color.black.opacity(0.4)
+                                                .edgesIgnoringSafeArea(.vertical)
+                                                .onTapGesture{self.showingAddUser = false}
+                                            // This VStack is the popup
+                                            VStack(spacing:10) {
+//                                                HStack{
+                                                Text("Are you sure you want to jump into the live feed for all India ? You can come back to \(name) live feed at any time by clicking on \(name) logo.")
+                                                        .padding(.horizontal)
+                                                    .foregroundColor(Color.darkGrey)
+//                                                    Spacer()
+                                                
+                                                
+                                                
+                                                
+//                                                TextField("Enter Email ID")
+//                                                           .padding()
+//                                                           .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.darkGrey, style: StrokeStyle(lineWidth: 1.0)))
+//                                                           .padding()
+                                                
+                                                
+//                                                VStack{
+                                                Button(action:{
+                                                    UserDefaults.standard.set("PVT", forKey: "feedFlag")
+                                                    
+                                                    self.showingAddUser = false
+                                                },label: {Text("Stay on \(name) Live Feed")
+                                                        .frame(minWidth: UIScreen.screenWidth * 0.7)
+                                                    
+                                                }) .foregroundColor(Color.white)
+                                                    .padding(10)
+                                                    .background(Color.blue)
+                                                    .cornerRadius(5)
+                                                    .padding(.horizontal)
+//                                                    .frame(maxWidth: .infinity)
+                                                    .shadow(radius: 2)
+                                                   
+//                                                    .frame( height: 100)
+                                                    
+                                                    
+                                               
+                                                   
+                                                Button(action:{
+                                                    self.showingAddUser = false
+                                                    UserDefaults.standard.set("PUB", forKey: "feedFlag")
+                                                   
+                                                },label: {Text("Take me to the Public Live Feed")
+                                                        .frame(minWidth: UIScreen.screenWidth * 0.7)
+
+                                                    
+                                                })
+                                                    .foregroundColor(Color.white)
+                                                .padding(10)
+                                                .background(Color.teal)
+                                                .cornerRadius(5)
+                                                .padding(.horizontal)
+                                                .frame(maxWidth: .infinity)
+                                                .onTapGesture{self.showingAddUser = false}
+                                                .shadow(radius: 2)
+//                                                .frame( height: 100)
+                                               
+//                                                }.padding()
+                                                
+                                            }.padding(.vertical)
+//                                            .padding(5)
+                                            .frame(width: UIScreen.screenWidth * 0.85)
+                                            .background(Color.white)
+                                            .cornerRadius(10).shadow(radius: 20)
+//                                            .overlay(Rectangle()
+//                                                .cornerRadius(5)
+//                                                .frame(width: nil, height: 10, alignment: .top)
+//                                                .foregroundColor(Color.blue), alignment: .top)
+
+                                        }
+                        }
+
+                        
+                        if $showinglogout.wrappedValue {
+                                        // But it will not show unless this variable is true
+                            ZStack {
+                                Color.black.opacity(0.4)
+                                    .edgesIgnoringSafeArea(.vertical)
+                                    .onTapGesture{self.showinglogout = false}
+                                // This VStack is the popup
+                                VStack(spacing:2) {
+                                    HStack{
+                                    Text("Logout")
+//                                            .padding(.horizontal)
+                                        .foregroundColor(Color.black)
+                                        .font(.custom("muli", size: 20))
+                                        Spacer()
+                                    }
+                                    
+                                    HStack{
+                                    Text("Are you sure you want to Logout ?")
+//                                            .padding(.horizontal)
+                                        .foregroundColor(Color.black)
+                                        .font(.custom("muli", size: 16))
+                                    
+                                    }
+                                    
+                                    HStack{
+                                    Spacer()
+                                        Text("CANCEL")
+                                                .foregroundColor(Color.purple)
+//                                            .padding(10)
+                                            .font(.custom("muli", size: 15))
+                                            .padding(.horizontal,5)
+                                            .onTapGesture{self.showinglogout = false}
+                                        
+                                    Text("OK")
+                                            .foregroundColor(Color.purple)
+//                                        .padding(10)
+                                        .font(.custom("muli", size: 15))
+                                        .padding(.horizontal,5)
+                                        .onTapGesture{
+                                            logout()
+                                            self.showinglogout = false
+                                                 self.showBottomSheet.toggle()
+                                        }
+                                    }
+                                    
+                                  
+                                    
+                                }
+                                .padding(.vertical)
+                                .padding(.horizontal,20)
+                                                                            .frame(width: UIScreen.screenWidth * 0.85)
+                                                                            .background(Color.white)
+                                                                            .cornerRadius(10).shadow(radius: 20)
+
+                            }
+                        }
+                        
+                        
                         
                         
                         
@@ -306,11 +457,43 @@ struct Home: View {
 //            }
             
     }
+    func logout(){
+        
+        DispatchQueue.main.async {
+            //Remove User Details
+            UserDefaults.standard.removeObject( forKey: "Token")
+            UserDefaults.standard.removeObject(forKey: "Profile_pic")
+            UserDefaults.standard.removeObject( forKey: "Company_pic")
+            UserDefaults.standard.removeObject(forKey: "organization")
+            UserDefaults.standard.removeObject( forKey: "id")
+            UserDefaults.standard.removeObject( forKey: "employerId")
+            //Change Flag
+            UserDefaults.standard.set("PUB", forKey: "feedFlag")
+            //Change Auth
+            login.authenticated = 0
+            
+        }
+       
+    }
+
 }
+
+
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
 //            .environmentObject(RoomViewModel())
+    }
+}
+
+
+struct AddView: View {
+    @Binding var isPresented: Bool
+
+    var body: some View {
+        Button("Dismiss") {
+            isPresented = false
+        }
     }
 }

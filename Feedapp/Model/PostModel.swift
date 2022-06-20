@@ -13,12 +13,14 @@ struct data: Decodable{
     var company_logo: String
     var id: String
     var organization: String
-    var employer: employesdata
+    var f_name: String
+    var organisation_name: String?
+    var employer: employesdata?
 }
 
 struct employesdata: Decodable{
     var totalCount: Int?
-    var data: allemployes
+    var data: allemployes?
 }
 
 struct allemployes: Decodable{

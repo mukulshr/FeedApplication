@@ -22,7 +22,7 @@ struct Webview: UIViewRepresentable {
             return
         }
         var request = URLRequest(url: myURL)
-        request.addValue(AuthToken!, forHTTPHeaderField: "Authorization")
+        request.addValue(AuthToken ?? "", forHTTPHeaderField: "Authorization")
 
     print(request)
     uiView.load(request)

@@ -268,6 +268,91 @@ class replycomment {
        
 
     }
+    
+    func deletereplycomment(replyid: Int) {
+        
+        
+        let parameters = "{\r\n    \"action\": \"add_comment\",\r\n    \"data\": {\r\n        \"interaction\": \"reply\",\r\n        \"actionType\": \"delete\",\r\n\r\n  \r\n        \"id\":\(replyid)\r\n\r\n    }\r\n}"
+        let postData = parameters.data(using: .utf8)
+
+        var request = URLRequest(url: URL(string: "https://www.mysuperhumanrace-uat.com/api/socialApis")!,timeoutInterval: Double.infinity)
+        request.addValue(AuthToken!, forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        request.httpMethod = "POST"
+        request.httpBody = postData
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+          guard let data = data else {
+            print(String(describing: error))
+           
+            return
+          }
+        
+                let result = try? JSONSerialization.jsonObject(with: data, options: [])
+                
+                if let result = result {
+                    DispatchQueue.main.async {
+                        print("Done Reply Deleted !")
+                        
+                    }
+
+                } else {
+                    DispatchQueue.main.async {
+                        print("Invalid response from web services!")
+                    }
+                }
+                
+        }
+
+        task.resume()
+       
+
+    }
+    
+    
+    
+    func editreplycomment(replyid: Int,reply: String) {
+        
+        
+        let parameters = "{\r\n    \"action\": \"add_comment\",\r\n    \"data\": {\r\n        \"interaction\": \"reply\",\r\n        \"actionType\": \"update\",\r\n        \"reply\": \"\(reply)\",\r\n\r\n  \r\n        \"id\":\(replyid)\r\n\r\n    }\r\n}"
+        let postData = parameters.data(using: .utf8)
+
+        var request = URLRequest(url: URL(string: "https://www.mysuperhumanrace-uat.com/api/socialApis")!,timeoutInterval: Double.infinity)
+        request.addValue(AuthToken!, forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        request.httpMethod = "POST"
+        request.httpBody = postData
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+          guard let data = data else {
+            print(String(describing: error))
+           
+            return
+          }
+        
+                let result = try? JSONSerialization.jsonObject(with: data, options: [])
+                
+                if let result = result {
+                    DispatchQueue.main.async {
+                        print("Done Reply Deleted !")
+                        
+                    }
+
+                } else {
+                    DispatchQueue.main.async {
+                        print("Invalid response from web services!")
+                    }
+                }
+                
+        }
+
+        task.resume()
+       
+
+    }
+    
 }
 
 
@@ -280,7 +365,7 @@ class getcommentreplies{
     func getcommentreply(needId:Int,completion:@escaping ([reqreplies]) -> ()) {
         
        
-        let parameters = "{\r\n    \"action\": \"get_comments\",\r\n    \"data\": {\r\n        \"actionType\": \"select\",\r\n        \"commentId\": 148,\r\n        \"interaction\": \"reply\"\r\n    }\r\n}"
+        let parameters = "{\r\n    \"action\": \"get_comments\",\r\n    \"data\": {\r\n        \"actionType\": \"select\",\r\n        \"commentId\": \(needId),\r\n        \"interaction\": \"reply\"\r\n    }\r\n}"
         let postData = parameters.data(using: .utf8)
 
         var request = URLRequest(url: URL(string: "https://www.mysuperhumanrace-uat.com/api/socialApis")!,timeoutInterval: Double.infinity)

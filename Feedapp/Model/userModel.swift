@@ -26,9 +26,11 @@ struct reqdata: Codable,Equatable ,Hashable{
     let feedDate:String
     let cityName:String
     let stateName:String
+    let webview_link:String
     let read_more_link:String
     var userLike:String
     var totalLikes: Int
+    var totalComments: Int
     let feedUserType: String
     let feedType: Int
     let description: String

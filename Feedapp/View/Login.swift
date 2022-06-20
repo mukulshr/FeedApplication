@@ -109,8 +109,9 @@ Button(action:{
                 
                 
                 Text("Not superhuman yet ?").foregroundColor(.white).bold().font(.custom("muli", size: UIScreen.screenWidth * 0.05))
-                
+                NavigationLink(destination: SignUp()) {
                 Text("Sign-up today").foregroundColor(.white).bold().font(.custom("muli", size: 24))
+                }
                 Spacer()
 }
 //            .padding()

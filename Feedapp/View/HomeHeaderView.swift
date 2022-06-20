@@ -7,21 +7,26 @@ import SDWebImageSwiftUI
 struct HomeHeaderView: View {
     
     @EnvironmentObject var login: PostViewModel
-    @State private var ProfilePic = UserDefaults.standard.string(forKey: "Profile_pic")
-    @State private var CompanyPic = UserDefaults.standard.string(forKey: "Company_pic")
     @State private var open = false
     @State private var showingAlert = false
-    @State private var showingChangetype = false
     @State private var isPresentedCamera = false
     @State private var isPresentedLibrary = false
-  
+    @AppStorage("feedFlag") var flag: String = ""
+    
+    @AppStorage("id") var userloginID: String = ""
+    
+    @Binding var isPresented: Bool
+   
+    @AppStorage("id") var userID: String = ""
+    @AppStorage("Profile_pic") var ProfilePic: String = ""
+    @AppStorage("Company_pic") var CompanyPic: String = ""
    
     var body: some View {
        
         HStack(alignment: .center) {
          
             HStack{
-            if login.authenticated == 0 {
+                if(userloginID.count == 0){
                 NavigationLink(destination: Login()) {
                     Text("LOGIN")
                 }.navigationBarTitle(Text(" "))
@@ -36,7 +41,7 @@ struct HomeHeaderView: View {
                                   .stroke(Color.red, lineWidth: 1)
                           )
                           
-                      }else if login.authenticated == 1 {
+                      }else  {
 
 
 
@@ -52,22 +57,15 @@ struct HomeHeaderView: View {
 
 
                               .onTapGesture {
-                                  showingChangetype = true
-                              }
-                          .alert("Change Profile", isPresented: $showingChangetype) {
                                   
-                                  Button("Public Feed") {
-                                      UserDefaults.standard.set("PUB", forKey: "feedFlag")
-                                     
-                                      FeedRoomView().checkFeedType()
-                                      
-                                  }
-                                  Button("Private Feed") {
+                                  if (flag == "PUB") {
                                       UserDefaults.standard.set("PVT", forKey: "feedFlag")
-                                      FeedRoomView().checkFeedType()
+                                  }else{
+                                  
+                                      isPresented = true
                                   }
-                                  Button("Close", role: .cancel) { self.open.toggle() }
                               }
+                       
 //
 
                           }
@@ -80,9 +78,6 @@ struct HomeHeaderView: View {
                 .frame(maxWidth: .infinity)
 
                           
-                    
-                         
-          
                      
           
 
@@ -95,23 +90,24 @@ struct HomeHeaderView: View {
                     Button(action: {
                         self.open.toggle()
                     }) {
-                        if login.authenticated == 0 {
+                        if(userloginID.count == 0){
                         
                         
                     
                         Image.profile_pic
                                 .resizable()
-                                          .aspectRatio(contentMode: .fit)
+//                                          .aspectRatio(contentMode: .fit)
                                           .clipShape(Circle())
-                                          .overlay(Circle().stroke(Color.black, lineWidth: 2))
+                                          .overlay(Circle().stroke(Color.black, lineWidth: 1))
                             
                    
                    
-                        }else if login.authenticated == 1 {
-                            AnimatedImage(url: URL(string: ProfilePic ?? "https://i.pinimg.com/originals/d9/56/9b/d9569bbed4393e2ceb1af7ba64fdf86a.jpg"))
+                        }else {
+                            AnimatedImage(url: URL(string: ProfilePic))
                                 .resizable()
-                                .frame(width: 40, height: 40)
-                                .cornerRadius(20)
+//                                .aspectRatio(contentMode: .fit)
+                                .clipShape(Circle())
+                                .overlay(Circle().stroke(Color.black, lineWidth: 1))
                                 
                         }
                     }
@@ -125,13 +121,22 @@ struct HomeHeaderView: View {
 //                              .clipShape(Circle())
                     
                     
-                    NavigationLink(destination: VolunteerView()) {
-                    SecondButton(open: $open, icon: "bubble.left.fill", color: .black, offsetX: -90)
-                    }
-                    SecondButton(open: $open, icon: "trash", color: .black, offsetX: -60, offsetY: 60, delay: 0.2)
-                    SecondButton(open: $open, icon: "pencil", color: .black, offsetX: 90, delay: 0.4)
-                    SecondButton(open: $open, icon: "folder", color: .black, offsetX: 60, offsetY: 60, delay: 0.6)
-                    SecondButton(open: $open, icon: "person", color: .black, offsetX: 0, offsetY: 90, delay: 0.8)
+                    
+                    SecondButton(open: $open, icon: "hand-heart-thin", color: .black, offsetX: -90,endpoint: "volunteer")
+                    
+                    SecondButton(open: $open, icon: "box-heart-thin", color: .black, offsetX: -60, offsetY: 60, delay: 0.2,endpoint: "story")
+                    SecondButton(open: $open, icon:"envira-brands", color: .black, offsetX: 90, delay: 0.4,endpoint:"create")
+                    SecondButton(open: $open, icon:"hand-holding-box-thin" , color: .black, offsetX: 60, offsetY: 60, delay: 0.6,endpoint: "donate")
+                    
+                    
+                    if(userloginID.count == 0){
+                        
+                        SecondButton(open: $open, icon: "palette-thin", color: .black,  offsetX: 0, offsetY: 90, delay: 0.8,endpoint: "covid-19-support")
+                        
+                    }else{
+                    
+                    
+                        SecondButton(open: $open, icon:  "camera-thin", color: .black, offsetX: 0, offsetY: 90, delay: 0.8)
                         .onTapGesture {
                             showingAlert = true
                         }
@@ -141,6 +146,11 @@ struct HomeHeaderView: View {
                             Button("Photo Library") {isPresentedLibrary.toggle() }
                             Button("Close", role: .cancel) { self.open.toggle() }
                         }
+                    }
+                    
+                    
+                    
+                    
                 }
 
             }.frame(alignment: .center)
@@ -169,6 +179,7 @@ struct HomeHeaderView: View {
            
         }.fullScreenCover(isPresented: $isPresentedCamera, content: FullModalCameraView.init)
             .fullScreenCover(isPresented: $isPresentedLibrary, content: ModalPhotoLibraryView.init)
+            
         .frame(maxWidth: .infinity)
         .frame(minHeight: 40,  maxHeight: 60)
 
@@ -181,12 +192,12 @@ struct HomeHeaderView: View {
 
 }
 
-struct HomeHeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeHeaderView()
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct HomeHeaderView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        HomeHeaderView()
+//            .previewLayout(.sizeThatFits)
+//    }
+//}
 
 
 struct FullModalCameraView: View {
@@ -340,6 +351,9 @@ struct ModalPhotoLibraryView: View {
                               .scaledToFill()
                               .frame(minWidth: 0, maxWidth: .infinity)
                               .edgesIgnoringSafeArea(.all)
+                              .clipShape(Circle())
+                              .overlay(Circle().stroke(Color.white ,lineWidth:5.0))
+                              .shadow(radius: 10)
                           
                     Button(action: {
                        aa()

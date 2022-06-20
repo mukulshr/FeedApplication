@@ -16,7 +16,13 @@ struct FeedRoomView: View {
     @State var filteredcityid: Int = 0
     var reqprofileid: String = ""
     var emptyempid: String = ""
+//     var flag = UserDefaults.standard.string(forKey: "feedFlag")!;
+    @AppStorage("feedFlag") var flag: String = ""
+    @AppStorage("id") var userloginID: String = ""
     
+    
+    
+    @Binding var loginalert: Bool
     
     
     func activityid(id: Int,posttype: String) -> Int {
@@ -48,11 +54,34 @@ struct FeedRoomView: View {
 
     
     var body: some View {
-        
+       
         
         ZStack{
         
         VStack(alignment: .leading) {
+            
+//            if (flag == "PUB") {
+//                callapi()
+//            }else if ( flag == "PVT") {
+//                callapi()
+//            }
+            
+            
+            HStack{
+            if (flag == "PUB") {
+                Text("Public")
+                    .font(.custom("muli", size: 15))
+                        .foregroundColor(Color.black)
+                    .padding(10)
+                    .padding(.horizontal)
+                    .background(Color.white)
+                    .cornerRadius(20)
+                    .padding(.horizontal)
+                    .onTapGesture{
+                        UserDefaults.standard.set("PVT", forKey: "feedFlag")
+                        callapi()
+                    }
+            }
             
             
             if (filteredcity != ""){
@@ -69,7 +98,7 @@ struct FeedRoomView: View {
                     DispatchQueue.main.async {
                     self.IsLoading = true
                        
-                    apiCall().getUsers(lastid: 0, cityid: 0,profileid: reqprofileid,empid: emptyempid) { (users) in
+                        apiCall().getUsers(lastid: 0, cityid: 0,profileid: reqprofileid,empid: checkFeedType()) { (users) in
                         self.req = users
                         filteredcity = ""
                         filteredcityid = 0
@@ -78,6 +107,7 @@ struct FeedRoomView: View {
                     }
                     }
                 }
+            }
             }
             
            
@@ -103,7 +133,7 @@ struct FeedRoomView: View {
                                 .font(Font.Muli.muli(size: 16))
                                 .onTapGesture{
                                     
-                                    apiCall().getUsers(lastid: 0, cityid: user.city,profileid: reqprofileid,empid: emptyempid) { (users) in
+                                    apiCall().getUsers(lastid: 0, cityid: user.city,profileid: reqprofileid,empid: checkFeedType()) { (users) in
                                         self.IsLoading = true
                                         if users == [] {
                                             print("its empty")
@@ -133,11 +163,18 @@ struct FeedRoomView: View {
                         
                         Spacer()
                         if user.feed_icon_type.count > 0{
+                            
+                            
+                            
+                            
+                            NavigationLink(destination: VolunteerEventRegisterView()) {
+
                         Image(uiImage: UIImage(named: setIcons(iconCount: user.feed_icon_count, iconType: user.feed_icon_type ))!)
                                 .resizable()
                             .foregroundColor(Color.black)
                         .frame(width: 30, height: 35, alignment: .trailing)
                       
+                            }
                         }
                         
                        
@@ -216,6 +253,8 @@ struct FeedRoomView: View {
                 HStack() {
                     
                     Button(action: {
+                        
+                        if(userloginID.count != 0){
                        
                         if user.userLike == "0"{
                            
@@ -244,10 +283,14 @@ struct FeedRoomView: View {
                             }
                             
                         }
+                            
+                        }else{
+                            loginalert = true
+                        }
                        
                     }, label: {
                         Text("Likes (\(user.totalLikes))")
-                            .font(Font.Muli.muli(size: 14))
+                            .font(Font.Muli.muli(size: 13))
                             .foregroundColor(Color.black)
                         
                         
@@ -271,22 +314,54 @@ struct FeedRoomView: View {
 
                     Spacer()
                     
-                    NavigationLink(destination: CommentView(need : user.category_name,needpostid: user.postId,needId: activityid(id: user.id,posttype: user.post_type))) {
-                        Text("Comment")
-                            .font(.custom("muli", size: 14))
-                            .foregroundColor(Color.black)
-                        Image(uiImage: UIImage(named: "message-thin")!)
-                                .resizable()
-                                .foregroundColor(Color.black)
-                            .frame(width: 20, height: 20, alignment: .leading)
                     
+                    
+                    
+                    if(userloginID.count != 0){
+
+
+
+                        NavigationLink(destination: CommentView(need : user.name,needpostid: user.postId,needId: activityid(id: user.id,posttype: user.post_type))) {
+                            Text("Comment (\(user.totalComments))")
+                                .font(.custom("muli", size: 13))
+                                .foregroundColor(Color.black)
+                            Image(uiImage: UIImage(named: "message-thin")!)
+                                    .resizable()
+                                    .foregroundColor(Color.black)
+                                .frame(width: 20, height: 20, alignment: .leading)
+
+                        }
+
+
+
+
+
+                    }else{
+                    
+                 
+                        Button(action: {loginalert = true}, label: {
+                            Text("Comment (\(user.totalComments))")
+                                .font(.custom("muli", size: 13))
+                                .foregroundColor(Color.black)
+                            Image(uiImage: UIImage(named: "message-thin")!)
+                                    .resizable()
+                                    .foregroundColor(Color.black)
+                                .frame(width: 20, height: 20, alignment: .leading)
+                        })
+                       
+                        
                     }
+                    
+                    
+                    
+                    
+                    
 //                    .navigationBarTitle(Text(user.name))
 
                     Spacer()
                     Button(action: {shareit(sharelink: user.read_more_link)}, label: {
                         Text("Share")
-                            .font(Font.Muli.muli(size: 14))
+                            .font(Font.Muli.muli(size: 13))
                             .foregroundColor(Color.black)
                         Image(uiImage: UIImage(named: "share-icon")!)
                                 .resizable()
@@ -306,7 +381,7 @@ struct FeedRoomView: View {
                         print("this is last",user.id)
                         self.IsLoading = true
               
-                        apiCall().getUsers(lastid: user.id, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
+                        apiCall().getUsers(lastid: user.id, cityid: filteredcityid,profileid: reqprofileid,empid: checkFeedType()) { (users) in
                             self.req.append(contentsOf: users)
                             self.IsLoading = false
                         }
@@ -341,9 +416,16 @@ struct FeedRoomView: View {
             
         
     }.onAppear {
-        checkFeedType()
+        apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: checkFeedType()) { (users) in
+                           self.req = users
+                           self.IsLoading = false
+                       }
+
         
        
+    } .onChange(of: flag) { newValue in
+        self.IsLoading = true
+       callapi()
     }
         
         
@@ -357,151 +439,166 @@ struct FeedRoomView: View {
     }
     
     
+    func callapi(){
+        apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: checkFeedType()) { (users) in
+                           self.req = users
+                           self.IsLoading = false
+                       }
+
+    }
     
     
-    
-    func checkFeedType() {
+    func checkFeedType() -> String {
         self.IsLoading = true
         // Get Flag
         print("STEP", "Get Flag");
-        var flag = UserDefaults.standard.string(forKey: "feedFlag")!;
+        @AppStorage("feedFlag") var flag: String = ""
 
         if (flag.count > 0) {
             // Flag has value
             // Check Flag
             print("STEP", "Flag has value, Check Flag");
             if (flag == "PUB") {
-                DispatchQueue.main.async {
+//                DispatchQueue.main.async {
                 // Show Public Feed
                 print("STEP", "Show Public Feed");
+                    return emptyempid
 //                return showPublic(context, cat, lastId, city);
-                apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
-                    self.req = users
-                    self.IsLoading = false
-        //            print(req)
-                }
-                }
+//                apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
+//                    self.req = users
+//                    self.IsLoading = false
+//        //            print(req)
+//                }
+//                }
             } else {
                 // Login Check
                 print("STEP", "Login Check");
-                 var userID = UserDefaults.standard.string(forKey: "id")
+                let userID = UserDefaults.standard.string(forKey: "id")
 
-                if (userID!.count > 0) {
+                if (userID != nil) {
                     // User logged In
                     // Get Organization
                     print("STEP", "User logged In, Get Organization");
-                    var org = UserDefaults.standard.string(forKey: "organization");
+                    let org = UserDefaults.standard.string(forKey: "organization");
                     if (org == "1") {
                         // Individual User
                         // Check Employer
                         print("STEP", "Check Employer");
-                        var employerId = UserDefaults.standard.string(forKey: "employerId");
+                        let employerId = UserDefaults.standard.string(forKey: "employerId");
                         
-                        if (employerId != "0") {
+                        if (employerId !=  nil) {
                             // Have Employer
                             print("STEP", "Have Employer");
                             
-                            var empId = employerId!.data(using: .utf8)!.base64EncodedString()
+                            let empId = employerId?.data(using: .utf8)!.base64EncodedString()
                             // Show Private Feed (based on Employer ID)
                             print("STEP", "Show Private Feed (based on Employer ID)",empId);
+                            return empId!
 //                            return showPrivate(context, cat, lastId, city, empId);
-                            DispatchQueue.main.async {
-                            apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: empId) { (users) in
-                                self.req = users
-                                self.IsLoading = false
-                            }
-                            }
+//                            DispatchQueue.main.async {
+//                            apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: empId) { (users) in
+//                                self.req = users
+//                                self.IsLoading = false
+//                            }
+//                            }
                         } else {
                             // Doesn't have Employer
                             // Show Public Feed
                             print("STEP", "Doesn't have Employer, Show Public Feed");
+                            return emptyempid
 //                            return showPublic(context, cat, lastId, city);
-                            apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
-                                self.req = users
-                                self.IsLoading = false
-                            }
+//                            apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
+//                                self.req = users
+//                                self.IsLoading = false
+//                            }
                         }
 
                     } else {
                         // Employer ID is ID
                         // Show Private Feed
-                        var empId = userID!.data(using: .utf8)!.base64EncodedString()
+                        let empId = userID!.data(using: .utf8)!.base64EncodedString()
                         print("STEP", "Employer ID is ID, Show Private Feed");
+                        return empId
 //                        return showPrivate(context, cat, lastId, city, empId);
-                        apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: empId) { (users) in
-                            self.req = users
-                            self.IsLoading = false
-                        }
+//                        apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: empId) { (users) in
+//                            self.req = users
+//                            self.IsLoading = false
+//                        }
                     }
                 } else {
                     // Show Public Feed
                     print("STEP", "Show Public Feed");
+                    return emptyempid
 //                    return showPublic(context, cat, lastId, city);
-                    apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
-                        self.req = users
-                        self.IsLoading = false
-                    }
+//                    apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
+//                        self.req = users
+//                        self.IsLoading = false
+//                    }
                 }
             }
         } else {
             // Flag is empty
             // Login Check
             print("STEP", "Flag is empty, Login Check");
-            var id = UserDefaults.standard.string(forKey: "id");
+            let id = UserDefaults.standard.string(forKey: "id");
 
             if (id!.count > 0) {
                 // Logged In
                 // Organization Check
                 print("STEP", "User logged In, Get Organization");
-                var org = UserDefaults.standard.string(forKey: "organization");
+                let org = UserDefaults.standard.string(forKey: "organization");
                 if (org == "1") {
                     // Individual User
                     // Employer check
                     print("STEP", "Individual User, Employer check");
-                    var employerId = UserDefaults.standard.string(forKey: "employerId");
+                    let employerId = UserDefaults.standard.string(forKey: "employerId");
                     if (employerId != "0") {
                         // Have Employer
                         print("STEP", "Have Employer");
-                        var empId = employerId!.data(using: .utf8)!.base64EncodedString()
+                        let empId = employerId!.data(using: .utf8)!.base64EncodedString()
                         // Show Private Feed (based on Employer ID)
                         print("STEP", "Show Private Feed (based on Employer ID)");
+                        return empId
 //                        return showPrivate(context, cat, lastId, city, empId);
-                        apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: empId) { (users) in
-                            self.req = users
-                            self.IsLoading = false
-                        }
+//                        apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: empId) { (users) in
+//                            self.req = users
+//                            self.IsLoading = false
+//                        }
                     } else {
                         // Doesn't have Employer
                        
                         // Show Public Feed
                         print("STEP", "Doesn't have Employer, Show Public Feed");
+                        return emptyempid
 //                        return showPublic(context, cat, lastId, city);
-                        apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
-                            self.req = users
-                            self.IsLoading = false
-                        }
+//                        apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
+//                            self.req = users
+//                            self.IsLoading = false
+//                        }
                     }
                 } else {
                     // Corporate, Non-Profit User
                     // Show Private Feed (based on ID)
                     print("STEP", "Corporate, Non-Profit User, Show Private Feed (based on ID)");
                     
-                    var empId = id!.data(using: .utf8)!.base64EncodedString()
+                    let empId = id!.data(using: .utf8)!.base64EncodedString()
+                    return empId
 //                    return showPrivate(context, cat, lastId, city, empId);
-                    apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: empId) { (users) in
-                        self.req = users
-                        self.IsLoading = false
-                    }
+//                    apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: empId) { (users) in
+//                        self.req = users
+//                        self.IsLoading = false
+//                    }
                 }
             } else {
                 // Not logged In
                 // Show Public Feed
                 print("STEP", "Not logged In, Show Public Feed");
+                return emptyempid
 //                return showPublic(context, cat, lastId, city);
-                apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
-                    self.req = users
-                    self.IsLoading = false
-                }
+//                apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
+//                    self.req = users
+//                    self.IsLoading = false
+//                }
             }
         }
     }
@@ -762,17 +859,10 @@ struct ModalView: View {
     @State var showimg: String
 @Environment(\.presentationMode) var presentationMode
 var body: some View {
-    ZStack{
+    ZStack(alignment: .topTrailing){
        
     ZoomableScrollView {
-        Image(uiImage: UIImage(named: "heart-solid")!)
-                .resizable()
-                .foregroundColor(Color.red)
-            .frame(width: 20, height: 20, alignment: .topTrailing)
         
-            .onTapGesture {
-                presentationMode.wrappedValue.dismiss()
-            }
         
         AnimatedImage(url: URL(string: showimg))
         .resizable()
@@ -780,6 +870,19 @@ var body: some View {
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
         
       }
+        VStack{
+        Image(uiImage: UIImage(named: "circle-xmark-solid")!)
+                .resizable()
+                .foregroundColor(Color.black)
+            .frame(width: 50, height: 50)
+            .zIndex(99999)
+            .offset(x: -10 ,y: 10)
+
+        
+            .onTapGesture {
+                presentationMode.wrappedValue.dismiss()
+            }
+        }
        
     }
 }

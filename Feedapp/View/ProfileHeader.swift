@@ -8,15 +8,19 @@
 import SwiftUI
 
 struct profileheader: View{
+    
+    
+    @AppStorage("First_Name") var name: String = ""
+    @AppStorage("organisation_name") var organisation_name: String = ""
 
     @State var dash = reqdash(stories: "0", events: "0", sponsored: "0")
     
 var body: some View {
     VStack(alignment: .leading,spacing: 5) {
-        Text("UserName".uppercased())
+        Text(name)
             .font(Font.Muli.muli(size: 16))
             .foregroundColor(Color.textBlack)
-            Text("SBI FOUNDATION".uppercased())
+            Text(organisation_name)
             .font(Font.Muli.muli(size: 12))
                 .foregroundColor(Color.textBlack)
                 .padding(.bottom, 15)

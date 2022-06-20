@@ -20,6 +20,7 @@ struct reqgetcmnt: Codable,Equatable {
     let created_at: String
     let mine: Bool
     let replyCount:Int
+    let profilePic:String
 }
 
 
@@ -34,4 +35,6 @@ struct reqreplies: Codable,Equatable {
     let comment_reply: String
     let userName: String
     let mine: Bool
+    let profilePic:String
+    let created_at:String
 }
