@@ -258,7 +258,7 @@ struct ProfileFeed: View {
                            
                         }, label: {
                             Text("Likes (\(user.totalLikes))")
-                                .font(Font.Muli.muli(size: 14))
+                                .font(Font.Muli.muli(size: 13))
                                 .foregroundColor(Color.black)
                             
                             
@@ -283,8 +283,8 @@ struct ProfileFeed: View {
                         Spacer()
                         
                         NavigationLink(destination: CommentView(need : user.category_name,needpostid: user.postId,needId: activityid(id: user.id,posttype: user.post_type))) {
-                            Text("Comment")
-                                .font(.custom("muli", size: 14))
+                            Text("Comment (\(user.totalComments))")
+                                .font(.custom("muli", size: 13))
                                 .foregroundColor(Color.black)
                             Image(uiImage: UIImage(named: "message-thin")!)
                                     .resizable()
@@ -297,7 +297,7 @@ struct ProfileFeed: View {
                         Spacer()
                         Button(action: {shareit(sharelink: user.read_more_link)}, label: {
                             Text("Share")
-                                .font(Font.Muli.muli(size: 14))
+                                .font(Font.Muli.muli(size: 13))
                                 .foregroundColor(Color.black)
                             Image(uiImage: UIImage(named: "share-icon")!)
                                     .resizable()

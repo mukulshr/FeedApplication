@@ -15,7 +15,7 @@ class geteventsdetail : ObservableObject{
     
     func getevents(postId: Int,completion:@escaping (events) -> ()) {
         
-        let parameters = "{\r\n    \"action\": \"view_physical_event\",\r\n    \"data\": {\r\n        \"postId\": 976\r\n    }\r\n}"
+        let parameters = "{\r\n    \"action\": \"view_physical_event\",\r\n    \"data\": {\r\n        \"postId\": \(postId)\r\n    }\r\n}"
         
         let postData = parameters.data(using: .utf8)
 

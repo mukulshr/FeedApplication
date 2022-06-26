@@ -44,6 +44,17 @@ struct FeedRoomView: View {
 
     }
     
+    
+    
+    func weblink(webview: String,readmore: String) -> String {
+        if webview != "" {
+               return webview;
+           } else {
+               return readmore;
+           }
+
+    }
+    
     func shareit(sharelink: String) {
            guard let urlShare = URL(string: "https://www.mysuperhumanrace-uat.com/\(sharelink)") else { return }
            let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
@@ -78,8 +89,13 @@ struct FeedRoomView: View {
                     .cornerRadius(20)
                     .padding(.horizontal)
                     .onTapGesture{
+                        if(userloginID.count != 0){
                         UserDefaults.standard.set("PVT", forKey: "feedFlag")
                         callapi()
+                        }else{
+                            loginalert = true
+                        }
+                        
                     }
             }
             
@@ -165,9 +181,11 @@ struct FeedRoomView: View {
                         if user.feed_icon_type.count > 0{
                             
                             
+                            if(user.webview_link != "popup"){
                             
-                            
-                            NavigationLink(destination: VolunteerEventRegisterView()) {
+                            NavigationLink(destination:
+                                GlobalView(endpoint: weblink(webview: user.webview_link, readmore: user.read_more_link))
+                            ) {
 
                         Image(uiImage: UIImage(named: setIcons(iconCount: user.feed_icon_count, iconType: user.feed_icon_type ))!)
                                 .resizable()
@@ -175,6 +193,42 @@ struct FeedRoomView: View {
                         .frame(width: 30, height: 35, alignment: .trailing)
                       
                             }
+                            }else{
+                                
+                                if(userloginID.count != 0){
+                            
+                            NavigationLink(destination:
+                                            VolunteerEventRegisterView(postid: user.postId)
+                            ) {
+
+                        Image(uiImage: UIImage(named: setIcons(iconCount: user.feed_icon_count, iconType: user.feed_icon_type ))!)
+                                .resizable()
+                            .foregroundColor(Color.black)
+                        .frame(width: 30, height: 35, alignment: .trailing)
+                      
+                            }
+                                
+                                }else{
+                                    
+                                    NavigationLink(destination:
+                                        GlobalView(endpoint: weblink(webview: user.webview_link, readmore: user.read_more_link))
+                                    ) {
+
+                                Image(uiImage: UIImage(named: setIcons(iconCount: user.feed_icon_count, iconType: user.feed_icon_type ))!)
+                                        .resizable()
+                                    .foregroundColor(Color.black)
+                                .frame(width: 30, height: 35, alignment: .trailing)
+                              
+                                    }
+                                    
+                                    
+                                }
+                                
+                                
+                                
+                            }
+                            
+                            
                         }
                         
                        
@@ -200,6 +254,9 @@ struct FeedRoomView: View {
                     
                     
                     
+                    NavigationLink(destination:
+                                    GlobalView(endpoint: weblink(webview: user.webview_link, readmore: user.read_more_link))
+                    ) {
                     if user.post_type == "0"{
                         if user.feedUserType == "1"{
                           
@@ -216,6 +273,8 @@ struct FeedRoomView: View {
                     }else{
                         Nonlayouttype(desc:  showdesc(descrip: user.description, storydesc: user.storyDescription))
                     }
+                        
+                    
                     
                  
                     
@@ -248,7 +307,9 @@ struct FeedRoomView: View {
                                                     ))
                     
                         
-                
+                    }.buttonStyle(FlatLinkStyle())
+                    
+                    
                 
                 HStack() {
                     
@@ -459,23 +520,17 @@ struct FeedRoomView: View {
             // Check Flag
             print("STEP", "Flag has value, Check Flag");
             if (flag == "PUB") {
-//                DispatchQueue.main.async {
                 // Show Public Feed
                 print("STEP", "Show Public Feed");
                     return emptyempid
-//                return showPublic(context, cat, lastId, city);
-//                apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
-//                    self.req = users
-//                    self.IsLoading = false
-//        //            print(req)
-//                }
-//                }
             } else {
                 // Login Check
                 print("STEP", "Login Check");
-                let userID = UserDefaults.standard.string(forKey: "id")
+//                let userID = UserDefaults.standard.string(forKey: "id")
+                @AppStorage("id") var userID: String = ""
 
-                if (userID != nil) {
+//                if (userID != nil) {
+                if(userID.count != 0){
                     // User logged In
                     // Get Organization
                     print("STEP", "User logged In, Get Organization");
@@ -494,51 +549,23 @@ struct FeedRoomView: View {
                             // Show Private Feed (based on Employer ID)
                             print("STEP", "Show Private Feed (based on Employer ID)",empId);
                             return empId!
-//                            return showPrivate(context, cat, lastId, city, empId);
-//                            DispatchQueue.main.async {
-//                            apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: empId) { (users) in
-//                                self.req = users
-//                                self.IsLoading = false
-//                            }
-//                            }
                         } else {
-                            // Doesn't have Employer
-                            // Show Public Feed
                             print("STEP", "Doesn't have Employer, Show Public Feed");
                             return emptyempid
-//                            return showPublic(context, cat, lastId, city);
-//                            apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
-//                                self.req = users
-//                                self.IsLoading = false
-//                            }
                         }
 
                     } else {
-                        // Employer ID is ID
-                        // Show Private Feed
-                        let empId = userID!.data(using: .utf8)!.base64EncodedString()
+                        
+                        let empId = userID.data(using: .utf8)!.base64EncodedString()
                         print("STEP", "Employer ID is ID, Show Private Feed");
                         return empId
-//                        return showPrivate(context, cat, lastId, city, empId);
-//                        apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: empId) { (users) in
-//                            self.req = users
-//                            self.IsLoading = false
-//                        }
                     }
                 } else {
-                    // Show Public Feed
                     print("STEP", "Show Public Feed");
                     return emptyempid
-//                    return showPublic(context, cat, lastId, city);
-//                    apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
-//                        self.req = users
-//                        self.IsLoading = false
-//                    }
                 }
             }
         } else {
-            // Flag is empty
-            // Login Check
             print("STEP", "Flag is empty, Login Check");
             let id = UserDefaults.standard.string(forKey: "id");
 
@@ -559,22 +586,9 @@ struct FeedRoomView: View {
                         // Show Private Feed (based on Employer ID)
                         print("STEP", "Show Private Feed (based on Employer ID)");
                         return empId
-//                        return showPrivate(context, cat, lastId, city, empId);
-//                        apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: empId) { (users) in
-//                            self.req = users
-//                            self.IsLoading = false
-//                        }
                     } else {
-                        // Doesn't have Employer
-                       
-                        // Show Public Feed
                         print("STEP", "Doesn't have Employer, Show Public Feed");
                         return emptyempid
-//                        return showPublic(context, cat, lastId, city);
-//                        apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
-//                            self.req = users
-//                            self.IsLoading = false
-//                        }
                     }
                 } else {
                     // Corporate, Non-Profit User
@@ -583,22 +597,12 @@ struct FeedRoomView: View {
                     
                     let empId = id!.data(using: .utf8)!.base64EncodedString()
                     return empId
-//                    return showPrivate(context, cat, lastId, city, empId);
-//                    apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: empId) { (users) in
-//                        self.req = users
-//                        self.IsLoading = false
-//                    }
                 }
             } else {
                 // Not logged In
                 // Show Public Feed
                 print("STEP", "Not logged In, Show Public Feed");
                 return emptyempid
-//                return showPublic(context, cat, lastId, city);
-//                apiCall().getUsers(lastid: 0, cityid: filteredcityid,profileid: reqprofileid,empid: emptyempid) { (users) in
-//                    self.req = users
-//                    self.IsLoading = false
-//                }
             }
         }
     }
@@ -939,3 +943,10 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
   }
 }
 
+
+
+struct FlatLinkStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+    }
+}

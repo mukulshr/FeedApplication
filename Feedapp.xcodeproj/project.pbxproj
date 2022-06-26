@@ -36,7 +36,6 @@
 		E60A2C2C2828D296008D52ED /* FeedRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60A2C2B2828D296008D52ED /* FeedRoomView.swift */; };
 		E60A2C2E2828D2AF008D52ED /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60A2C2D2828D2AF008D52ED /* CommentView.swift */; };
 		E60A2C312828D30D008D52ED /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = E60A2C302828D30D008D52ED /* SDWebImageSwiftUI */; };
-		E615E5E6285E762A006AA5D3 /* RSKImageCropper in Frameworks */ = {isa = PBXBuildFile; productRef = E615E5E5285E762A006AA5D3 /* RSKImageCropper */; };
 		E63C90FA284D0BD300C8E7C2 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63C90F9284D0BD300C8E7C2 /* LoadingView.swift */; };
 		E63C90FC284E17BA00C8E7C2 /* muli.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E63C90FB284E17B900C8E7C2 /* muli.ttf */; };
 		E64E9A4728585A8500931D5B /* RegisterVoulnteerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64E9A4628585A8500931D5B /* RegisterVoulnteerViewModel.swift */; };
@@ -53,7 +52,6 @@
 		E67B9CEC285707A900F6268F /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67B9CEB285707A900F6268F /* ProfileViewModel.swift */; };
 		E67B9CEE285736B200F6268F /* feedlogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67B9CED285736B200F6268F /* feedlogic.swift */; };
 		E68954A228535FCF004D4DF8 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = E68954A128535FCF004D4DF8 /* AlertToast */; };
-		E68C0BD028603CFB00CEDBA3 /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = E68C0BCF28603CFB00CEDBA3 /* iPhoneNumberField */; };
 		E68C0BD22860436F00CEDBA3 /* Country_Code_Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68C0BD12860436F00CEDBA3 /* Country_Code_Input.swift */; };
 		E6AA9731284F01E8005F4D6C /* Font Awesome 6 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = E6AA972E284F01E8005F4D6C /* Font Awesome 6 Brands-Regular-400.otf */; };
 		E6AA9732284F01E8005F4D6C /* Font Awesome 6 Free-Solid-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = E6AA972F284F01E8005F4D6C /* Font Awesome 6 Free-Solid-900.otf */; };
@@ -144,9 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E68954A228535FCF004D4DF8 /* AlertToast in Frameworks */,
-				E615E5E6285E762A006AA5D3 /* RSKImageCropper in Frameworks */,
 				E60A2C312828D30D008D52ED /* SDWebImageSwiftUI in Frameworks */,
-				E68C0BD028603CFB00CEDBA3 /* iPhoneNumberField in Frameworks */,
 				E652EE04284F6A9E00AC8462 /* RichText in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -360,8 +356,6 @@
 				E60A2C302828D30D008D52ED /* SDWebImageSwiftUI */,
 				E652EE03284F6A9E00AC8462 /* RichText */,
 				E68954A128535FCF004D4DF8 /* AlertToast */,
-				E615E5E5285E762A006AA5D3 /* RSKImageCropper */,
-				E68C0BCF28603CFB00CEDBA3 /* iPhoneNumberField */,
 			);
 			productName = Feedapp;
 			productReference = E60A2BD32828C86D008D52ED /* Feedapp.app */;
@@ -439,8 +433,6 @@
 				E60A2C2F2828D30D008D52ED /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				E652EE02284F6A9E00AC8462 /* XCRemoteSwiftPackageReference "RichText" */,
 				E68954A028535FCE004D4DF8 /* XCRemoteSwiftPackageReference "AlertToast" */,
-				E615E5E4285E762A006AA5D3 /* XCRemoteSwiftPackageReference "RSKImageCropper" */,
-				E68C0BCE28603CFB00CEDBA3 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */,
 			);
 			productRefGroup = E60A2BD42828C86D008D52ED /* Products */;
 			projectDirPath = "";
@@ -690,7 +682,7 @@
 				DEVELOPMENT_TEAM = UUNJH84ZMG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = /Users/gagandeep/Desktop/Feedapp/Feedapp/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Feedapp/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -720,7 +712,7 @@
 				DEVELOPMENT_TEAM = UUNJH84ZMG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = /Users/gagandeep/Desktop/Feedapp/Feedapp/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Feedapp/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -865,14 +857,6 @@
 				kind = branch;
 			};
 		};
-		E615E5E4285E762A006AA5D3 /* XCRemoteSwiftPackageReference "RSKImageCropper" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ruslanskorb/RSKImageCropper.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
-			};
-		};
 		E652EE02284F6A9E00AC8462 /* XCRemoteSwiftPackageReference "RichText" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NuPlay/RichText.git";
@@ -889,14 +873,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		E68C0BCE28603CFB00CEDBA3 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/MojtabaHs/iPhoneNumberField.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.6.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -904,11 +880,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E60A2C2F2828D30D008D52ED /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
-		};
-		E615E5E5285E762A006AA5D3 /* RSKImageCropper */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E615E5E4285E762A006AA5D3 /* XCRemoteSwiftPackageReference "RSKImageCropper" */;
-			productName = RSKImageCropper;
 		};
 		E652EE03284F6A9E00AC8462 /* RichText */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -919,11 +890,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E68954A028535FCE004D4DF8 /* XCRemoteSwiftPackageReference "AlertToast" */;
 			productName = AlertToast;
-		};
-		E68C0BCF28603CFB00CEDBA3 /* iPhoneNumberField */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E68C0BCE28603CFB00CEDBA3 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */;
-			productName = iPhoneNumberField;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

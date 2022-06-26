@@ -12,7 +12,7 @@ struct ProfilePageView: View {
     @State var userid : Int = 0
     
     var body: some View {
-        NavigationView{
+//        NavigationView{
             ScrollView{
         ProfileDashboard(UserName: username)
                   
@@ -22,10 +22,11 @@ struct ProfilePageView: View {
                     maxHeight: .infinity)
              .background(Color.background)
              
-             .navigationBarHidden(true)
+//             .navigationBarHidden(true)
          
-//            .navigationBarTitle(Text(username).font(.custom("muli", size: 18)), displayMode: .inline).navigationBarHidden(true)
-        }
+            .navigationBarTitle(Text(username).font(.custom("muli", size: 18)), displayMode: .inline)
+//            .navigationBarHidden(true)
+//        }
     }
 }
 

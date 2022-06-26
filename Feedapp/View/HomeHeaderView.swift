@@ -209,10 +209,11 @@ struct FullModalCameraView: View {
     @State private var image = UIImage()
     
     
-    func aa (){
+    func aa () -> String{
         let imageData: Data? = image.jpegData(compressionQuality: 0.4)
         let imageStr = imageData?.base64EncodedString(options: .lineLength64Characters) ?? ""
-        print(imageStr,"imageString")
+        return imageStr
+        
     }
         
             
@@ -236,7 +237,9 @@ struct FullModalCameraView: View {
                               .edgesIgnoringSafeArea(.all)
                           
                     Button(action: {
-                       aa()
+                        HeaderViewModel().upload_pic(imagecode:aa(),onSuccess: { presentationMode.wrappedValue.dismiss()},onFailure:{  presentationMode.wrappedValue.dismiss()})
+                        presentationMode.wrappedValue.dismiss()
+//                       print(aa())
                     }){
                         HStack {
                             Image(systemName: "photo")
@@ -326,10 +329,11 @@ struct ModalPhotoLibraryView: View {
     @State private var image = UIImage()
     
     
-    func aa (){
+    func aa () -> String{
         let imageData: Data? = image.jpegData(compressionQuality: 0.4)
         let imageStr = imageData?.base64EncodedString(options: .lineLength64Characters) ?? ""
-        print(imageStr,"imageString")
+        return imageStr
+        
     }
         
             
@@ -356,7 +360,8 @@ struct ModalPhotoLibraryView: View {
                               .shadow(radius: 10)
                           
                     Button(action: {
-                       aa()
+                        HeaderViewModel().upload_pic(imagecode:aa(),onSuccess: {  presentationMode.wrappedValue.dismiss()},onFailure:{  presentationMode.wrappedValue.dismiss()})
+                        presentationMode.wrappedValue.dismiss()
                     }){
                         HStack {
                             Image(systemName: "photo")

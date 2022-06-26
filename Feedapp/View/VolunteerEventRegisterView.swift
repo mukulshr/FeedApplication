@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct VolunteerEventRegisterView: View {
-    
+    @State var postid: Int = 0
     @State private var showingModal = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var eventdata = events(eventInclusionCount:0, eventData: eventsdata(storyCreatorId:0,feedName:"-", eventLocationId:0,eventDateInstancId:0,eventDate:"-", hideName:0,cityId:0,stateId:0,countryId:0,elocation:"",start_time:"-",locationLag:"-",locationLat:"-"), eventInclusionData:["-"])
@@ -117,7 +117,7 @@ struct VolunteerEventRegisterView: View {
               
 
         }.onAppear {
-            geteventsdetail().getevents(postId: 0) { (evnt) in
+            geteventsdetail().getevents(postId: postid) { (evnt) in
                 self.eventdata = evnt
             print(evnt)
             }

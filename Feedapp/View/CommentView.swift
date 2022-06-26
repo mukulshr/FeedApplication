@@ -72,7 +72,7 @@ struct CommentView: View {
         VStack{
 //                ScrollView {
 
-//            ZStack{
+            ZStack{
             
               
                 
@@ -320,21 +320,24 @@ struct CommentView: View {
                 
                 
 
-                VStack(alignment: .center){
+                ScrollView{
                     
                     
                   
-                    
-                        Color.customGrey
-                            .ignoresSafeArea()
+//
+//                        Color.customGrey
+//                            .ignoresSafeArea()
                         Image("nodatafound")
                             .resizable()
                             .scaledToFit()
                             .padding(2)
                             .foregroundColor(Color.textYellow)
+                           
                     }
 
             }
+            
+        
                 
             
 //                    .navigationBarTitle(Text("Navigation title"))
@@ -358,7 +361,9 @@ struct CommentView: View {
 //        }
 //        }
        
-        
+            }.background(Color.customGrey.edgesIgnoringSafeArea(.all))
+            
+            Spacer()
         
        
         
@@ -502,7 +507,8 @@ struct CommentView: View {
             .onAppear {
                 self.testFunction()
             }
-            
+          
+        
             
     }
 }
