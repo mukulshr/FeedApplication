@@ -29,5 +29,12 @@ extension Color {
     static let conditionbg = Color("conditionbg")
     static let godrejgreen = Color("godrej_green")
     static let buttonviolet = Color("buttonviolet")
+    static let primarycolor = Color("primarycolor")
+    static let customteal = Color("customteal")
+    static let labelcolor = Color("labelcolor")
+    static let DarkGreen = Color("DarkGreen")
+    static let GreenGradient = Color("GreenGradient")
+    
+
 
 }

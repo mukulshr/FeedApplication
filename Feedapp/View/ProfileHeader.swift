@@ -63,7 +63,7 @@ var body: some View {
     .padding(.trailing, 15)
     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/,
            alignment: .leading)
-    .background(Color.white)
+    .background(Color.customGrey)
     .padding(.horizontal, 15)
 }
 }

@@ -417,7 +417,7 @@ struct Home: View {
                     } //: ZStack
                     .frame(maxWidth: .infinity,
                            maxHeight: .infinity)
-                    .background(Color.background)
+                    .background(Color.white)
                     .ignoresSafeArea()
                     .navigationBarHidden(true)
                 

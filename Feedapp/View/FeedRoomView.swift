@@ -85,7 +85,7 @@ struct FeedRoomView: View {
                         .foregroundColor(Color.black)
                     .padding(10)
                     .padding(.horizontal)
-                    .background(Color.white)
+                    .background(Color.customGrey)
                     .cornerRadius(20)
                     .padding(.horizontal)
                     .onTapGesture{
@@ -106,7 +106,7 @@ struct FeedRoomView: View {
                 .font(.custom("muli", size: 15))
                     .foregroundColor(Color.black)
                 .padding(10)
-                .background(Color.white)
+                .background(Color.customGrey)
                 .cornerRadius(20)
                 .padding(.horizontal)
                 
@@ -142,7 +142,7 @@ struct FeedRoomView: View {
                         Image(uiImage: UIImage(named: "location-thin")!)
                                 .resizable()
                             .foregroundColor(Color.black)
-                        .frame(width: 20, height: 25, alignment: .leading)
+                        .frame(width: 22, height: 30, alignment: .leading)
                         
                         VStack(alignment: .leading){
                             Text("\(user.cityName),\(user.stateName)")
@@ -170,69 +170,81 @@ struct FeedRoomView: View {
                                     }
                                    
 
-                            .foregroundColor(Color.black)
+                            .foregroundColor(Color.primarycolor)
                             Text(user.feedDate)
                                 .font(Font.Muli.muli(size: 12))
 
-                                .foregroundColor(Color.darkGrey)
+                                .foregroundColor(Color.customteal)
                         }
                         
                         Spacer()
-                        if user.feed_icon_type.count > 0{
+                        
+                        Button(action: {
                             
-                            
-                            if(user.webview_link != "popup"){
-                            
-                            NavigationLink(destination:
-                                GlobalView(endpoint: weblink(webview: user.webview_link, readmore: user.read_more_link))
-                            ) {
-
-                        Image(uiImage: UIImage(named: setIcons(iconCount: user.feed_icon_count, iconType: user.feed_icon_type ))!)
-                                .resizable()
-                            .foregroundColor(Color.black)
-                        .frame(width: 30, height: 35, alignment: .trailing)
-                      
-                            }
-                            }else{
+                            if(userloginID.count != 0){
+                           
+                            if user.userLike == "0"{
+                               
+                               
                                 
-                                if(userloginID.count != 0){
-                            
-                            NavigationLink(destination:
-                                            VolunteerEventRegisterView(postid: user.postId)
-                            ) {
-
-                        Image(uiImage: UIImage(named: setIcons(iconCount: user.feed_icon_count, iconType: user.feed_icon_type ))!)
-                                .resizable()
-                            .foregroundColor(Color.black)
-                        .frame(width: 30, height: 35, alignment: .trailing)
-                      
-                            }
                                 
-                                }else{
-                                    
-                                    NavigationLink(destination:
-                                        GlobalView(endpoint: weblink(webview: user.webview_link, readmore: user.read_more_link))
-                                    ) {
-
-                                Image(uiImage: UIImage(named: setIcons(iconCount: user.feed_icon_count, iconType: user.feed_icon_type ))!)
-                                        .resizable()
-                                    .foregroundColor(Color.black)
-                                .frame(width: 30, height: 35, alignment: .trailing)
-                              
+                                    DispatchQueue.main.async{
+                                        like(needpostid: user.postId,needId: activityid(id: user.id,posttype: user.post_type))
+                                        if let index = self.req.index(where: {$0.id == user.id}){
+                                        self.req[index].userLike = "1"
+                                            self.req[index].totalLikes += 1
+                                        print(self.req[index])
+                                        }
                                     }
                                     
-                                    
+                                
+                               
+                            }else if user.userLike == "1"{
+                                DispatchQueue.main.async{
+                                dislike(needpostid: user.postId,needId: activityid(id: user.id,posttype: user.post_type))
+                                if let index = self.req.index(where: {$0.id == user.id}){
+                                self.req[index].userLike = "0"
+                                    self.req[index].totalLikes -= 1
+                                print(self.req[index])
+                                }
                                 }
                                 
+                            }
                                 
-                                
+                            }else{
+                                loginalert = true
+                            }
+                           
+                        }, label: {
+                            VStack(spacing: 0){
+                            
+                            
+                            
+                            if user.userLike == "0"{
+                            Image(uiImage: UIImage(named: "heart-thin")!)
+                                    .resizable()
+                                    .foregroundColor(Color.red)
+                                .frame(width: 15, height: 15, alignment: .leading)
+                            }else if user.userLike == "1"{
+                            
+                            Image(uiImage: UIImage(named: "heart-solid")!)
+                                    .resizable()
+                                    .foregroundColor(Color.red)
+                                .frame(width: 15, height: 15, alignment: .leading)
+                            }
+                                Text("\(user.totalLikes)")
+                                    .font(Font.Muli.muli(size: 13))
+                                    .foregroundColor(Color.red)
+                            
                             }
                             
-                            
-                        }
+
+                        })
+                        
                         
                        
-                    }                    .padding(.horizontal, 15)
+                    }
+//                    .padding(.horizontal, 15)
                 }
                 
                     
@@ -241,14 +253,68 @@ struct FeedRoomView: View {
                 HStack(){
                    AnimatedImage(url: URL(string: user.feedUserPic))
                         .resizable()
-                        .frame(width: 30, height: 30)
+                        .frame(width: 25, height: 25)
                         .cornerRadius(25)
                     Text(user.feedUserName)
-                        .foregroundColor(Color.black)
+                        .foregroundColor(Color.primarycolor)
                     .padding(.trailing, 5)
-                    .font(.custom("muli", size: 18))
+                    .font(.custom("muli", size: 16))
+                    Spacer()
+                    if user.feed_icon_type.count > 0{
+                        
+                        
+                        if(user.webview_link != "popup"){
+                        
+                        NavigationLink(destination:
+                            GlobalView(endpoint: weblink(webview: user.webview_link, readmore: user.read_more_link))
+                        ) {
 
-                }.padding(.horizontal, 15)
+                    Image(uiImage: UIImage(named: setIcons(iconCount: user.feed_icon_count, iconType: user.feed_icon_type ))!)
+                            .resizable()
+                        .foregroundColor(Color.primarycolor)
+                    .frame(width: 30, height: 35, alignment: .trailing)
+                  
+                        }
+                        }else{
+                            
+                            if(userloginID.count != 0){
+                        
+                        NavigationLink(destination:
+                                        VolunteerEventRegisterView(postid: user.postId)
+                        ) {
+
+                    Image(uiImage: UIImage(named: setIcons(iconCount: user.feed_icon_count, iconType: user.feed_icon_type ))!)
+                            .resizable()
+                        .foregroundColor(Color.black)
+                    .frame(width: 30, height: 35, alignment: .trailing)
+                  
+                        }
+                            
+                            }else{
+                                
+                                NavigationLink(destination:
+                                    GlobalView(endpoint: weblink(webview: user.webview_link, readmore: user.read_more_link))
+                                ) {
+
+                            Image(uiImage: UIImage(named: setIcons(iconCount: user.feed_icon_count, iconType: user.feed_icon_type ))!)
+                                    .resizable()
+                                .foregroundColor(Color.black)
+                            .frame(width: 30, height: 35, alignment: .trailing)
+                          
+                                }
+                                
+                                
+                            }
+                            
+                            
+                            
+                        }
+                        
+                        
+                    }
+
+                }
+//                .padding(.horizontal, 15)
                     }
                     
                     
@@ -290,21 +356,40 @@ struct FeedRoomView: View {
 //                    }
                     
               
-                    LazyVStack(alignment:.leading ,spacing:0){
-                    Text(user.category_name)
-                            .foregroundColor(.white)
-                            .font(Font.Muli.muli(size: 13))
-                            .padding(.leading, 15)
-                            .lineLimit(1)
+                        VStack(alignment: .leading){
+//                        Button(action: {
+//                                   print("blah blah")
+//                                }) {
+//                                    Text(user.category_name)
+//                               }
+                            HStack{
+                        Text(user.category_name)
+                            .frame(alignment: .leading)
+                            .foregroundColor(.black)
+                            .font(Font.Muli.muli(size: 14))
+                            .padding(.horizontal,10)
+                            .padding(5)
+                            .background(
+                                ArrowShape()
+                                    .fill(Color.labelcolor))
+                             
+                                Spacer()
+                            }
+                //            .shadow(color:.black, radius: configuration.isPressed ? 2 : 4)
+//                    Text(user.category_name)
+//                            .foregroundColor(.gray)
+//                            .font(Font.Muli.muli(size: 13))
+//                            .padding(.leading, 15)
+//                            .lineLimit(1)
                         Text(user.name)
-                            .foregroundColor(.white)
-                            .font(Font.Muli.muli(size: 18))
-                            .padding(.leading, 15)
-                            .lineLimit(1)
-                    } .frame( height: 55)
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-                        .background(Rectangle().fill( LinearGradient(gradient: Gradient(colors: [.gradientdark, .gradientlight]), startPoint: .leading, endPoint: .trailing)
-                                                    ))
+                            .foregroundColor(Color.darkGrey)
+                            .font(Font.Muli.muli(size: 14))
+                            .padding(.leading, 5)
+                    }
+//                    .frame( height: 55)
+//                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+//                        .background(Rectangle().fill( LinearGradient(gradient: Gradient(colors: [.gradientdark, .gradientlight]), startPoint: .leading, endPoint: .trailing)
+//                                                    ))
                     
                         
                     }.buttonStyle(FlatLinkStyle())
@@ -312,64 +397,16 @@ struct FeedRoomView: View {
                     
                 
                 HStack() {
-                    
-                    Button(action: {
-                        
-                        if(userloginID.count != 0){
-                       
-                        if user.userLike == "0"{
-                           
-                           
-                            
-                            
-                                DispatchQueue.main.async{
-                                    like(needpostid: user.postId,needId: activityid(id: user.id,posttype: user.post_type))
-                                    if let index = self.req.index(where: {$0.id == user.id}){
-                                    self.req[index].userLike = "1"
-                                        self.req[index].totalLikes += 1
-                                    print(self.req[index])
-                                    }
-                                }
-                                
-                            
-                           
-                        }else if user.userLike == "1"{
-                            DispatchQueue.main.async{
-                            dislike(needpostid: user.postId,needId: activityid(id: user.id,posttype: user.post_type))
-                            if let index = self.req.index(where: {$0.id == user.id}){
-                            self.req[index].userLike = "0"
-                                self.req[index].totalLikes -= 1
-                            print(self.req[index])
-                            }
-                            }
-                            
-                        }
-                            
-                        }else{
-                            loginalert = true
-                        }
-                       
-                    }, label: {
-                        Text("Likes (\(user.totalLikes))")
+                    Button(action: {shareit(sharelink: user.read_more_link)}, label: {
+                        Image(uiImage: UIImage(named: "share-icon")!)
+                                .resizable()
+                                .foregroundColor(Color.textYellow)
+                            .frame(width: 20, height: 20, alignment: .leading)
+                        Text("Share")
                             .font(Font.Muli.muli(size: 13))
-                            .foregroundColor(Color.black)
+                            .foregroundColor(Color.darkGrey)
+                       
                         
-                        
-                        if user.userLike == "0"{
-                        Image(uiImage: UIImage(named: "heart-thin")!)
-                                .resizable()
-                                .foregroundColor(Color.black)
-                            .frame(width: 20, height: 20, alignment: .leading)
-                        }else if user.userLike == "1"{
-                        
-                        Image(uiImage: UIImage(named: "heart-solid")!)
-                                .resizable()
-                                .foregroundColor(Color.red)
-                            .frame(width: 20, height: 20, alignment: .leading)
-                        }
-                        
-                        
-
                     })
                     
 
@@ -383,13 +420,14 @@ struct FeedRoomView: View {
 
 
                         NavigationLink(destination: CommentView(need : user.name,needpostid: user.postId,needId: activityid(id: user.id,posttype: user.post_type))) {
-                            Text("Comment (\(user.totalComments))")
-                                .font(.custom("muli", size: 13))
-                                .foregroundColor(Color.black)
                             Image(uiImage: UIImage(named: "message-thin")!)
                                     .resizable()
-                                    .foregroundColor(Color.black)
+                                    .foregroundColor(Color.textYellow)
                                 .frame(width: 20, height: 20, alignment: .leading)
+                            Text("Comment")
+                                .font(.custom("muli", size: 13))
+                                .foregroundColor(Color.darkGrey)
+                            
 
                         }
 
@@ -401,13 +439,14 @@ struct FeedRoomView: View {
                     
                  
                         Button(action: {loginalert = true}, label: {
-                            Text("Comment (\(user.totalComments))")
-                                .font(.custom("muli", size: 13))
-                                .foregroundColor(Color.black)
                             Image(uiImage: UIImage(named: "message-thin")!)
                                     .resizable()
-                                    .foregroundColor(Color.black)
+                                    .foregroundColor(Color.textYellow)
                                 .frame(width: 20, height: 20, alignment: .leading)
+                            Text("Comment")
+                                .font(.custom("muli", size: 13))
+                                .foregroundColor(Color.darkGrey)
+                           
                         })
                        
                         
@@ -420,17 +459,42 @@ struct FeedRoomView: View {
 //                    .navigationBarTitle(Text(user.name))
 
                     Spacer()
-                    Button(action: {shareit(sharelink: user.read_more_link)}, label: {
-                        Text("Share")
-                            .font(Font.Muli.muli(size: 13))
-                            .foregroundColor(Color.black)
-                        Image(uiImage: UIImage(named: "share-icon")!)
-                                .resizable()
-                                .foregroundColor(Color.black)
-                            .frame(width: 20, height: 20, alignment: .leading)
-                        
-                    })
+                    if(userloginID.count != 0){
+
+
+
+                        NavigationLink(destination: CommentView(need : user.name,needpostid: user.postId,needId: activityid(id: user.id,posttype: user.post_type))) {
+                            Image(uiImage: UIImage(named: "messages-light")!)
+                                    .resizable()
+                                    .foregroundColor(Color.textYellow)
+                                .frame(width: 25, height: 20, alignment: .leading)
+                            Text("\(user.totalComments) Comment")
+                                .font(.custom("muli", size: 13))
+                                .foregroundColor(Color.darkGrey)
+                            
+
+                        }
+
+
+
+
+
+                    }else{
                     
+                 
+                        Button(action: {loginalert = true}, label: {
+                            Image(uiImage: UIImage(named: "messages-light")!)
+                                    .resizable()
+                                    .foregroundColor(Color.textYellow)
+                                .frame(width: 25, height: 20, alignment: .leading)
+                            Text("\(user.totalComments) Comment")
+                                .font(.custom("muli", size: 13))
+                                .foregroundColor(Color.darkGrey)
+                           
+                        })
+                       
+                        
+                    }
                     
                    
                     
@@ -453,7 +517,7 @@ struct FeedRoomView: View {
                 }
                 
                 
-                .padding(.horizontal, 15)
+//                .padding(.horizontal, 15)
 //                .padding(.top, 10)
                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/,
                        maxHeight: 60,
@@ -469,10 +533,12 @@ struct FeedRoomView: View {
                     
         .padding(.vertical, 5)
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
-        .background(Color.cardBackground)
-        .padding(.horizontal, 5)
+        .background(Color.white)
+        .padding(.horizontal, 10)
+//        .border(Color.gray)
+        .border(Color.customGrey, width: 1)
                 }
-            
+                .padding(.horizontal, 10)
             
             
         
@@ -695,17 +761,18 @@ struct HalfLayouttype: View {
                         Text(desc + "\n\n")
                             .font(.custom("muli", size: 16))
                             .lineLimit(3)
-                            .foregroundColor(Color.darkGrey)
-                            .padding(.leading, 15).padding(.bottom, 2)
+                            .foregroundColor(Color.black)
+//                            .padding(.leading, 15)
+                            .padding(.bottom, 2)
                             .frame( alignment: .leading)
-                            .padding(.trailing, 10)
+//                            .padding(.trailing, 10)
 
 
                             AnimatedImage(url: URL(string: img))
                             .resizable()
                             .padding(.trailing, 15)
                             .frame( height: UIScreen.screenHeight * 0.1)
-                                       .aspectRatio(16/9, contentMode: .fit)
+                            .aspectRatio(16/9, contentMode: .fit)
                             .frame( alignment: .trailing)
                             .onTapGesture {
                                 showModal = true
@@ -733,15 +800,15 @@ struct Fulllayouttype: View {
                     Text(desc + "\n\n")
                         .font(.custom("muli", size: 16))
                         .lineLimit(3)
-                        .foregroundColor(Color.darkGrey)
+                        .foregroundColor(Color.black)
                         .fixedSize(horizontal: false, vertical: true)
-                        .padding(.leading, 16).padding(.trailing, 16).padding(.bottom, 2)
+//                        .padding(.leading, 16).padding(.trailing, 16)
+                        .padding(.bottom, 2)
 
 
 
                         AnimatedImage(url: URL(string: img))
                         .resizable()
-                        .padding(.bottom, -10)
                         .frame( height: UIScreen.screenHeight * 0.3)
                         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
                         .onTapGesture {
@@ -770,9 +837,10 @@ struct Nonlayouttype: View {
                                 Text(desc + "\n\n")
                                     .font(.custom("muli", size: 16))
                                     .lineLimit(3)
-                                    .foregroundColor(Color.darkGrey)
+                                    .foregroundColor(Color.black)
                                     .fixedSize(horizontal: false, vertical: true)
-                                    .padding(.leading, 16).padding(.trailing, 16).padding(.bottom, 2)
+//                                    .padding(.leading, 16).padding(.trailing, 16)
+                                    .padding(.bottom, 2)
 
         }
         
@@ -941,6 +1009,39 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
       return hostingController.view
     }
   }
+}
+
+
+
+struct ArrowShape: Shape {
+    func path(in rect: CGRect) -> Path {
+        let xOffset = rect.size.width * 0.07
+        var path = Path()
+        path.move(to: CGPoint(x: 0, y: 0))
+        path.addLine(to: CGPoint(x: rect.size.width - xOffset, y: 0))
+        path.addLine(to: CGPoint(x: rect.size.width, y: rect.size.height / 2))
+        path.addLine(to: CGPoint(x: rect.size.width - xOffset, y: rect.size.height))
+        path.addLine(to: CGPoint(x: 0, y: rect.size.height))
+//        path.addLine(to: CGPoint(x: xOffset, y: rect.size.height / 2))
+        path.closeSubpath()
+        return path
+    }
+}
+
+
+struct ArrowButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundColor(.white)
+            .font(Font.Muli.muli(size: 14))
+//            .padding(.horizontal,50)
+            .padding(5)
+            .background(
+                ArrowShape()
+                    .fill(Color.cardShadowTint))
+//            .shadow(color:.black, radius: configuration.isPressed ? 2 : 4)
+            .scaleEffect(configuration.isPressed ? 0.9 : 1.0)
+    }
 }
 
 

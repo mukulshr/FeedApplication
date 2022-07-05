@@ -21,31 +21,34 @@ struct SplashScreenView: View {
 //
                
                                    
-                VStack() {
-    
-                    VStack{
-                    Image(uiImage: #imageLiteral(resourceName: "godrej_logo_white"))
-                        .resizable()
-                        .frame(width: UIScreen.screenWidth * 0.4, height: UIScreen.screenHeight * 0.15)
-                    Text("DoGood@Godrej").foregroundColor(.white).bold().font(.system(size: 24))
-                    }
-                    .padding(.top ,UIScreen.screenHeight * 0.05)
-                    
-               
-                Spacer()
-               
-    
-                    VStack{
-                    Image(uiImage: #imageLiteral(resourceName: "logo_white"))
-                        .resizable()
-                        .frame(width: UIScreen.screenWidth * 0.15, height: UIScreen.screenHeight * 0.075)
-                        Text("Powered by SuperHuman Race").foregroundColor(.white).bold().font(.system(size: UIScreen.screenWidth * 0.05))
-                    }
-                    .padding(.bottom ,UIScreen.screenHeight * 0.05)
-                    
-//                }
-                
-            }
+//                VStack() {
+//
+//                    VStack{
+//                    Image(uiImage: #imageLiteral(resourceName: "godrej_logo_white"))
+//                        .resizable()
+//                        .frame(width: UIScreen.screenWidth * 0.4, height: UIScreen.screenHeight * 0.15)
+//                    Text("DoGood@Godrej").foregroundColor(.white).bold().font(.system(size: 24))
+//                    }
+//                    .padding(.top ,UIScreen.screenHeight * 0.05)
+//
+//
+//                Spacer()
+//
+//
+//                    VStack{
+//                    Image(uiImage: #imageLiteral(resourceName: "logo_white"))
+//                        .resizable()
+//                        .frame(width: UIScreen.screenWidth * 0.15, height: UIScreen.screenHeight * 0.075)
+//                        Text("Powered by SuperHuman Race").foregroundColor(.white).bold().font(.system(size: UIScreen.screenWidth * 0.05))
+//                    }
+//                    .padding(.bottom ,UIScreen.screenHeight * 0.05)
+//
+////                }
+//
+//            }
+            Image(uiImage: #imageLiteral(resourceName: "app_page"))
+                .resizable()
+                .frame(width: UIScreen.screenWidth * 1, height: UIScreen.screenHeight * 1)
             .onAppear {
                 if UserDefaults.standard.object(forKey: "feedFlag") != nil{
                     print("kuch to hai")
@@ -66,11 +69,11 @@ struct SplashScreenView: View {
                 }
             }.frame( maxWidth: .infinity,maxHeight: UIScreen.screenHeight)
                 .ignoresSafeArea()
-            .background(
-                Image("app_page")
-                        .resizable()
-                        .ignoresSafeArea()
-                )
+//            .background(
+//                Image("app_page")
+//                        .resizable()
+//                        .ignoresSafeArea()
+//                )
         }
     }
 }
