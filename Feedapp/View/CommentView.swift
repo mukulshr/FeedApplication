@@ -102,14 +102,14 @@ struct CommentView: View {
                     Text(cmnt.userName)
                             .frame(alignment:.leading)
 //                            .fontWeight(.bold)
-                            .font(.custom("muli", size: 15))
+                            .font(.custom("Muli-regular", size: 15))
                         Text(cmnt.created_at)
                                     .frame(alignment:.leading)
-                                    .font(.custom("muli", size: 10))
+                                    .font(.custom("Muli-regular", size: 10))
                         
                 Text(cmnt.post_comment)
                             .frame(alignment:.leading)
-                            .font(.custom("muli", size: 15))
+                            .font(.custom("Muli-regular", size: 15))
                 }
                     .padding()
                  .frame(minWidth: 0,  maxWidth: .infinity, minHeight: 0,  alignment: .leading)
@@ -134,7 +134,7 @@ struct CommentView: View {
 //
 //                            }, label: {
                                 Text("\(cmnt.replyCount) Reply")
-                                    .font(.custom("muli", size: 15))
+                                    .font(.custom("Muli-regular", size: 15))
                                     .foregroundColor(Color.black)
                                     .onTapGesture{
                                         getcommentreplies().getcommentreply(needId: cmnt.id){ (replies) in
@@ -162,7 +162,7 @@ struct CommentView: View {
                       
                 }, label: {
                     Text("Edit")
-            })                                    .font(.custom("muli", size: 15))
+            })                                    .font(.custom("Muli-regular", size: 15))
                             .foregroundColor(Color.black)
 
                     Button(
@@ -176,7 +176,7 @@ struct CommentView: View {
                        
                     }, label: {
                         Text("Delete")
-                            .font(.custom("muli", size: 15))
+                            .font(.custom("Muli-regular", size: 15))
                             .foregroundColor(Color.black)
 
                 })
@@ -200,7 +200,7 @@ struct CommentView: View {
                                     print(AuthToken!)
                             }, label: {
                                 Text("\(cmnt.replyCount) Reply")
-                                    .font(.custom("muli", size: 15))
+                                    .font(.custom("Muli-regular", size: 15))
                                                   .foregroundColor(Color.black)
                             })
                         }
@@ -220,7 +220,7 @@ struct CommentView: View {
                             condtext = "Reply to \(cmnt.userName)"
                     }, label: {
                         Text("Reply")
-                            .font(.custom("muli", size: 15))
+                            .font(.custom("Muli-regular", size: 15))
                                           .foregroundColor(Color.black)
                     }).padding(.trailing)
                 }
@@ -245,14 +245,14 @@ struct CommentView: View {
                                     Text(reply.userName)
                                             .frame(alignment:.leading)
                 //                            .fontWeight(.bold)
-                                            .font(.custom("muli", size: 15))
+                                            .font(.custom("Muli-regular", size: 15))
                                         Text(reply.created_at)
                                                     .frame(alignment:.leading)
-                                                    .font(.custom("muli", size: 10))
+                                                    .font(.custom("Muli-regular", size: 10))
                                         
                                 Text(reply.comment_reply)
                                             .frame(alignment:.leading)
-                                            .font(.custom("muli", size: 15))
+                                            .font(.custom("Muli-regular", size: 15))
                                 }
                                     .padding()
                                  .frame(minWidth: 0,  maxWidth: .infinity, minHeight: 0,  alignment: .leading)
@@ -282,7 +282,7 @@ struct CommentView: View {
                                 }, label: {
                                     Text("Edit")
                                     
-                                        .font(.custom("muli", size: 15))
+                                        .font(.custom("Muli-regular", size: 15))
                                                       .foregroundColor(Color.black)
                             })
                                     Button(
@@ -294,7 +294,7 @@ struct CommentView: View {
                                        
                                     }, label: {
                                         Text("Delete")
-                                            .font(.custom("muli", size: 15))
+                                            .font(.custom("Muli-regular", size: 15))
                                                           .foregroundColor(Color.black)
                                 })
                                     }.padding(.trailing)

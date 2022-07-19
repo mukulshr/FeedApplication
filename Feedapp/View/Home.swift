@@ -164,7 +164,7 @@ struct Home: View {
                                                        .frame(width: 25, height: 25)
                                                        
                                                        Text("VOLUNTEER HOURS")
-                                                           .font(.custom("muli", size: 18))
+                                                           .font(.custom("Muli-regular", size: 18))
                                                            .frame(alignment:.leading)
                                                            .padding(.leading ,5)
                                                            .foregroundColor(Color.white)
@@ -185,7 +185,7 @@ struct Home: View {
                                                        .frame(width: 25, height: 25)
                                                        
                                                        Text("CREATE STORY")
-                                                           .font(.custom("muli", size: 18))
+                                                           .font(.custom("Muli-regular", size: 18))
                                                            .frame(alignment:.leading)
                                                            .padding(.leading ,5)
                                                            .foregroundColor(Color.white)
@@ -202,7 +202,7 @@ struct Home: View {
                                                        .frame(width: 25, height: 25)
                                                        
                                                        Text("WEEKLY GOALS")
-                                                           .font(.custom("muli", size: 18))
+                                                           .font(.custom("Muli-regular", size: 18))
                                                            .frame(alignment:.leading)
                                                            .padding(.leading ,5)
                                                            .foregroundColor(Color.white)
@@ -219,7 +219,7 @@ struct Home: View {
                                                        .frame(width: 25, height: 25)
                                                        
                                                        Text("CREATE CHALLENGE")
-                                                           .font(.custom("muli", size: 18))
+                                                           .font(.custom("Muli-regular", size: 18))
                                                            .frame(alignment:.leading)
                                                            .padding(.leading ,5)
                                                            .foregroundColor(Color.white)
@@ -236,7 +236,7 @@ struct Home: View {
                                                        .frame(width: 25, height: 25)
                                                        
                                                        Text("FRIENDS")
-                                                           .font(.custom("muli", size: 18))
+                                                           .font(.custom("Muli-regular", size: 18))
                                                            .frame(alignment:.leading)
                                                            .padding(.leading ,5)
                                                            .foregroundColor(Color.white)
@@ -257,7 +257,7 @@ struct Home: View {
                                                        .frame(width: 25, height: 25)
                                                        
                                                        Text("LOG OUT")
-                                                           .font(.custom("muli", size: 18))
+                                                           .font(.custom("Muli-regular", size: 18))
                                                            .frame(alignment:.leading)
                                                            .padding(.leading ,5)
                                                            .foregroundColor(Color.white)
@@ -365,7 +365,7 @@ struct Home: View {
                                     Text("Logout")
 //                                            .padding(.horizontal)
                                         .foregroundColor(Color.black)
-                                        .font(.custom("muli", size: 20))
+                                        .font(.custom("Muli-regular", size: 20))
                                         Spacer()
                                     }
                                     
@@ -373,7 +373,7 @@ struct Home: View {
                                     Text("Are you sure you want to Logout ?")
 //                                            .padding(.horizontal)
                                         .foregroundColor(Color.black)
-                                        .font(.custom("muli", size: 16))
+                                        .font(.custom("Muli-regular", size: 16))
                                     
                                     }
                                     
@@ -382,14 +382,14 @@ struct Home: View {
                                         Text("CANCEL")
                                                 .foregroundColor(Color.purple)
 //                                            .padding(10)
-                                            .font(.custom("muli", size: 15))
+                                            .font(.custom("Muli-regular", size: 15))
                                             .padding(.horizontal,5)
                                             .onTapGesture{self.showinglogout = false}
                                         
                                     Text("OK")
                                             .foregroundColor(Color.purple)
 //                                        .padding(10)
-                                        .font(.custom("muli", size: 15))
+                                        .font(.custom("Muli-regular", size: 15))
                                         .padding(.horizontal,5)
                                         .onTapGesture{
                                             logout()

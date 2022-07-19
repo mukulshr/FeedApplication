@@ -63,7 +63,7 @@ struct ProfileFeed: View {
                 if (filteredcity != ""){
                 
                 Text(filteredcity)
-                    .font(.custom("muli", size: 15))
+                    .font(.custom("Muli-Regular", size: 15))
                         .foregroundColor(Color.black)
                     .padding(10)
                     .background(Color.white)
@@ -159,7 +159,7 @@ struct ProfileFeed: View {
                         Text(user.feedUserName)
                             .foregroundColor(Color.black)
                         .padding(.trailing, 5)
-                        .font(.custom("muli", size: 18))
+                        .font(.custom("Muli-Regular", size: 18))
 
                     }.padding(.horizontal, 15)
                             .onTapGesture{
@@ -200,7 +200,7 @@ struct ProfileFeed: View {
                         
     //                    VStack{
     //                        RichText(html: "attempted a quiz - <strong>Save Energy this Summer! </strong> on <strong>06 May 2022</strong> at <strong>06:29 PM</strong>")
-    //                            .font(.custom("muli", size: 18))
+    //                            .font(.custom("Muli-regular", size: 18))
     //                            .foregroundColor(Color.darkGrey)
     //                    }
                         
@@ -284,7 +284,7 @@ struct ProfileFeed: View {
                         
                         NavigationLink(destination: CommentView(need : user.category_name,needpostid: user.postId,needId: activityid(id: user.id,posttype: user.post_type))) {
                             Text("Comment (\(user.totalComments))")
-                                .font(.custom("muli", size: 13))
+                                .font(.custom("Muli-Regular", size: 13))
                                 .foregroundColor(Color.black)
                             Image(uiImage: UIImage(named: "message-thin")!)
                                     .resizable()

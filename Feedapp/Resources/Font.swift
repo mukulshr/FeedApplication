@@ -39,7 +39,7 @@ extension Font {
     struct Muli{
         
         static func muli(size: CGFloat) -> Font {
-            .custom("muli", size: size)
+            .custom("Muli-regular", size: size)
         }
 
     }

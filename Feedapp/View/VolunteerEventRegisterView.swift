@@ -24,7 +24,7 @@ struct VolunteerEventRegisterView: View {
                     .frame(width: 25, height: 25)
                     
                     Text(eventdata.eventData.feedName)
-                        .font(.custom("muli", size: 18))
+                        .font(.custom("Muli-regular", size: 18))
                         .frame(alignment:.leading)
                         .padding(.leading ,5)
                         .foregroundColor(Color.black)
@@ -37,7 +37,7 @@ struct VolunteerEventRegisterView: View {
                     .frame(width: 25, height: 25)
                     
                     Text(eventdata.eventData.eventDate)
-                        .font(.custom("muli", size: 18))
+                        .font(.custom("Muli-regular", size: 18))
                         .frame(alignment:.leading)
                         .padding(.leading ,5)
                         .foregroundColor(Color.black)
@@ -50,7 +50,7 @@ struct VolunteerEventRegisterView: View {
                     .frame(width: 25, height: 25)
                     
                     Text(eventdata.eventData.start_time)
-                        .font(.custom("muli", size: 18))
+                        .font(.custom("Muli-regular", size: 18))
                         .frame(alignment:.leading)
                         .padding(.leading ,5)
                         .foregroundColor(Color.black)
@@ -63,7 +63,7 @@ struct VolunteerEventRegisterView: View {
                     .frame(width: 25, height: 25)
                     
                     Text(eventdata.eventData.feedName)
-                        .font(.custom("muli", size: 18))
+                        .font(.custom("Muli-regular", size: 18))
                         .frame(alignment:.leading)
                         .padding(.leading ,5)
                         .foregroundColor(Color.black)
@@ -76,7 +76,7 @@ struct VolunteerEventRegisterView: View {
                     .frame(width: 25, height: 25)
                     
                     Text(eventdata.eventInclusionData[0])
-                        .font(.custom("muli", size: 18))
+                        .font(.custom("Muli-regular", size: 18))
                         .frame(alignment:.leading)
                         .padding(.leading ,5)
                         .foregroundColor(Color.black)
@@ -84,7 +84,7 @@ struct VolunteerEventRegisterView: View {
                     
                     if (eventdata.eventInclusionCount != 1){
                     Text("+ \(eventdata.eventInclusionCount - 1) Inclusions")
-                        .font(.custom("muli", size: 18))
+                        .font(.custom("Muli-regular", size: 18))
                         .frame(alignment:.leading)
                         .padding(.leading ,5)
                         .foregroundColor(Color.textYellow)
@@ -98,14 +98,14 @@ struct VolunteerEventRegisterView: View {
                 
                 HStack(alignment: .bottom,spacing: 30){
                 Text("CANCEL")
-                    .font(.custom("muli", size: 15))
+                    .font(.custom("Muli-regular", size: 15))
                         .foregroundColor(Color.black)
                     .padding(10)
                     .background(Color.white)
                     .cornerRadius(5)
                     .onTapGesture{self.presentationMode.wrappedValue.dismiss()}
                 Text("CONFIRM")
-                    .font(.custom("muli", size: 15))
+                    .font(.custom("Muli-regular", size: 15))
                         .foregroundColor(Color.black)
                     .padding(10)
                     .background(Color.blue)

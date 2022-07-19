@@ -16,7 +16,7 @@ struct Login: View {
 //            Image(uiImage: #imageLiteral(resourceName: "godrej_logo_white"))
 //                .resizable()
 //                .frame(width: UIScreen.screenWidth * 0.30, height: UIScreen.screenHeight * 0.15)
-//            Text("DoGood@Godrej").foregroundColor(.white).bold().font(.custom("muli",size: 20))
+//            Text("DoGood@Godrej").foregroundColor(.white).bold().font(.custom("Muli-regular",size: 20))
 //                    .padding(.top ,-30)
 //            }
 //            .padding(.top ,-UIScreen.screenHeight * 0.05)
@@ -52,7 +52,7 @@ Button(action:{
                     .cornerRadius(50.0)
                     .shadow(color: Color.black.opacity(0.08), radius: 60)
 //                Spacer()
-                Text("Forgot Password ?").foregroundColor(.white).bold().font(.custom("muli", size: 16))
+                Text("Forgot Password ?").foregroundColor(.white).bold().font(.custom("Muli-regular", size: 16))
                     .onTapGesture{self.showingModal = true}
                 
                 
@@ -109,9 +109,9 @@ Button(action:{
                 
                 
                 
-                Text("Not superhuman yet ?").foregroundColor(.white).bold().font(.custom("muli", size: UIScreen.screenWidth * 0.05))
+                Text("Not superhuman yet ?").foregroundColor(.white).bold().font(.custom("Muli-regular", size: UIScreen.screenWidth * 0.05))
                 NavigationLink(destination: SignUp()) {
-                Text("Sign-up today").foregroundColor(.white).bold().font(.custom("muli", size: 24))
+                Text("Sign-up today").foregroundColor(.white).bold().font(.custom("Muli-regular", size: 24))
                 }
                 Spacer()
 //}
@@ -123,7 +123,7 @@ Button(action:{
 //            Image(uiImage: #imageLiteral(resourceName: "logo_white"))
 //                .resizable()
 //                .frame(width: 40, height: 45)
-//                Text("Powered by SuperHuman Race").foregroundColor(.white).bold().font(.custom("muli", size: UIScreen.screenWidth * 0.05))
+//                Text("Powered by SuperHuman Race").foregroundColor(.white).bold().font(.custom("Muli-regular", size: UIScreen.screenWidth * 0.05))
 //                    .padding(.top , -10)
 //                    .padding(.bottom ,UIScreen.screenHeight * 0.1)
 //            }

@@ -24,7 +24,7 @@ struct ProfilePageView: View {
              
 //             .navigationBarHidden(true)
          
-            .navigationBarTitle(Text(username).font(.custom("muli", size: 18)), displayMode: .inline)
+            .navigationBarTitle(Text(username).font(.custom("Muli-Regular", size: 18)), displayMode: .inline)
 //            .navigationBarHidden(true)
 //        }
     }
