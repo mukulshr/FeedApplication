@@ -96,7 +96,7 @@ struct HomeHeaderView: View {
                     
                         Image.profile_pic
                                 .resizable()
-//                                          .aspectRatio(contentMode: .fit)
+                                          .aspectRatio(contentMode: .fit)
                                           .clipShape(Circle())
                                           .overlay(Circle().stroke(Color.black, lineWidth: 1))
                             

@@ -22,7 +22,7 @@ struct Home: View {
     
     var body: some View {
         
-      
+        
             
 //            ZStack(alignment: .bottom) {
         NavigationView {
@@ -423,7 +423,7 @@ struct Home: View {
                 
                     .edgesIgnoringSafeArea(.top)
                 }
-    }
+    }.navigationViewStyle(StackNavigationViewStyle())
 //                VStack {
 //
 //

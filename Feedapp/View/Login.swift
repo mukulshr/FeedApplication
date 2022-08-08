@@ -1,28 +1,20 @@
 
 import SwiftUI
 
+import AlertToast
+
+
 struct Login: View {
     @State private var email = ""
     @State private var password = ""
     @State private var showingModal = false
     @State private var stringOfTextField: String = String()
-    
+    @State private var showAlert = false
     @EnvironmentObject var login: PostViewModel
     var body: some View {
         ZStack{
         VStack() {
 
-//            VStack{
-//            Image(uiImage: #imageLiteral(resourceName: "godrej_logo_white"))
-//                .resizable()
-//                .frame(width: UIScreen.screenWidth * 0.30, height: UIScreen.screenHeight * 0.15)
-//            Text("DoGood@Godrej").foregroundColor(.white).bold().font(.custom("Muli-regular",size: 20))
-//                    .padding(.top ,-30)
-//            }
-//            .padding(.top ,-UIScreen.screenHeight * 0.05)
-            
-       
-//            VStack {
     
 TextField("Email", text: $email)
     .font(.title3)
@@ -41,7 +33,9 @@ SecureField("Password", text: $password)
                            .cornerRadius(50.0)
                            .shadow(color: Color.black.opacity(0.08), radius: 60)
 Button(action:{
-    login.login(email: email, password: password)
+   
+    
+    login.login(onSuccess: {print("fetched successfully")}, onFailure: { showAlert.toggle()},email: email, password: password)
 }){
     Text("SIGN IN TO SAVE THE WORLD").foregroundColor(.white).bold()
 }.padding(UIScreen.screenHeight * 0.02)
@@ -54,11 +48,6 @@ Button(action:{
 //                Spacer()
                 Text("Forgot Password ?").foregroundColor(.white).bold().font(.custom("Muli-regular", size: 16))
                     .onTapGesture{self.showingModal = true}
-                
-                
-                
-
-                    
                 
                 
                 HStack(spacing:40){
@@ -114,24 +103,7 @@ Button(action:{
                 Text("Sign-up today").foregroundColor(.white).bold().font(.custom("Muli-regular", size: 24))
                 }
                 Spacer()
-//}
-//            .padding()
 
-       
-//
-//            VStack(alignment: .center){
-//            Image(uiImage: #imageLiteral(resourceName: "logo_white"))
-//                .resizable()
-//                .frame(width: 40, height: 45)
-//                Text("Powered by SuperHuman Race").foregroundColor(.white).bold().font(.custom("Muli-regular", size: UIScreen.screenWidth * 0.05))
-//                    .padding(.top , -10)
-//                    .padding(.bottom ,UIScreen.screenHeight * 0.1)
-//            }
-           
-            
-//                }
-            
-        
     }.frame( maxWidth: .infinity)
 //            .ignoresSafeArea()
         .background(
@@ -141,6 +113,13 @@ Button(action:{
                     .aspectRatio(contentMode: .fill)
             )
             
+            
+        .toast(isPresenting: $showAlert){
+            
+          
+            AlertToast(displayMode: .hud, type: .regular, title: "Unable To Login")
+           
+        }
             
             
             if $showingModal.wrappedValue {

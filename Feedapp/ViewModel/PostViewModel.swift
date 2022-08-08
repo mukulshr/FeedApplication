@@ -13,7 +13,10 @@ class PostViewModel: ObservableObject {
         }
     }
     
-    func login(email: String, password: String){
+  
+    
+    func login(onSuccess: @escaping () -> Void, onFailure: @escaping () -> Void,email: String, password: String){
+   
         let parameters = "{\r\n    \"action\": \"authenticate\",\r\n    \"data\": {\r\n        \"username\": \"\(email)\",\r\n        \"password\": \"\(password)\"\r\n    }\r\n}"
         let postData = parameters.data(using: .utf8)
 
@@ -52,12 +55,11 @@ class PostViewModel: ObservableObject {
             } catch let error as NSError {
                 print("Error al hacer POST", error.localizedDescription)
                 DispatchQueue.main.async {
-                    self.authenticated = 2
+                    print("Unable to Login")
                 }
             }
         }.resume()
     }
-    
     
     
     

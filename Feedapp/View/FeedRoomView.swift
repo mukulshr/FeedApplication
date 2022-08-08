@@ -20,7 +20,7 @@ struct FeedRoomView: View {
     //     var flag = UserDefaults.standard.string(forKey: "feedFlag")!;
     @AppStorage("feedFlag") var flag: String = ""
     @AppStorage("id") var userloginID: String = ""
-    
+    @State private var AuthToken = UserDefaults.standard.string(forKey: "Token")
     
     
     @Binding var loginalert: Bool
@@ -128,15 +128,13 @@ struct FeedRoomView: View {
                 }
                 
                 
-                LazyVStack(spacing: 10){
+                
+                LazyVStack(spacing: 15){
                     ForEach(req, id: \.id) { user in
                         
                         
                         
-                        //            Text(room.roomName)
-                        //                .font(Font.Nunito.bold(size: 16))
-                        //                .foregroundColor(Color.textBlack)
-                        //
+               
                         LazyVStack(alignment: .leading, spacing: 10) {
                             if let groupName = user.feed_type_name {
                                 HStack() {
@@ -145,9 +143,11 @@ struct FeedRoomView: View {
                                         .foregroundColor(Color.black)
                                         .frame(width: 22, height: 30, alignment: .leading)
                                     
-                                    VStack(alignment: .leading){
-                                        Text("\(user.cityName),\(user.stateName)")
-                                            .font(Font.Muli.muli(size: 16))
+                                    VStack(alignment: .leading, spacing: 4){
+                                        Text("\(user.cityName) , \(user.stateName)")
+                                            .font(Font.Muli.muli(size: 14))
+                                            .textCase(.uppercase)
+
                                             .onTapGesture{
                                                 
                                                 apiCall().getUsers(lastid: 0, cityid: user.city,profileid: reqprofileid,empid: checkFeedType()) { (users) in
@@ -172,8 +172,10 @@ struct FeedRoomView: View {
                                         
                                         
                                             .foregroundColor(Color.primarycolor)
+                                        
+                                        
                                         Text(user.feedDate)
-                                            .font(Font.Muli.muli(size: 12))
+                                            .font(Font.Muli.muli(size: 14))
                                         
                                             .foregroundColor(Color.customteal)
                                     }
@@ -234,7 +236,7 @@ struct FeedRoomView: View {
                                                     .frame(width: 15, height: 15, alignment: .leading)
                                             }
                                             Text("\(user.totalLikes)")
-                                                .font(Font.Muli.muli(size: 13))
+                                                .font(Font.Muli.muli(size: 14))
                                                 .foregroundColor(Color.red)
                                             
                                         }
@@ -245,7 +247,7 @@ struct FeedRoomView: View {
                                     
                                     
                                 }
-                                //                    .padding(.horizontal, 15)
+                                .padding(.top, 5)
                             }
                             
                             
@@ -259,7 +261,7 @@ struct FeedRoomView: View {
                                     Text(user.feedUserName)
                                         .foregroundColor(Color.primarycolor)
                                         .padding(.trailing, 5)
-                                        .font(.custom("muli", size: 16))
+                                        .font(.custom("muli", size: 13))
                                     Spacer()
                                     if user.feed_icon_type.count > 0{
                                         
@@ -273,7 +275,7 @@ struct FeedRoomView: View {
                                                 Image(uiImage: UIImage(named: setIcons(iconCount: user.feed_icon_count, iconType: user.feed_icon_type ))!)
                                                     .resizable()
                                                     .foregroundColor(Color.primarycolor)
-                                                    .frame(width: 30, height: 35, alignment: .trailing)
+                                                    .frame(width: 30, height: 30, alignment: .trailing)
                                                 
                                             }
                                         }else{
@@ -287,7 +289,7 @@ struct FeedRoomView: View {
                                                     Image(uiImage: UIImage(named: setIcons(iconCount: user.feed_icon_count, iconType: user.feed_icon_type ))!)
                                                         .resizable()
                                                         .foregroundColor(Color.black)
-                                                        .frame(width: 30, height: 35, alignment: .trailing)
+                                                        .frame(width: 30, height: 30, alignment: .trailing)
                                                     
                                                 }
                                                 
@@ -300,7 +302,7 @@ struct FeedRoomView: View {
                                                     Image(uiImage: UIImage(named: setIcons(iconCount: user.feed_icon_count, iconType: user.feed_icon_type ))!)
                                                         .resizable()
                                                         .foregroundColor(Color.black)
-                                                        .frame(width: 30, height: 35, alignment: .trailing)
+                                                        .frame(width: 30, height: 30, alignment: .trailing)
                                                     
                                                 }
                                                 
@@ -314,7 +316,7 @@ struct FeedRoomView: View {
                                         
                                     }
                                     
-                                }
+                                }  .padding(.vertical, 15)
                             }
                             
                             
@@ -345,7 +347,7 @@ struct FeedRoomView: View {
                                     HStack{
                                         Text(user.category_name)
                                             .frame(alignment: .leading)
-                                            .foregroundColor(.gray)
+                                            .foregroundColor(Color.darkGrey)
                                             .font(Font.Muli.muli(size: 14))
                                             .padding(.horizontal,10)
                                             .padding(5)
@@ -377,9 +379,9 @@ struct FeedRoomView: View {
                                     Image(uiImage: UIImage(named: "share-icon")!)
                                         .resizable()
                                         .foregroundColor(Color.textYellow)
-                                        .frame(width: 20, height: 20, alignment: .leading)
+                                        .frame(width: 15, height: 15, alignment: .leading)
                                     Text("Share")
-                                        .font(Font.Muli.muli(size: 13))
+                                        .font(Font.Muli.muli(size: 14))
                                         .foregroundColor(Color.darkGrey)
                                     
                                     
@@ -399,9 +401,9 @@ struct FeedRoomView: View {
                                         Image(uiImage: UIImage(named: "message-thin")!)
                                             .resizable()
                                             .foregroundColor(Color.textYellow)
-                                            .frame(width: 20, height: 20, alignment: .leading)
+                                            .frame(width: 15, height: 15, alignment: .leading)
                                         Text("Comment")
-                                            .font(.custom("muli", size: 13))
+                                            .font(.custom("muli", size: 14))
                                             .foregroundColor(Color.darkGrey)
                                         
                                         
@@ -418,9 +420,9 @@ struct FeedRoomView: View {
                                         Image(uiImage: UIImage(named: "message-thin")!)
                                             .resizable()
                                             .foregroundColor(Color.textYellow)
-                                            .frame(width: 20, height: 20, alignment: .leading)
+                                            .frame(width: 15, height: 15, alignment: .leading)
                                         Text("Comment")
-                                            .font(.custom("muli", size: 13))
+                                            .font(.custom("muli", size: 14))
                                             .foregroundColor(Color.darkGrey)
                                         
                                     })
@@ -443,9 +445,9 @@ struct FeedRoomView: View {
                                         Image(uiImage: UIImage(named: "messages-light")!)
                                             .resizable()
                                             .foregroundColor(Color.textYellow)
-                                            .frame(width: 25, height: 20, alignment: .leading)
+                                            .frame(width: 20, height: 15, alignment: .leading)
                                         Text("\(user.totalComments) Comment")
-                                            .font(.custom("muli", size: 13))
+                                            .font(.custom("muli", size: 14))
                                             .foregroundColor(Color.darkGrey)
                                         
                                         
@@ -462,9 +464,9 @@ struct FeedRoomView: View {
                                         Image(uiImage: UIImage(named: "messages-light")!)
                                             .resizable()
                                             .foregroundColor(Color.textYellow)
-                                            .frame(width: 25, height: 20, alignment: .leading)
+                                            .frame(width: 20, height: 15, alignment: .leading)
                                         Text("\(user.totalComments) Comment")
-                                            .font(.custom("muli", size: 13))
+                                            .font(.custom("muli", size: 14))
                                             .foregroundColor(Color.darkGrey)
                                         
                                     })
@@ -510,7 +512,7 @@ struct FeedRoomView: View {
                     .padding(.vertical, 5)
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
                     .background(Color.white)
-                    .padding(.horizontal, 10)
+                    .padding(.horizontal, 15)
                     //        .border(Color.gray)
                     .border(Color.customGrey, width: 1)
                 }
@@ -550,6 +552,7 @@ struct FeedRoomView: View {
         
     }
     
+ 
     
     func checkFeedType() -> String {
         self.IsLoading = true
@@ -660,11 +663,12 @@ struct FeedRoomView: View {
 
 
 func like(needpostid: Int,needId: Int) {
+    @State var AuthToken = UserDefaults.standard.string(forKey: "Token")
     let parameters = "{\r\n    \"action\": \"like\",\r\n    \"data\": {\r\n        \"interaction\": \"like\",\r\n        \"actionType\": \"create\",\r\n        \"postId\": \(needpostid),\r\n        \"activityId\": \(needId)\r\n    }\r\n}"
     let postData = parameters.data(using: .utf8)
     
     var request = URLRequest(url: URL(string: "https://www.mysuperhumanrace-uat.com/api/socialApis")!,timeoutInterval: Double.infinity)
-    request.addValue("eyJpdiI6Iko3VUtOMzBtOUdzWHkrT01FMWtlMHc9PSIsInZhbHVlIjoickdrNWNidjlPTXpZVm1NdVVDNDM3dz09IiwibWFjIjoiNDg4ZjEwNjQ0NzM2NTcxNGFiNzc5NGJiYjk1Y2Q4MWM5YmE2M2MyNzI5ODdhMzRkOTEwYjUwMmM0YTQ4MzgzNCJ9", forHTTPHeaderField: "Authorization")
+    request.addValue(AuthToken!, forHTTPHeaderField: "Authorization")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     
     request.httpMethod = "POST"
@@ -688,11 +692,12 @@ func like(needpostid: Int,needId: Int) {
 
 
 func dislike(needpostid: Int,needId: Int) {
+    @State  var AuthToken = UserDefaults.standard.string(forKey: "Token")
     let parameters = "{\r\n    \"action\": \"like\",\r\n    \"data\": {\r\n        \"interaction\": \"like\",\r\n        \"actionType\": \"delete\",\r\n        \"postId\": \(needpostid),\r\n        \"activityId\": \(needId)\r\n    }\r\n}"
     let postData = parameters.data(using: .utf8)
     
     var request = URLRequest(url: URL(string: "https://www.mysuperhumanrace-uat.com/api/socialApis")!,timeoutInterval: Double.infinity)
-    request.addValue("eyJpdiI6Iko3VUtOMzBtOUdzWHkrT01FMWtlMHc9PSIsInZhbHVlIjoickdrNWNidjlPTXpZVm1NdVVDNDM3dz09IiwibWFjIjoiNDg4ZjEwNjQ0NzM2NTcxNGFiNzc5NGJiYjk1Y2Q4MWM5YmE2M2MyNzI5ODdhMzRkOTEwYjUwMmM0YTQ4MzgzNCJ9", forHTTPHeaderField: "Authorization")
+    request.addValue(AuthToken!, forHTTPHeaderField: "Authorization")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     
     request.httpMethod = "POST"
@@ -735,7 +740,7 @@ struct HalfLayouttype: View {
         HStack(){
             
             AttributedText(desc + "\n\n")
-                .font(.custom("muli", size: 16))
+                .font(.custom("muli", size: 13))
                 .lineLimit(3)
             
                 .foregroundColor(Color.black)
@@ -747,9 +752,10 @@ struct HalfLayouttype: View {
             
             AnimatedImage(url: URL(string: img))
                 .resizable()
+              
                 .padding(.trailing, 15)
-                .frame( height: UIScreen.screenHeight * 0.1)
-                .aspectRatio(16/9, contentMode: .fit)
+                .frame( height: UIScreen.screenHeight * 0.04)
+                .frame(width: UIScreen.screenWidth * 0.2)
                 .frame( alignment: .trailing)
                 .onTapGesture {
                     showModal = true
@@ -775,7 +781,7 @@ struct Fulllayouttype: View {
         VStack{
             
             AttributedText(desc + "\n\n")
-                .font(.custom("muli", size: 16))
+                .font(.custom("muli", size: 13))
                 .lineLimit(3)
                 .foregroundColor(Color.black)
                 .fixedSize(horizontal: false, vertical: true)
@@ -786,8 +792,10 @@ struct Fulllayouttype: View {
             
             AnimatedImage(url: URL(string: img))
                 .resizable()
-                .frame( height: UIScreen.screenHeight * 0.3)
+                
+                .frame( height: UIScreen.screenHeight * 0.25)
                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
+                .aspectRatio(CGSize(width:50, height: 50), contentMode: .fit)
                 .onTapGesture {
                     showModal = true
                 }.fullScreenCover(isPresented: $showModal) {
@@ -812,7 +820,7 @@ struct Nonlayouttype: View {
         VStack(){
             
             AttributedText(desc + "\n\n")
-                .font(.custom("muli", size: 16))
+                .font(.custom("muli", size: 13))
                 .lineLimit(3)
                 .foregroundColor(Color.black)
                 .fixedSize(horizontal: false, vertical: true)
